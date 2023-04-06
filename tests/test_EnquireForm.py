@@ -63,7 +63,7 @@ class Test_EnquireForms(Invokation):
         enquireformObj.uniItem().click()
         enquireformObj.submitBtnEnquire().click() 
         time.sleep(5)
-        self.driver.get_screenshot_as_file("screenshot.png")
+        self.driver.get_screenshot_as_file("enquireNow.png")
         currenturl = self.driver.current_url
         
         if Test_EnquireForms.enquireNowUrl == currenturl:

@@ -33,8 +33,16 @@ class FormClass:
     startdateMonthSelector = (By.XPATH,"//div[text()='Dec']")
     enddateSelector = (By.NAME,"endDate")
     enddateMonthSelector = (By.XPATH,"//div[text()='Dec']")
-    
-    
+    guardianFnameSelector = (By.ID,"name")
+    guardianEmailSelector = (By.NAME,"email")
+    guardianNumberSelector = (By.ID,"contactNo")
+    relationshipSelector = (By.ID,"relationship")
+    messageSelector = (By.NAME,"message")
+    guardianDOBselector = (By.ID,"dob")
+    guardianDOBdateSelector = (By.XPATH,"(//td[text()=30])[2]")
+    sourceSelector = (By.NAME,"source")
+    sourceNameSelector = (By.ID,"sourceName")
+    guardiansubmitBtnSelector = (By.XPATH,"//div[text()='Submit']")
     
     def firstName(self):
         return self.driver.find_element(*FormClass.firstnameSelector)
@@ -122,3 +130,33 @@ class FormClass:
     
     def enddateMonth(self):
         return self.driver.find_element(*FormClass.enddateMonthSelector)
+    
+    def guardianFullname(self):
+        return self.driver.find_element(*FormClass.guardianFnameSelector)
+    
+    def guardianEmail(self):
+        return self.driver.find_element(*FormClass.guardianEmailSelector)
+    
+    def guardianContact(self):
+        return self.driver.find_element(*FormClass.guardianNumberSelector)
+    
+    def guardianRelationship(self):
+        return self.driver.find_element(*FormClass.relationshipSelector)
+    
+    def message(self):
+        return self.driver.find_element(*FormClass.messageSelector)
+    
+    def guardianDOB(self):
+        return self.driver.find_element(*FormClass.guardianDOBselector)
+    
+    def guardianDOBDate(self):
+        return self.driver.find_element(*FormClass.guardianDOBdateSelector)
+    
+    def source(self):
+        return self.driver.find_element(*FormClass.sourceSelector)
+    
+    def sourceName(self):
+        return self.driver.find_element(*FormClass.sourceNameSelector)
+    
+    def guardianSubmitBtn(self):
+        return self.driver.find_element(*FormClass.guardiansubmitBtnSelector)

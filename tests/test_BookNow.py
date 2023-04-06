@@ -20,10 +20,11 @@ import pytest
 
 class Test_BookNowForms(Invokation):
     
+    bookNow_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"
+    
     def test_bookNowForm(self):
         
         log = self.getLogger()
-        
         self.driver.implicitly_wait(5)
         
         homepageObj = Homepageclass(self.driver)
@@ -106,4 +107,19 @@ class Test_BookNowForms(Invokation):
         formObj.startdateMonth().click()
         formObj.endDateField().click()
         formObj.enddateMonth().click()
-        time.sleep(5)
+        formObj.nextBtn().click()
+        formObj.guardianFullname().send_keys("test")
+        formObj.guardianEmail().send_keys("test@yopmail.com")
+        formObj.guardianContact().send_keys("8100223348")
+        formObj.guardianRelationship().send_keys("testrelation")
+        formObj.message().send_keys("testing Message")
+        formObj.guardianDOB().click()
+        formObj.guardianDOBDate().click()
+        sourceDrop = Select(formObj.source())
+        sourceDrop.select_by_index(3)
+        formObj.sourceName().send_keys("Mr Test")
+        formObj.guardianSubmitBtn().click()
+        time.sleep(10)
+        self.driver.get_screenshot_as_file("Book_Now.png")
+        
+        assert Test_BookNowForms.bookNow_url == self.driver.current_url
