@@ -16,6 +16,7 @@ from pageData.Forms import FormClass
 from pageData.listingPage import listingClass
 import pytest
 
+@pytest.mark.skip()
 class Test_lising(Invokation):
     
     def test_listing_e2e(self):

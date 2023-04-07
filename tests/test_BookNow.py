@@ -34,7 +34,7 @@ class Test_BookNowForms(Invokation):
         
         
 
-        log.info("using iq hoxton property for enquire form")
+        log.info("using chapter ealing")
         homepageObj.searchbar().send_keys("chapter ealing")
         self.driver.find_element(By.XPATH,"//div[text()='Chapter Ealing']").click()                
 
@@ -120,6 +120,6 @@ class Test_BookNowForms(Invokation):
         formObj.sourceName().send_keys("Mr Test")
         formObj.guardianSubmitBtn().click()
         time.sleep(10)
-        self.driver.get_screenshot_as_file("Book_Now.png")
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\forms\\BookNowNow.png")
         
         assert Test_BookNowForms.bookNow_url == self.driver.current_url

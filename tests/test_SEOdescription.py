@@ -37,7 +37,7 @@ class Test_BookNowForms(Invokation):
         self.driver.execute_script("arguments[0].scrollIntoView();",eleDescription)
         a = listingObj.cityDescription().text
         print(a)
-        self.driver.get_screenshot_as_file("listingDescription.png")
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\listing\\listingDescription.png")
         log.info("Description city -->" + a)
         eleTop = listingObj.homeBreadcrum()
         
@@ -51,7 +51,7 @@ class Test_BookNowForms(Invokation):
         self.driver.execute_script("arguments[0].scrollIntoView();",uniDescription)
         uniDescTitile = listingObj.uniDesc().text
         print(uniDescTitile)
-        self.driver.get_screenshot_as_file("UniversityDescription.png")
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\listing\\UniversityDescription.png")
         log.info("Description university -->" + uniDescTitile)
         self.driver.execute_script("window.scrollTo(0,0);")
         time.sleep(2)
@@ -71,7 +71,7 @@ class Test_BookNowForms(Invokation):
         except Exception:
             log.info("No descrioption is available on campus page")
             print("No descrioption is available on campus page")
-            self.driver.get_screenshot_as_file("campusDescription.png")
+            self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\listing\\campusDescription.png")
 
         
         

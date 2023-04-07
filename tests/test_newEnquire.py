@@ -23,6 +23,7 @@ N = 7
 class Test_NewuserEnquireForm(Invokation):
     
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
+    phone_number = ''.join([str(random.randint(0, 9)) for i in range(10)])
     newEmail = res+"@yopmail.com"
         
     enquireNowUrl = "https://www.universityliving.com/united-kingdom/london/iq-hoxton/enquire-now/thank-you"
@@ -42,7 +43,7 @@ class Test_NewuserEnquireForm(Invokation):
         enquireformObj.firstName().send_keys("test")
         enquireformObj.lastName().send_keys("test")
         enquireformObj.email().send_keys(Test_NewuserEnquireForm.newEmail)
-        enquireformObj.phoneNumber().send_keys("8505813979")
+        enquireformObj.phoneNumber().send_keys(Test_NewuserEnquireForm.phone_number)
         enquireformObj.message().send_keys("this is test message :)")
         visastatusDropdown = Select(enquireformObj.visaStatus())
         visastatusDropdown.select_by_index(3)
@@ -66,6 +67,7 @@ class Test_NewuserEnquireForm(Invokation):
         enquireformObj.uniItem().click()
         enquireformObj.submitBtnEnquire().click()
         time.sleep(5)
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\forms\\NewUserEnquireNow.png")
         currenturl = self.driver.current_url
         
         assert Test_NewuserEnquireForm.enquireNowUrl == currenturl
