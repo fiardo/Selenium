@@ -13,33 +13,46 @@ import pytest
 from invokeBaseClass import Invokation
 from pageData.homePage import Homepageclass
 from pageData.roomReplacement import roomreplacementclass
+from pageData.services import Servicesclass
 import pytest
 
-@pytest.mark.skip()
-class Test_BookNowForms(Invokation):
+# @pytest.mark.skip()
+class Test_RoomReplacement(Invokation):
     
-    def test_servicesFunctionality(self):
+    def test_roomReplacemnet(self):
+        
+        roomReplacementURL = "https://www.universityliving.com/services/room-replacement"
+        thankyouPageURl = "https://www.universityliving.com/services/room-replacement/thank-you"
         
         homepageObj = Homepageclass(self.driver)
         roomreplacementObj = roomreplacementclass(self.driver)
+        serviceObj = Servicesclass(self.driver)
         
         log = self.getLogger()
         self.driver.implicitly_wait(5)
         
-        servicesOnheader = homepageObj.headerServices()
+        try:
+            servicesOnheader = homepageObj.headerServices()
+            action = ActionChains(self.driver)
+            action.move_to_element(servicesOnheader).perform()
+            time.sleep(2)
+            homepageObj.roomReplacement().click()
+            log.info("room replacement from header")
+        except Exception:
+            homepageObj.services().click()
+            serviceObj.roomreplacement().click()
+            log.info("room replacement from service page")
+            
         
-        action = ActionChains(self.driver)
-        action.move_to_element(servicesOnheader).perform()
-        time.sleep(5)
-        homepageObj.roomReplacement().click()
         
         roomreplacementObj.firstname().send_keys("test")
         roomreplacementObj.lastname().send_keys("test")
         roomreplacementObj.contactNumber().send_keys("8505813979")
         roomreplacementObj.email().send_keys("harsh.sachan@univeristyliving.com")
         roomreplacementObj.currentPrice().send_keys("100")
-        roomreplacementObj.UniverisityName().send_keys("test uni")
-        roomreplacementObj.currentProperty().sned_keys("scape swanston")
+        roomreplacementObj.UniverisityName().send_keys("uni")
+        roomreplacementObj.unidropdownItem().click()
+        roomreplacementObj.currentProperty().send_keys("scape swanston")
         roomreplacementObj.tenacyStart().click()
         roomreplacementObj.tenacyCalendarStartDate().click()
         roomreplacementObj.tenacyEnd().click()
@@ -52,4 +65,24 @@ class Test_BookNowForms(Invokation):
         roomreplacementObj.submitButton().click()
         time.sleep(3)
         self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\services\\RoomReplacement.png")
+
+        assert thankyouPageURl == self.driver.current_url
+        
+        if thankyouPageURl == self.driver.current_url:
+            log.info("page url is working")
+        else:
+            log.warning("page url is different plz check")
+            
+        roomreplacementObj.okButton().click()
+        
+        assert roomReplacementURL == self.driver.current_url
+        
+        if roomReplacementURL== self.driver.current_url:
+            log.info("After submission page is fine")
+        else:
+            log.warning("Page break")
+            
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\services\\AfterClickOnOKButtonRoomReplacement.png")
+        
+        
         

@@ -17,7 +17,8 @@ class loginpopupClass:
     dashboardemailSelector = (By.XPATH,"(//p[text()='harsh.sachan@universityliving.com'])")
     profilesectionSelector = (By.XPATH,"(//img[@alt='Profile'])")
     profileemailSelector = (By.XPATH,"(//p[text()='harsh.sachan@universityliving.com'])[2]")
-    
+    continueWithGoogleSelector = (By.XPATH,"//img[@alt='SignUp with Google']")
+    googleLoginIDselector = (By.XPATH,"//div[text()='harsh.sachan@universityliving.com']")
     
     def emailfield(self):
         return self.driver.find_element(*loginpopupClass.emailfieldSelector)
@@ -55,6 +56,9 @@ class loginpopupClass:
     def profileEmail(self):
         return self.driver.find_element(*loginpopupClass.profileemailSelector)
 
+    def continueWithGoogleBtn(self):
+        return self.driver.find_element(*loginpopupClass.continueWithGoogleSelector)
         
-        
+    def LogingoogleID(self):
+        return self.driver.find_element(*loginpopupClass.googleLoginIDselector)
     

@@ -23,7 +23,7 @@ class Test_BookNowForms(Invokation):
     
     bookNow_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"
     
-    def test_bookNowForm(self):
+    def test_SeoCampusDescription(self):
         
         log = self.getLogger()       
         self.driver.implicitly_wait(5)

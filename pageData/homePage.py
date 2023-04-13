@@ -10,7 +10,7 @@ class Homepageclass:
     homepageImgSelector = (By.XPATH,"//img[@alt='University Living']")
     headerServicesSelector = (By.XPATH,"//a[text()='Services']")
     roomreplacementSelector = (By.XPATH,"//a[@href = '/services/room-replacement']")
-    
+    servicesSelector = (By.XPATH,"//a[text()='Services']")
     
     
     def searchbar(self):
@@ -19,7 +19,7 @@ class Homepageclass:
     def loginBtn(self):
         return self.driver.find_element(*Homepageclass.loginbtnSelector)
     
-    def homepageBtn(self):
+    def headerLogo(self):
         return self.driver.find_element(*Homepageclass.homepageImgSelector)
     
     def headerServices(self):
@@ -28,3 +28,5 @@ class Homepageclass:
     def roomReplacement(self):
         return self.driver.find_element(*Homepageclass.roomreplacementSelector)
     
+    def services(self):
+        return self.driver.find_element(*Homepageclass.servicesSelector)

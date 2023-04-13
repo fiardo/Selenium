@@ -27,7 +27,7 @@ class Test_LoginE2e(Invokation):        # test class
         loginPopUPObj = loginpopupClass(self.driver)
         loginEmail = 'harsh.sachan@universityliving.com'
         
-        self.driver.implicitly_wait(4)
+        self.driver.implicitly_wait(10)
 
         homepageObject.loginBtn().click()
         loginPopUPObj.emailfield().send_keys(loginEmail)
@@ -45,14 +45,33 @@ class Test_LoginE2e(Invokation):        # test class
         loginPopUPObj.profileSection().click()
         emailProfile = loginPopUPObj.profileEmail().text 
     
+        assert (loginEmail == emailDashboard and loginEmail == emailProfile)
         if (loginEmail == emailDashboard and loginEmail == emailProfile):
-            print("Loggin successful")
+            log.info("login successfull + Dashboard data matched")
         else:
-            print("there is an error in loggin")
-
-        print("Login email is -->", loginEmail)
-        print("Dashboard email is -->", emailDashboard)
-        print("profile email is -->", emailProfile)
+            log.warning("dashboard data does not matched wiht login profile")
+            
+        homepageObject.headerLogo().click()
+        self.driver.delete_all_cookies()
+        self.driver.refresh()
+        
+        homepageObject.loginBtn().click()
+        loginPopUPObj.continueWithGoogleBtn().click()
+        time.sleep(10)
+        # loginPopUPObj.LogingoogleID().click()        
+        
+        # loginPopUPObj.profileIcon().click()
+    
+        # emailDashboard = loginPopUPObj.dashboardEmail().text
+        # loginPopUPObj.profileSection().click()
+        # emailProfile = loginPopUPObj.profileEmail().text 
+    
+        # assert (loginEmail == emailDashboard and loginEmail == emailProfile)
+        # if (loginEmail == emailDashboard and loginEmail == emailProfile):
+        #     log.info("login successfull + Dashboard data matched")
+        # else:
+        #     log.warning("dashboard data does not matched wiht login profile")
+            
         # self.driver.refresh()
     
     

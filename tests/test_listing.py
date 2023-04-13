@@ -31,7 +31,6 @@ class Test_lising(Invokation):
         homepageObj.searchbar().send_keys("melbo")
         time.sleep(3)
         homepageObj.searchbar().send_keys(Keys.ENTER)
-        time.sleep(5)
         lastPage = listingObj.PaginationLast().text
         listingObj.PaginationLast().click()
         time.sleep(3)

@@ -13,6 +13,7 @@ class FormClass:
     universityID2Selector = (By.ID,":r2:")
     universityID3Selector = (By.ID,":r3:")
     universityID4Selector = (By.ID,":r4:")
+    univeristyID5Selector = (By.ID,":r5:")
     uniItemSelector = (By.ID,"university-search-item-0")
     platformSelector = (By.NAME,"platformToReach")
     platformInfoselector = (By.NAME,"platformInfo")
@@ -70,6 +71,9 @@ class FormClass:
     
     def uniIDfour(self):
         return self.driver.find_element(*FormClass.universityID4Selector)
+    
+    def uniIDfive(self):
+        return self.driver.find_element(*FormClass.univeristyID5Selector)
     
     def uniItem(self):
         return self.driver.find_element(*FormClass.uniItemSelector)
