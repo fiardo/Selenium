@@ -17,6 +17,9 @@ class listingClass:
     pageTextSelector = (By.XPATH,"//span[text() = 'Page']")
     uniDescHeaderSelector = (By.XPATH,"//div[text()=\"Everything about student accommodation near King's College London\"]")
     readMoreDescSelector = (By.XPATH,"//label[@for = 'read-more-controller']")
+    uniHallCategorySelector = (By.XPATH,"//label[text()='University Halls']")
+    firstpropertiesSelector = (By.XPATH,"(//div[@class='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3']/div)[1]")
+    propertylistedSelector = (By.XPATH,"(//div[@class='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3']/div)")
     
     
     
@@ -53,3 +56,8 @@ class listingClass:
     def readMoreDesc(self):
         return self.driver.find_element(*listingClass.readMoreDescSelector)
     
+    def unihallcategory(self):
+        return self.driver.find_element(*listingClass.uniHallCategorySelector)
+    
+    def firstPropertyOnList(self):
+        return self.driver.find_element(*listingClass.firstpropertiesSelector)

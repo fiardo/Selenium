@@ -1,4 +1,6 @@
-2023-04-13 12:48:02,811 :INFO : test_E2eLogin :login successfull + Dashboard data matched
-2023-04-13 12:49:54,565 :INFO : test_E2eLogin :login successfull + Dashboard data matched
-2023-04-13 14:14:07,236 :INFO : test_E2eLogin :login successfull + Dashboard data matched
-2023-04-13 14:14:34,172 :INFO : test_E2eLogin :login successfull + Dashboard data matched
+2023-04-14 13:24:53,662 :INFO : test_unihallcase :https://www.universityliving.com/united-kingdom/london/unihall/canvas-wembley
+2023-04-14 13:25:10,800 :INFO : test_unihallcase :Thank you url page of unihall is Woring fine
+2023-04-14 13:25:14,099 :INFO : test_unihallcase :Detail page is working fine after clicking on OK from thank you page
+2023-04-14 13:26:55,050 :INFO : test_unihallcase :https://www.universityliving.com/united-kingdom/london/unihall/canvas-wembley
+2023-04-14 13:27:06,364 :INFO : test_unihallcase :Thank you url page of unihall is Woring fine
+2023-04-14 13:27:09,544 :INFO : test_unihallcase :Detail page is working fine after clicking on OK from thank you page

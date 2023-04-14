@@ -75,20 +75,12 @@ class Test_BookNowForms(Invokation):
                     try:
                         formObj.uniIDfour().click()
                     except Exception:
-                        print('id is not available for the univerisity select field')
+                        try:
+                            formObj.uniIDfive().click()
+                        except Exception:
+                            log.warning("ID is not interactable")
            
         formObj.uniItem().click()
-        # enquireformObj.submitBtn().click() 
-        # time.sleep(5)
-        # currenturl = self.driver.current_url
-        
-        # if Test_EnquireForms.enquireNowUrl == currenturl:
-        #     print("test success")
-        # else:
-        #     print("test failed")
-
-        # print(currenturl)
-        
         formObj.bookNowBtn().click()
         formObj.genderBtn().click()
         formObj.homeField().send_keys("test Home")

@@ -51,13 +51,18 @@ class Test_LoginE2e(Invokation):        # test class
         else:
             log.warning("dashboard data does not matched wiht login profile")
             
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\homepage&dashboard\\Login_Dashboard.png")
+            
         homepageObject.headerLogo().click()
-        self.driver.delete_all_cookies()
-        self.driver.refresh()
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\homepage&dashboard\\After_Login_Homepage.png")
+        # self.driver.delete_all_cookies()
+        # self.driver.refresh()
         
-        homepageObject.loginBtn().click()
-        loginPopUPObj.continueWithGoogleBtn().click()
-        time.sleep(10)
+        # homepageObject.loginBtn().click()
+        # time.sleep(5)
+        # loginPopUPObj.continueWithGoogleBtn().click()
+        # time.sleep(10)
+        
         # loginPopUPObj.LogingoogleID().click()        
         
         # loginPopUPObj.profileIcon().click()

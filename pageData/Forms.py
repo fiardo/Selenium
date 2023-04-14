@@ -44,6 +44,13 @@ class FormClass:
     sourceSelector = (By.NAME,"source")
     sourceNameSelector = (By.ID,"sourceName")
     guardiansubmitBtnSelector = (By.XPATH,"//div[text()='Submit']")
+    universityEmailSelector = (By.ID,"email")
+    dateofBirthselector = (By.ID,"dateOfBirth")
+    dateONEofDOBselector = (By.XPATH,"(//td[text()='1'])[2]")
+    studentIDselctor = (By.ID,"studentId")
+    coursenameselctor = (By.ID, "courseName")
+    OKbtnSelector = (By.XPATH,"//div[text()='OK']")
+    
     
     def firstName(self):
         return self.driver.find_element(*FormClass.firstnameSelector)
@@ -164,3 +171,21 @@ class FormClass:
     
     def guardianSubmitBtn(self):
         return self.driver.find_element(*FormClass.guardiansubmitBtnSelector)
+    
+    def universityemail(self):
+        return self.driver.find_element(*FormClass.universityEmailSelector)
+    
+    def dateofbirth(self):
+        return self.driver.find_element(*FormClass.dateofBirthselector)
+    
+    def date1ofDOB(self):
+        return self.driver.find_element(*FormClass.dateONEofDOBselector)
+    
+    def studentID(self):
+        return self.driver.find_element(*FormClass.studentIDselctor)
+    
+    def courseName(self):
+        return self.driver.find_element(*FormClass.coursenameselctor)
+    
+    def OKbtnThankyou(self):
+        return self.driver.find_element(*FormClass.OKbtnSelector)
