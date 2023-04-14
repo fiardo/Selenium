@@ -13,10 +13,10 @@ from selenium.common.exceptions import NoSuchElementException
 driver = None
 
 
-# def pytest_addoption(parser):
-#     parser.addoption(
-#         "--browser_name", action = "store" , default = "chrome"
-#     )
+def pytest_addoption(parser):
+    parser.addoption(
+        "--browser_name", action = "store" , default = "chrome"
+    )
 
 
 
@@ -25,17 +25,17 @@ driver = None
 def setup(request):                 
     
     global driver
-    # browser_name = request.config.getoption("browser_name")
-    # if browser_name == "chrome":
-    s = Service("C:/Users/TUL/Desktop/cd/cd3.exe")
-    driver = webdriver.Chrome(service=s)
-    driver.get('https://www.universityliving.com/')
-    # wait = 1
-    # else:
-    #     s = Service("C:/Users/TUL/Desktop/cd/geckodriver.exe")
-    #     driver = webdriver.Firefox(service=s)
-    #     driver.get('https://www.universityliving.com/')
-    #     wait = 1
+    browser_name = request.config.getoption("browser_name")
+    if browser_name == "chrome":
+        s = Service("C:/Users/TUL/Desktop/cd/cd4.exe")
+        driver = webdriver.Chrome(service=s)
+        driver.get('https://www.universityliving.com/')
+        wait = 1
+    else:
+        s = Service("C:/Users/TUL/Desktop/cd/geckodriver.exe")
+        driver = webdriver.Firefox(service=s)
+        driver.get('https://www.universityliving.com/')
+        wait = 1
     driver.maximize_window()
     request.cls.driver = driver
     yield                           
@@ -47,7 +47,7 @@ def setup(request):
 
 
     
-#---------------------------------capturing screenshot pytest code ----------------------------
+# ---------------------------------capturing screenshot pytest code ----------------------------
     
 @pytest.mark.hookwrapper
 def pytest_runtest_makereport(item):
@@ -73,4 +73,4 @@ def pytest_runtest_makereport(item):
 
 
 def _capture_screenshot(name):
-        driver.get_screenshot_as_file(name)
+    driver.get_screenshot_as_file(name)
