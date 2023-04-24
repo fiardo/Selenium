@@ -1,9 +1,17 @@
 from selenium.webdriver.common.by import By
+import string
+import random
 
 class loginpopupClass:
     def __init__(self,driver):
         self.driver = driver
         
+    
+    N = 7
+    res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
+    phone_number = ''.join([str(random.randint(0, 9)) for i in range(10)])
+    newEmail = res+".university@yopmail.com"
+    
         
     emailfieldSelector = (By.ID,"email")
     loginBtnSelector = (By.XPATH,"//div[text()='Login']")
@@ -19,6 +27,12 @@ class loginpopupClass:
     profileemailSelector = (By.XPATH,"(//p[text()='harsh.sachan@universityliving.com'])[2]")
     continueWithGoogleSelector = (By.XPATH,"//img[@alt='SignUp with Google']")
     googleLoginIDselector = (By.XPATH,"//div[text()='harsh.sachan@universityliving.com']")
+    
+    firstnameSelector = (By.NAME, "firstName")
+    lastnameSelector = (By.NAME,"lastName")
+    PhoneNumberSelector = (By.ID,"contactNumber")
+    signUpBtnSelector = (By.XPATH,"//div[text()='Sign Up']")
+    
     
     def emailfield(self):
         return self.driver.find_element(*loginpopupClass.emailfieldSelector)
@@ -62,3 +76,14 @@ class loginpopupClass:
     def LogingoogleID(self):
         return self.driver.find_element(*loginpopupClass.googleLoginIDselector)
     
+    def firstName(self):
+        return self.driver.find_element(*loginpopupClass.firstnameSelector)
+    
+    def lastName(self):
+        return self.driver.find_element(*loginpopupClass.lastnameSelector)
+    
+    def phoneNumber(self):
+        return self.driver.find_element(*loginpopupClass.PhoneNumberSelector)
+    
+    def signUpBtn(self):
+        return self.driver.find_element(*loginpopupClass.signUpBtnSelector)

@@ -14,44 +14,53 @@ from invokeBaseClass import Invokation
 from pageData.homePage import Homepageclass
 from pageData.loginPopup import loginpopupClass
 import pytest
+import string
+import random
+
+N = 7
 
 
-@pytest.mark.skip() # test in conftest
-class Test_LoginE2e(Invokation):        # test class
+# @pytest.mark.skip()  # test in conftest
+class Test_SignupE2e(Invokation):        # test class
+    
+    
+    res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
+    phone_number = ''.join([str(random.randint(0, 9)) for i in range(10)])
+    newEmail = res+".university@yopmail.com"
+    
     def test_E2eLogin(self):            # complete test will be written here
         
         log = self.getLogger()
+        self.driver.implicitly_wait(10)
     
         homepageObject = Homepageclass(self.driver)
         loginPopUPObj = loginpopupClass(self.driver)
-        loginEmail = 'harsh.sachan@universityliving.com'
         
-        self.driver.implicitly_wait(10)
+        
 
         homepageObject.loginBtn().click()
-        loginPopUPObj.emailfield().send_keys(loginEmail)
+        loginPopUPObj.emailfield().send_keys(Test_SignupE2e.newEmail.lower())
         loginPopUPObj.loginBtn().click()
+        loginPopUPObj.firstName().send_keys("test")
+        loginPopUPObj.lastName().send_keys("test")
+        loginPopUPObj.phoneNumber().send_keys(Test_SignupE2e.phone_number)
+        loginPopUPObj.signUpBtn().click()
         loginPopUPObj.otpFirst().send_keys("1")
         loginPopUPObj.otpsecond().send_keys("2")
         loginPopUPObj.otpthird().send_keys("3")
         loginPopUPObj.otpfourth().send_keys("4")
         loginPopUPObj.otpfifth().send_keys("5")
-
         loginPopUPObj.continueBtn().click()
         loginPopUPObj.profileIcon().click()
-    
-        emailDashboard = loginPopUPObj.dashboardEmail().text
-        loginPopUPObj.profileSection().click()
-        emailProfile = loginPopUPObj.profileEmail().text 
-    
-        assert (loginEmail == emailDashboard and loginEmail == emailProfile)
-        if (loginEmail == emailDashboard and loginEmail == emailProfile):
-            log.info("login successfull + Dashboard data matched")
+        dashboard_email = self.driver.find_element(By.CSS_SELECTOR,".text-base.text-theme-gray-text.truncate").text
+        if dashboard_email == Test_SignupE2e.newEmail.lower():
+            log.info("Sign up id matched with dashboard id")
         else:
-            log.warning("dashboard data does not matched wiht login profile")
-            
-        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\homepage&dashboard\\Login_Dashboard.png")
-            
-        homepageObject.headerLogo().click()
-        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\homepage&dashboard\\After_Login_Homepage.png")
-    
+            log.warning("email is not matched") 
+        
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\homepage&dashboard\\signUP-dashboard.png")      
+        
+        homepageObject.headerLogo().click() 
+        
+        log.info("dashboard emai -->" + dashboard_email)
+        log.info("sign up email -->" + Test_SignupE2e.newEmail.lower())

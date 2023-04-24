@@ -47,8 +47,8 @@ class Test_joinWaitlist(Invokation):
         
         joinwaitlistObj.firstName().send_keys("test")
         joinwaitlistObj.lastName().send_keys("test")
-        joinwaitlistObj.email().send_keys(Test_joinWaitlist.newEmail)
-        joinwaitlistObj.phoneNumber().send_keys(Test_joinWaitlist.phone_number)
+        joinwaitlistObj.email().send_keys("pravin.garg@universityliving.com")
+        joinwaitlistObj.phoneNumber().send_keys("8871555179")
         joinwaitlistObj.message().send_keys("this is test message :)")
         visastatusDropdown = Select(joinwaitlistObj.visaStatus())
         visastatusDropdown.select_by_index(3)
