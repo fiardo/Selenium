@@ -58,9 +58,10 @@ class Test_SignupE2e(Invokation):        # test class
         else:
             log.warning("email is not matched") 
         
-        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\homepage&dashboard\\signUP-dashboard.png")      
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\homepage&dashboard\\signUP-dashboard.png")      
         
         homepageObject.headerLogo().click() 
         
         log.info("dashboard emai -->" + dashboard_email)
         log.info("sign up email -->" + Test_SignupE2e.newEmail.lower())
+        log.info("used contact number for sign up -->" + Test_SignupE2e.phone_number)
