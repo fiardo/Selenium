@@ -27,7 +27,7 @@ class Test_unihallClass(Invokation):
           
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
     phone_number = ''.join([str(random.randint(0, 9)) for i in range(10)])
-    newEmail = res+"@yopmail.com"
+    newEmail = res+".university@yopmail.com"
     
     def test_unihallcase(self):
         
@@ -74,6 +74,7 @@ class Test_unihallClass(Invokation):
             formobj.uniIDone().click()
         except Exception:
             try:
+                
                 formobj.uniIDtwo().click()
             except Exception:
                 try:

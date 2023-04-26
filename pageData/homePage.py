@@ -11,6 +11,7 @@ class Homepageclass:
     headerServicesSelector = (By.XPATH,"//a[text()='Services']")
     roomreplacementSelector = (By.XPATH,"//a[@href = '/services/room-replacement']")
     servicesSelector = (By.XPATH,"//a[text()='Services']")
+    contactusSelector = (By.XPATH,"//a[text()='Contact Us']")
     
     
     def searchbar(self):
@@ -30,3 +31,6 @@ class Homepageclass:
     
     def services(self):
         return self.driver.find_element(*Homepageclass.servicesSelector)
+    
+    def contactus(self):
+        return self.driver.find_element(*Homepageclass.contactusSelector)
