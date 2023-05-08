@@ -16,7 +16,7 @@ from pageData.loginPopup import loginpopupClass
 import pytest
 
 
-@pytest.mark.skip() # test in conftest
+# @pytest.mark.skip() # test in conftest
 class Test_LoginE2e(Invokation):        # test class
     def test_E2eLogin(self):            # complete test will be written here
         

@@ -18,7 +18,7 @@ from pageData.listingPage import listingClass
 from pageData.Forms import FormClass
 import pytest
 
-@pytest.mark.skip()
+# @pytest.mark.skip()
 class Test_BookNowForms(Invokation):
     
     bookNow_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"

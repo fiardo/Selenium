@@ -22,7 +22,7 @@ import string
 import random
 N = 7
 
-@pytest.mark.skip()
+# @pytest.mark.skip()
 class Test_unihallClass(Invokation):
           
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
