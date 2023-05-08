@@ -20,14 +20,16 @@ import string
 import random
 
 N = 7
-@pytest.mark.skip()
+# @pytest.mark.skip()
 class Test_NewuserEnquireForm(Invokation):
     
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
     phone_number = ''.join([str(random.randint(0, 9)) for i in range(10)])
     newEmail = res+"@yopmail.com"
         
-    enquireNowUrl = "https://www.universityliving.com/united-kingdom/london/iq-hoxton/enquire-now/thank-you"
+    iq_hoxton_thankYou_url = "https://www.universityliving.com/united-kingdom/london/iq-hoxton/enquire-now/thank-you"
+    chapter_ealing_thankYou_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/enquire-now/thank-you"
+    scape_melbourne_central_thankyou_url = "https://www.universityliving.com/australia/melbourne/scape-melbourne-central/enquire-now/thank-you"
     
     def test_enquireE2e(self):
         
@@ -39,8 +41,27 @@ class Test_NewuserEnquireForm(Invokation):
         detailpageObj = detailpageClass(self.driver)
         enquireformObj = FormClass(self.driver)
         homepageObj.searchbar().send_keys("iq hoxton")
-        self.driver.find_element(By.XPATH,"//div[text()='iQ Hoxton']").click()
-        detailpageObj.enquireButton().click()
+        
+        time.sleep(2)
+        homepageObj.searchbar().send_keys(Keys.RETURN)
+
+        try:
+            detailpageObj.enquireButton().click()
+            log.info("IQ hoxton - Enquire Now")
+        except Exception:
+            homepageObj.headerSearch().send_keys("chapter ealing")
+            time.sleep(2)
+            homepageObj.headerSearch().send_keys(Keys.ENTER)
+            try:
+                detailpageObj.enquireButton().click()
+                log.info('chapter ealing - Enquire now')
+            except Exception:
+                homepageObj.headerSearch().send_keys("scape melbourne central")
+                time.sleep(2)
+                homepageObj.headerSearch().send_keys(Keys.ENTER)
+                detailpageObj.enquireButton().click()
+                log.info("scape melbourne central - Enquire Now")
+
         enquireformObj.firstName().send_keys("test")
         enquireformObj.lastName().send_keys("test")
         enquireformObj.email().send_keys(Test_NewuserEnquireForm.newEmail)
@@ -50,7 +71,7 @@ class Test_NewuserEnquireForm(Invokation):
         visastatusDropdown.select_by_index(3)
         bestPlatformDropdown = Select(enquireformObj.platform())
         bestPlatformDropdown.select_by_index(10)
-        enquireformObj.platformInfo().send_keys("Discord-ID-Test-1234")
+        enquireformObj.platformInfo().send_keys("Discord1234")
         try:
             enquireformObj.uniIDone().click()
         except Exception:
@@ -63,19 +84,20 @@ class Test_NewuserEnquireForm(Invokation):
                     try:
                         enquireformObj.uniIDfour().click()
                     except Exception:
-                        print('id is not available for the univerisity select field')
+                        try:
+                            enquireformObj.uniIDfive().click()
+                        except Exception:   
+                            log.warning('id is not available for the univerisity select field')
            
         enquireformObj.uniItem().click()
         enquireformObj.submitBtnEnquire().click()
-        time.sleep(5)
-        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\forms\\NewUserEnquireNow.png")
+        time.sleep(3)
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\forms\\NewUserEnquireNow.png")
         currenturl = self.driver.current_url
         
-        assert Test_NewuserEnquireForm.enquireNowUrl == currenturl
-            # print("test success")
-        # else:
-        #     print("test failed")
-
+        assert currenturl == Test_NewuserEnquireForm.iq_hoxton_thankYou_url or currenturl == Test_NewuserEnquireForm.chapter_ealing_thankYou_url or currenturl == Test_NewuserEnquireForm.scape_melbourne_central_thankyou_url
+        
         print(currenturl)
         print(Test_NewuserEnquireForm.newEmail)
         log.info("new email id is " + Test_NewuserEnquireForm.newEmail)
+        log.info("new phone number is "+ Test_NewuserEnquireForm.phone_number)

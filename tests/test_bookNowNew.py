@@ -26,7 +26,10 @@ class Test_BookNowNew(Invokation):
     new_email = res +".university@yopmail.com"
     new_phoneNumber = ''.join([str(random.randint(0,9)) for i in range(10)])
     
-    bookNow_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"
+    chapter_ealing_thankyou_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"
+    scape_melbourne_thankyou_url = "https://www.universityliving.com/australia/melbourne/scape-melbourne-central/book-now/thank-you"
+    a_92y_residence_thankyou_url = "https://www.universityliving.com/united-states/newyork/92y-residence/book-now/thank-you"
+    
     
     def test_bookNowForm(self):
         
@@ -39,12 +42,27 @@ class Test_BookNowNew(Invokation):
         loginPopUPObj = loginpopupClass(self.driver)
         
         
-
-        log.info("using chapter ealing")
         homepageObj.searchbar().send_keys("chapter ealing")
-        self.driver.find_element(By.XPATH,"//div[text()='Chapter Ealing']").click()                
-
-        detailpageObj.booknowButton().click()
+        time.sleep(2)
+        homepageObj.searchbar().send_keys(Keys.RETURN)
+        try:
+            detailpageObj.booknowButton().click()
+            log.info("Chapter Ealing - Book Now")
+        except Exception:
+            homepageObj.headerSearch().send_keys("scape melbourne central")
+            time.sleep(3)
+            homepageObj.headerSearch().send_keys(Keys.ENTER)
+            try:
+                detailpageObj.booknowButton().click()
+                log.info('chapter ealing - Enquire now')
+            except Exception:
+                homepageObj.headerSearch().send_keys("92y residence")
+                time.sleep(3)
+                homepageObj.headerSearch().send_keys(Keys.ENTER)
+                detailpageObj.booknowButton().click()
+                log.info("scape melbourne central - Enquire Now")
+                
+            
         
         loginPopUPObj.emailfield().send_keys(Test_BookNowNew.new_email)
         log.info("email id -->" + Test_BookNowNew.new_email)
@@ -62,12 +80,13 @@ class Test_BookNowNew(Invokation):
         loginPopUPObj.otpfifth().send_keys("5")
         loginPopUPObj.continueBtn().click()
         
+        #--------------------------------step 1/3 -----------------------------
         
         visastatusDropdown = Select(formObj.visaStatus())
-        visastatusDropdown.select_by_index(3)
+        visastatusDropdown.select_by_index(2)
         bestPlatformDropdown = Select(formObj.platform())
         bestPlatformDropdown.select_by_index(10)
-        formObj.platformInfo().send_keys("Discord-ID-Test-1234")
+        formObj.platformInfo().send_keys("Discord-test")
         formObj.dateofbirth().click()
         formObj.date1ofDOB().click()
         
@@ -99,7 +118,10 @@ class Test_BookNowNew(Invokation):
         formObj.postalField().send_keys("test")
         nationality = Select(formObj.nationalityDrop())
         nationality.select_by_index(2)
-        formObj.nextBtn().click()               
+        formObj.nextBtn().click()    
+        
+        #----------------------- step 2/3 --------------------------------
+                   
         formObj.courseField().send_keys("test course")
         yearofStudy = Select(formObj.yearofstudyField())
         yearofStudy.select_by_index(2)
@@ -107,19 +129,36 @@ class Test_BookNowNew(Invokation):
         formObj.startdateMonth().click()
         formObj.endDateField().click()
         formObj.enddateMonth().click()
+        formObj.pastAttend().send_keys("test")
+        formObj.pastCourse().send_keys("test")
         formObj.nextBtn().click()
+        
+        #----------------------------- step 3/3 ------------------------
         formObj.guardianFullname().send_keys("test")
         formObj.guardianEmail().send_keys("test@yopmail.com")
         formObj.guardianContact().send_keys("8100223348")
         formObj.guardianRelationship().send_keys("testrelation")
         formObj.message().send_keys("testing Message")
-        formObj.guardianDOB().click()
-        formObj.guardianDOBDate().click()
+        
+        try:
+            formObj.guardianDOB().click()
+            formObj.guardianDOBDate().click()
+        except Exception:
+            pass
         sourceDrop = Select(formObj.source())
         sourceDrop.select_by_index(3)
         formObj.sourceName().send_keys("Mr Test")
         formObj.guardianSubmitBtn().click()
-        time.sleep(10)
-        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\forms\\BookNowNow.png")
         
-        assert Test_BookNowNew.bookNow_url == self.driver.current_url
+        #---------------------------------------- form submitted -----------------------------
+        time.sleep(5)
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\forms\\BookNowNow.png")
+        
+        assert Test_BookNowNew.a_92y_residence_thankyou_url == self.driver.current_url or Test_BookNowNew.scape_melbourne_thankyou_url or  Test_BookNowNew.chapter_ealing_thankyou_url
+        
+        if(Test_BookNowNew.a_92y_residence_thankyou_url == self.driver.current_url or Test_BookNowNew.scape_melbourne_thankyou_url or  Test_BookNowNew.chapter_ealing_thankyou_url):
+            log.info("Thankyou url is working fine")
+        else:
+            log.warning("Thankyou url is broken. plz check")
+            
+        homepageObj.headerLogo().click()

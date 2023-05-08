@@ -50,7 +50,8 @@ class FormClass:
     studentIDselctor = (By.ID,"studentId")
     coursenameselctor = (By.ID, "courseName")
     OKbtnSelector = (By.XPATH,"//div[text()='OK']")
-    
+    pastAttendSelector = (By.NAME,"previousUniversity")
+    pastCourseSelector = (By.NAME,"previousCourseName")
     
     def firstName(self):
         return self.driver.find_element(*FormClass.firstnameSelector)
@@ -189,3 +190,9 @@ class FormClass:
     
     def OKbtnThankyou(self):
         return self.driver.find_element(*FormClass.OKbtnSelector)
+    
+    def pastAttend(self):
+        return self.driver.find_element(*FormClass.pastAttendSelector)
+    
+    def pastCourse(self):
+        return self.driver.find_element(*FormClass.pastCourseSelector)

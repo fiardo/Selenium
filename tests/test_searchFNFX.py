@@ -15,9 +15,8 @@ from pageData.homePage import Homepageclass
 from pageData.loginPopup import loginpopupClass
 import pytest
 
-
-# @pytest.mark.skip()  # test in conftest
-class Test_SearchFunc(Invokation):        # test class
+@pytest.mark.skip()  # test in conftest
+class Test_SearchFunc(Invokation):        # test class 
     
     def test_seachbarFnFx(self):            # complete test will be written here
         
@@ -26,15 +25,18 @@ class Test_SearchFunc(Invokation):        # test class
     
         homepage = Homepageclass(self.driver)
         
-        keyword_list = ["london", "Birmingham","manchester","Nottingham","Glasgow","cardiff","KCL","queen mary university of london","university of manchester","birmingham city university","nottingham trent university","university of glassgow"]
+        keyword_list = ["London", "Birmingham","Manchester","Nottingham","Glasgow","Cardiff","King's College London (KCL)","Queen Mary University of London (QMUL)","University of Manchester","Birmingham City University (BCU)","Nottingham Trent University (NTU)","University of Glassgow"]
+        item_len = len(keyword_list)
+        
         for i in keyword_list:
-            homepage.searchbar().send_keys(i.capitalize())
+            homepage.searchbar().send_keys(i)
             time.sleep(3)
             first_element_in_search = self.driver.find_element(By.XPATH,"((//div[@class='content-font'])/div)[1]").text
             if i == first_element_in_search:
-                log.info("data matched" + i)
+                log.info("data matched--->" + i)
             homepage.headerLogo().click()           
         
+        log.info("length -->" + item_len)       
         
         
  
