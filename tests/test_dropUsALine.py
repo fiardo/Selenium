@@ -51,7 +51,7 @@ class Test_DropUsALineclass(Invokation):
         detailpage.submitBtn().click()
         
         time.sleep(3)
-        self.driver.save_screenshot("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\forms\\Drop_Us_A_Line.png")
+        self.driver.save_screenshot("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\forms\\Drop_Us_A_Line.png")
         
         detailpage.okBtn().click()
         time.sleep(2)
@@ -61,4 +61,4 @@ class Test_DropUsALineclass(Invokation):
             log.info("page is working fine")
         else:
             log.critical("URL issue plz check")
-        self.driver.save_screenshot("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\forms\\After_Drop_Us_A_Line.png")
+        self.driver.save_screenshot("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\forms\\After_Drop_Us_A_Line.png")

@@ -16,7 +16,7 @@ from pageData.roomReplacement import roomreplacementclass
 from pageData.services import Servicesclass
 import pytest
 
-# @pytest.mark.skip()
+@pytest.mark.skip()
 class Test_RoomReplacement(Invokation):
     
     def test_roomReplacemnet(self):

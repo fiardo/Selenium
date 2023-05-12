@@ -61,7 +61,7 @@ class Test_BookNowForms(Invokation):
         visastatusDropdown.select_by_index(3)
         bestPlatformDropdown = Select(formObj.platform())
         bestPlatformDropdown.select_by_index(10)
-        formObj.platformInfo().send_keys("Discord-ID-Test-1234")
+        formObj.platformInfo().send_keys("Dis-test-1")
         
         try:
             formObj.uniIDone().click()

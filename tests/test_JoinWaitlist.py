@@ -54,7 +54,7 @@ class Test_joinWaitlist(Invokation):
         visastatusDropdown.select_by_index(3)
         bestPlatformDropdown = Select(joinwaitlistObj.platform())
         bestPlatformDropdown.select_by_index(10)
-        joinwaitlistObj.platformInfo().send_keys("Discord-ID-Test-1234")
+        joinwaitlistObj.platformInfo().send_keys("Dis-test-12")
         try:
             joinwaitlistObj.uniIDone().click()
         except Exception:
