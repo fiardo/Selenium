@@ -27,7 +27,7 @@ def setup(request):
     global driver
     browser_name = request.config.getoption("browser_name")
     if browser_name == "chrome":
-        s = Service("C:/Users/TUL/Desktop/cd/cd4.exe")
+        s = Service("/Users/apple/Desktop/My\Data/cd")
         driver = webdriver.Chrome(service=s)
         driver.get('https://www.universityliving.com/')
         wait = 1
