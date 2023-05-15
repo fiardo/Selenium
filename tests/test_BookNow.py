@@ -57,6 +57,8 @@ class Test_BookNowForms(Invokation):
         # enquireformObj.message().send_keys("this is test message :)")
         
         
+#--------------------------------step 1/3 -------------------------------------------------------------------------
+
         visastatusDropdown = Select(formObj.visaStatus())
         visastatusDropdown.select_by_index(3)
         bestPlatformDropdown = Select(formObj.platform())
@@ -82,6 +84,9 @@ class Test_BookNowForms(Invokation):
            
         formObj.uniItem().click()
         formObj.bookNowBtn().click()
+
+#----------------------------------------------step 2/3 ------------------------------------------------------
+        
         formObj.genderBtn().click()
         formObj.homeField().send_keys("test Home")
         country = Select(formObj.countryDrop())
@@ -99,7 +104,12 @@ class Test_BookNowForms(Invokation):
         formObj.startdateMonth().click()
         formObj.endDateField().click()
         formObj.enddateMonth().click()
+        formObj.pastCourse().send_keys("test past course")
+        formObj.pastAttend().send_keys("test past university")        
         formObj.nextBtn().click()
+        
+#---------------------------------------------------step 3/3 ----------------------------------------------
+
         formObj.guardianFullname().send_keys("test")
         formObj.guardianEmail().send_keys("test@yopmail.com")
         formObj.guardianContact().send_keys("8100223348")

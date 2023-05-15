@@ -1,0 +1,34 @@
+2023-05-15 17:36:39,613 :INFO : test_bookNowForm :using chapter ealing
+2023-05-15 17:37:13,983 :INFO : test_enquireE2e :IQ hoxton - Enquire Now
+2023-05-15 17:37:24,867 :INFO : test_enquireE2e :Thankyou URL is working Fine
+2023-05-15 17:37:58,130 :INFO : test_joinWaitlist :new email id is B9S9FPP@yopmail.com
+2023-05-15 17:37:58,131 :INFO : test_joinWaitlist :new phone number is3523692909
+2023-05-15 17:38:08,431 :INFO : test_E2eLogin :login successfull + Dashboard data matched
+2023-05-15 17:38:22,916 :INFO : test_bookNowForm :Chapter Ealing - Book Now
+2023-05-15 17:38:22,916 :INFO : test_bookNowForm :Chapter Ealing - Book Now
+2023-05-15 17:38:23,453 :INFO : test_bookNowForm :email id -->1fgjwl6rv4.university@yopmail.com
+2023-05-15 17:38:23,453 :INFO : test_bookNowForm :email id -->1fgjwl6rv4.university@yopmail.com
+2023-05-15 17:38:27,075 :INFO : test_bookNowForm :phone number -->2667525190
+2023-05-15 17:38:27,075 :INFO : test_bookNowForm :phone number -->2667525190
+2023-05-15 17:38:52,043 :INFO : test_bookNowForm :Thankyou url is working fine
+2023-05-15 17:38:52,043 :INFO : test_bookNowForm :Thankyou url is working fine
+2023-05-15 17:39:09,510 :INFO : test_contactusE2E :Thank You Url is working fine
+2023-05-15 17:39:10,605 :INFO : test_contactusE2E :contact page url is working fine
+2023-05-15 17:40:24,982 :INFO : test_dropusaline :page is working fine
+2023-05-15 17:40:36,783 :INFO : test_enquireE2e :IQ hoxton - Enquire Now
+2023-05-15 17:40:36,783 :INFO : test_enquireE2e :IQ hoxton - Enquire Now
+2023-05-15 17:40:52,670 :INFO : test_enquireE2e :new email id is 2O9JNRZ@yopmail.com
+2023-05-15 17:40:52,670 :INFO : test_enquireE2e :new email id is 2O9JNRZ@yopmail.com
+2023-05-15 17:40:52,671 :INFO : test_enquireE2e :new phone number is 2268650486
+2023-05-15 17:40:52,671 :INFO : test_enquireE2e :new phone number is 2268650486
+2023-05-15 17:41:05,271 :INFO : test_E2eLogin :Sign up id matched with dashboard id
+2023-05-15 17:41:05,271 :INFO : test_E2eLogin :Sign up id matched with dashboard id
+2023-05-15 17:41:07,094 :INFO : test_E2eLogin :dashboard emai -->pjut4un.university@yopmail.com
+2023-05-15 17:41:07,094 :INFO : test_E2eLogin :dashboard emai -->pjut4un.university@yopmail.com
+2023-05-15 17:41:07,094 :INFO : test_E2eLogin :sign up email -->pjut4un.university@yopmail.com
+2023-05-15 17:41:07,094 :INFO : test_E2eLogin :sign up email -->pjut4un.university@yopmail.com
+2023-05-15 17:41:07,095 :INFO : test_E2eLogin :used contact number for sign up -->0046936614
+2023-05-15 17:41:07,095 :INFO : test_E2eLogin :used contact number for sign up -->0046936614
+2023-05-15 17:41:24,404 :INFO : test_unihallcase :https://www.universityliving.com/united-kingdom/london/unihall/canvas-wembley
+2023-05-15 17:41:36,028 :INFO : test_unihallcase :Thank you url page of unihall is Woring fine
+2023-05-15 17:41:38,796 :INFO : test_unihallcase :Detail page is working fine after clicking on OK from thank you page
