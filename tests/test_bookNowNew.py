@@ -54,13 +54,13 @@ class Test_BookNowNew(Invokation):
             homepageObj.headerSearch().send_keys(Keys.ENTER)
             try:
                 detailpageObj.booknowButton().click()
-                log.info('chapter ealing - Enquire now')
+                log.info('scape melbourne central - Book now')
             except Exception:
                 homepageObj.headerSearch().send_keys("92y residence")
                 time.sleep(3)
                 homepageObj.headerSearch().send_keys(Keys.ENTER)
                 detailpageObj.booknowButton().click()
-                log.info("scape melbourne central - Enquire Now")
+                log.info("92y reisdence  - Bok Now")
                 
             
         
