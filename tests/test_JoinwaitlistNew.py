@@ -21,13 +21,13 @@ import string
 import random
 N = 7
 
-class Test_joinWaitlist(Invokation):
+class Test_join_Waitlist_new_user(Invokation):
     
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
     phone_number = ''.join([str(random.randint(0, 9)) for i in range(10)])
     newEmail = res+"@yopmail.com"
     
-    def test_joinWaitlist(self):
+    def test_join_Waitlist_new_user(self):
         
         log = self.getLogger()
         self.driver.implicitly_wait(5)
@@ -79,8 +79,8 @@ class Test_joinWaitlist(Invokation):
         currenturl = self.driver.current_url
         
         assert thankyouURL == currenturl
-        log.info("new email id is " + Test_joinWaitlist.newEmail)
-        log.info("new phone number is" + Test_joinWaitlist.phone_number)
+        log.info("new email id is " + Test_join_Waitlist_new_user.newEmail)
+        log.info("new phone number is" + Test_join_Waitlist_new_user.phone_number)
         
         
         

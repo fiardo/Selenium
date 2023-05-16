@@ -21,7 +21,7 @@ import random
 N = 10
 
 
-class Test_BookNowNew(Invokation):
+class Test_book_now_new_user(Invokation):
     res = ''.join(random.choices(string.ascii_lowercase + string.digits , k=N))
     new_email = res +".university@yopmail.com"
     new_phoneNumber = ''.join([str(random.randint(0,9)) for i in range(10)])
@@ -31,7 +31,7 @@ class Test_BookNowNew(Invokation):
     a_92y_residence_thankyou_url = "https://www.universityliving.com/united-states/newyork/92y-residence/book-now/thank-you"
     
     
-    def test_bookNowForm(self):
+    def test_bookNowForm_new_user(self):
         
         log = self.getLogger()
         self.driver.implicitly_wait(5)
@@ -64,14 +64,14 @@ class Test_BookNowNew(Invokation):
                 
             
         
-        loginPopUPObj.emailfield().send_keys(Test_BookNowNew.new_email)
-        log.info("email id -->" + Test_BookNowNew.new_email)
+        loginPopUPObj.emailfield().send_keys(Test_book_now_new_user.new_email)
+        log.info("email id -->" + Test_book_now_new_user.new_email)
         loginPopUPObj.loginBtn().click()
         time.sleep(3)
         loginPopUPObj.firstName().send_keys("test")
         loginPopUPObj.lastName().send_keys("test")
-        loginPopUPObj.phoneNumber().send_keys(Test_BookNowNew.new_phoneNumber)
-        log.info("phone number -->" + Test_BookNowNew.new_phoneNumber)
+        loginPopUPObj.phoneNumber().send_keys(Test_book_now_new_user.new_phoneNumber)
+        log.info("phone number -->" + Test_book_now_new_user.new_phoneNumber)
         loginPopUPObj.signUpBtn().click()
         loginPopUPObj.otpFirst().send_keys("1")
         loginPopUPObj.otpsecond().send_keys("2")
@@ -154,9 +154,9 @@ class Test_BookNowNew(Invokation):
         time.sleep(5)
         self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\forms\\BookNowNow.png")
         
-        assert Test_BookNowNew.a_92y_residence_thankyou_url == self.driver.current_url or Test_BookNowNew.scape_melbourne_thankyou_url or  Test_BookNowNew.chapter_ealing_thankyou_url
+        assert Test_book_now_new_user.a_92y_residence_thankyou_url == self.driver.current_url or Test_book_now_new_user.scape_melbourne_thankyou_url or  Test_book_now_new_user.chapter_ealing_thankyou_url
         
-        if(Test_BookNowNew.a_92y_residence_thankyou_url == self.driver.current_url or Test_BookNowNew.scape_melbourne_thankyou_url or  Test_BookNowNew.chapter_ealing_thankyou_url):
+        if(Test_book_now_new_user.a_92y_residence_thankyou_url == self.driver.current_url or Test_book_now_new_user.scape_melbourne_thankyou_url or  Test_book_now_new_user.chapter_ealing_thankyou_url):
             log.info("Thankyou url is working fine")
         else:
             log.warning("Thankyou url is broken. plz check")

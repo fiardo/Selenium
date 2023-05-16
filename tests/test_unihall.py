@@ -23,13 +23,13 @@ import random
 N = 7
 
 # @pytest.mark.skip()
-class Test_unihallClass(Invokation):
+class Test_unihall_new_user(Invokation):
           
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
     phone_number = ''.join([str(random.randint(0, 9)) for i in range(10)])
     newEmail = res+".university@yopmail.com"
     
-    def test_unihallcase(self):
+    def test_unihall_new_user(self):
         
         log = self.getLogger()
         self.driver.implicitly_wait(5)
@@ -65,8 +65,8 @@ class Test_unihallClass(Invokation):
         
         formobj.firstName().send_keys("test")
         formobj.lastName().send_keys("test")
-        formobj.universityemail().send_keys(Test_unihallClass.newEmail)
-        formobj.phoneNumber().send_keys(Test_unihallClass.phone_number)
+        formobj.universityemail().send_keys(Test_unihall_new_user.newEmail)
+        formobj.phoneNumber().send_keys(Test_unihall_new_user.phone_number)
         visa = Select(formobj.visaStatus())
         visa.select_by_index(2)
         

@@ -21,7 +21,7 @@ import random
 
 N = 7
 # @pytest.mark.skip()
-class Test_DropUsALineclass(Invokation):
+class Test_Drop_us_a_line_form(Invokation):
     
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
     phone_number = ''.join([str(random.randint(0, 9)) for i in range(10)])
@@ -29,7 +29,7 @@ class Test_DropUsALineclass(Invokation):
         
     propertyUrl = "https://www.universityliving.com/united-kingdom/london/property/iq-hoxton"
     
-    def test_dropusaline(self):
+    def test_drop_us_a_line_form(self):
         
         log = self.getLogger()
         
@@ -43,8 +43,8 @@ class Test_DropUsALineclass(Invokation):
         homepage.searchbar().send_keys(Keys.ENTER)
         detailpage.firstname().send_keys("test")
         detailpage.lastname().send_keys("test")
-        detailpage.phoneNumber().send_keys(Test_DropUsALineclass.phone_number)
-        detailpage.email().send_keys(Test_DropUsALineclass.newEmail)
+        detailpage.phoneNumber().send_keys(Test_Drop_us_a_line_form.phone_number)
+        detailpage.email().send_keys(Test_Drop_us_a_line_form.newEmail)
         detailpage.universityDrop().click()
         detailpage.universityDROPItem().click()
         detailpage.message().send_keys("test message")
@@ -55,9 +55,9 @@ class Test_DropUsALineclass(Invokation):
         
         detailpage.okBtn().click()
         time.sleep(2)
-        assert Test_DropUsALineclass.propertyUrl == self.driver.current_url
+        assert Test_Drop_us_a_line_form.propertyUrl == self.driver.current_url
         
-        if Test_DropUsALineclass.propertyUrl == self.driver.current_url:
+        if Test_Drop_us_a_line_form.propertyUrl == self.driver.current_url:
             log.info("page is working fine")
         else:
             log.critical("URL issue plz check")

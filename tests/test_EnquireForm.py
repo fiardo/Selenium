@@ -18,14 +18,14 @@ from pageData.Forms import FormClass
 import pytest
 
 
-class Test_EnquireForms(Invokation):
+class Test_Enquire_exisitng_user(Invokation):
     
     iq_hoxton_thankYou_url = "https://www.universityliving.com/united-kingdom/london/iq-hoxton/enquire-now/thank-you"
     chapter_ealing_thankYou_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/enquire-now/thank-you"
     scape_melbourne_central_thankyou_url = "https://www.universityliving.com/australia/melbourne/scape-melbourne-central/enquire-now/thank-you"
     
     
-    def test_enquireE2e(self):
+    def test_enquire_form_existing_user(self):
         
         log = self.getLogger()
         
@@ -90,7 +90,7 @@ class Test_EnquireForms(Invokation):
         self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\forms\\enquireNow.png")
         currenturl = self.driver.current_url
 
-        if (currenturl == Test_EnquireForms.iq_hoxton_thankYou_url or currenturl == Test_EnquireForms.chapter_ealing_thankYou_url or currenturl == Test_EnquireForms.scape_melbourne_central_thankyou_url):
+        if (currenturl == Test_Enquire_exisitng_user.iq_hoxton_thankYou_url or currenturl == Test_Enquire_exisitng_user.chapter_ealing_thankYou_url or currenturl == Test_Enquire_exisitng_user.scape_melbourne_central_thankyou_url):
             log.info("Thankyou URL is working Fine")
         else:
             log.warning("Thankyou URL is not working PlZ check")

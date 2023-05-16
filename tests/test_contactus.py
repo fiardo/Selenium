@@ -21,13 +21,13 @@ import string
 import random
 N = 7
 
-class Test_contactusClass(Invokation):
+class Test_contact_us_form(Invokation):
     
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
     phone_number = ''.join([str(random.randint(0, 9)) for i in range(10)])
     newEmail = res+"@yopmail.com"
     
-    def test_contactusE2E(self):
+    def test_contact_us_form(self):
         
         log = self.getLogger()
         
@@ -42,8 +42,8 @@ class Test_contactusClass(Invokation):
         
         homepage.contactus().click()
         contactpage.fullName().send_keys("test test")
-        contactpage.email().send_keys(Test_contactusClass.newEmail)
-        contactpage.phoneNumber().send_keys(Test_contactusClass.phone_number)
+        contactpage.email().send_keys(Test_contact_us_form.newEmail)
+        contactpage.phoneNumber().send_keys(Test_contact_us_form.phone_number)
         contactpage.travellingCountry().click()
         contactpage.selectCountry().click()
         contactpage.comment().send_keys("this is test msg :)")

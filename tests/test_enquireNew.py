@@ -21,7 +21,7 @@ import random
 
 N = 7
 # @pytest.mark.skip()
-class Test_NewuserEnquireForm(Invokation):
+class Test_Enquire_new_user(Invokation):
     
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
     phone_number = ''.join([str(random.randint(0, 9)) for i in range(10)])
@@ -31,7 +31,7 @@ class Test_NewuserEnquireForm(Invokation):
     chapter_ealing_thankYou_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/enquire-now/thank-you"
     scape_melbourne_central_thankyou_url = "https://www.universityliving.com/australia/melbourne/scape-melbourne-central/enquire-now/thank-you"
     
-    def test_enquireE2e(self):
+    def test_enquire_new_user(self):
         
         log = self.getLogger()
         
@@ -64,8 +64,8 @@ class Test_NewuserEnquireForm(Invokation):
 
         enquireformObj.firstName().send_keys("test")
         enquireformObj.lastName().send_keys("test")
-        enquireformObj.email().send_keys(Test_NewuserEnquireForm.newEmail)
-        enquireformObj.phoneNumber().send_keys(Test_NewuserEnquireForm.phone_number)
+        enquireformObj.email().send_keys(Test_Enquire_new_user.newEmail)
+        enquireformObj.phoneNumber().send_keys(Test_Enquire_new_user.phone_number)
         enquireformObj.message().send_keys("this is test message :)")
         visastatusDropdown = Select(enquireformObj.visaStatus())
         visastatusDropdown.select_by_index(3)
@@ -95,9 +95,9 @@ class Test_NewuserEnquireForm(Invokation):
         self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\forms\\NewUserEnquireNow.png")
         currenturl = self.driver.current_url
         
-        assert currenturl == Test_NewuserEnquireForm.iq_hoxton_thankYou_url or currenturl == Test_NewuserEnquireForm.chapter_ealing_thankYou_url or currenturl == Test_NewuserEnquireForm.scape_melbourne_central_thankyou_url
+        assert currenturl == Test_Enquire_new_user.iq_hoxton_thankYou_url or currenturl == Test_Enquire_new_user.chapter_ealing_thankYou_url or currenturl == Test_Enquire_new_user.scape_melbourne_central_thankyou_url
         
         print(currenturl)
-        print(Test_NewuserEnquireForm.newEmail)
-        log.info("new email id is " + Test_NewuserEnquireForm.newEmail)
-        log.info("new phone number is "+ Test_NewuserEnquireForm.phone_number)
+        print(Test_Enquire_new_user.newEmail)
+        log.info("new email id is " + Test_Enquire_new_user.newEmail)
+        log.info("new phone number is "+ Test_Enquire_new_user.phone_number)

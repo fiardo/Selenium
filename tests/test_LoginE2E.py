@@ -17,8 +17,8 @@ import pytest
 
 
 # @pytest.mark.skip() # test in conftest
-class Test_LoginE2e(Invokation):        # test class
-    def test_E2eLogin(self):            # complete test will be written here
+class Test_Login_existing_user(Invokation):        # test class
+    def test_login_existing_user(self):            # complete test will be written here
         
         log = self.getLogger()
     

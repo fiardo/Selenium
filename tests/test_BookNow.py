@@ -18,11 +18,11 @@ from pageData.Forms import FormClass
 import pytest
 
 
-class Test_BookNowForms(Invokation):
+class Test_book_now_existing_user(Invokation):
     
     bookNow_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"
     
-    def test_bookNowForm(self):
+    def test_bookNowForm_existing_user(self):
         
         log = self.getLogger()
         self.driver.implicitly_wait(5)
@@ -34,13 +34,14 @@ class Test_BookNowForms(Invokation):
         
         
 
-        log.info("using chapter ealing")
+        log.info("Chapter Ealing Booking")
         homepageObj.searchbar().send_keys("chapter ealing")
         self.driver.find_element(By.XPATH,"//div[text()='Chapter Ealing']").click()                
 
         detailpageObj.booknowButton().click()
         
         loginPopUPObj.emailfield().send_keys("pravin.garg@universityliving.com")
+        log.info("Existing Email -> pravin.garg@universityliving.com")
         loginPopUPObj.loginBtn().click()
         loginPopUPObj.otpFirst().send_keys("1")
         loginPopUPObj.otpsecond().send_keys("2")
@@ -84,9 +85,9 @@ class Test_BookNowForms(Invokation):
            
         formObj.uniItem().click()
         formObj.bookNowBtn().click()
-
 #----------------------------------------------step 2/3 ------------------------------------------------------
         
+        log.info("step 1/3 of booking - success")
         formObj.genderBtn().click()
         formObj.homeField().send_keys("test Home")
         country = Select(formObj.countryDrop())
@@ -124,4 +125,4 @@ class Test_BookNowForms(Invokation):
         time.sleep(10)
         self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\forms\\BookNowNow.png")
         
-        assert Test_BookNowForms.bookNow_url == self.driver.current_url
+        assert Test_book_now_existing_user.bookNow_url == self.driver.current_url
