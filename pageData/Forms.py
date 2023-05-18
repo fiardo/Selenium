@@ -53,6 +53,10 @@ class FormClass:
     pastAttendSelector = (By.NAME,"previousUniversity")
     pastCourseSelector = (By.NAME,"previousCourseName")
     
+    booknow_step1_valid_selector = (By.XPATH,"//p[text()='Personal Info']")
+    booknow_step2_valid_selector = (By.XPATH,"//p[text()='University Info']")
+    booknow_step3_valid_selector = (By.XPATH,"//p[text()='Guardian Info']")
+    
     def firstName(self):
         return self.driver.find_element(*FormClass.firstnameSelector)
     
@@ -196,3 +200,12 @@ class FormClass:
     
     def pastCourse(self):
         return self.driver.find_element(*FormClass.pastCourseSelector)
+    
+    def booknow_step1_validator(self):
+        return self.driver.find_element(*FormClass.booknow_step1_valid_selector)
+    
+    def booknow_step2_validator(self):
+        return self.driver.find_element(*FormClass.booknow_step2_valid_selector)
+    
+    def booknow_step3_validator(self):
+        return self.driver.find_element(*FormClass.booknow_step3_valid_selector)

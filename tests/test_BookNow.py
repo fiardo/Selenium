@@ -17,7 +17,6 @@ from pageData.detailPage import detailpageClass
 from pageData.Forms import FormClass
 import pytest
 
-
 class Test_book_now_existing_user(Invokation):
     
     bookNow_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"
@@ -58,7 +57,7 @@ class Test_book_now_existing_user(Invokation):
         # enquireformObj.message().send_keys("this is test message :)")
         
         
-#--------------------------------step 1/3 -------------------------------------------------------------------------
+#-------------------------------- Partial Booking Form -------------------------------------------------------------------------
 
         visastatusDropdown = Select(formObj.visaStatus())
         visastatusDropdown.select_by_index(3)
@@ -85,9 +84,14 @@ class Test_book_now_existing_user(Invokation):
            
         formObj.uniItem().click()
         formObj.bookNowBtn().click()
-#----------------------------------------------step 2/3 ------------------------------------------------------
+#----------------------------------------------step 1/3 ------------------------------------------------------xxxx-------------------------------
         
-        log.info("step 1/3 of booking - success")
+        # Partial Booking form Validations and origin of step 1/3 of booking
+        assert formObj.booknow_step1_validator().text == "Personal Info"
+        if formObj.booknow_step1_validator().text == "Personal Info":
+            log.info("Partial booking -- completed")
+        else:
+            log.warning("personal info missing xx Plz check")
         formObj.genderBtn().click()
         formObj.homeField().send_keys("test Home")
         country = Select(formObj.countryDrop())
@@ -97,7 +101,18 @@ class Test_book_now_existing_user(Invokation):
         formObj.postalField().send_keys("test")
         nationality = Select(formObj.nationalityDrop())
         nationality.select_by_index(2)
-        formObj.nextBtn().click()               
+        formObj.nextBtn().click()
+        
+#---------------------------------------------step 2/3----------------------------------------------------------------xxxx-----------------     
+
+        # step 1/3 form Validations and origin of step 2/3 of booking
+        assert formObj.booknow_step2_validator().text == "University Info"
+        if formObj.booknow_step2_validator().text == "University Info":
+            log.info("step 1/3 -- success")
+        else:
+            log.warning("University info missing nxxx Plz check")
+
+            
         formObj.courseField().send_keys("test course")
         yearofStudy = Select(formObj.yearofstudyField())
         yearofStudy.select_by_index(2)
@@ -109,8 +124,15 @@ class Test_book_now_existing_user(Invokation):
         formObj.pastAttend().send_keys("test past university")        
         formObj.nextBtn().click()
         
-#---------------------------------------------------step 3/3 ----------------------------------------------
+#---------------------------------------------------step 3/3 ----------------------------------------------xxxx------------------------------
 
+        # step 2/3 form Validations and origin of step 3/3 of booking
+        assert formObj.booknow_step3_validator().text == "Guardian Info"
+        if formObj.booknow_step3_validator().text == "Guardian Info":
+            log.info("step 2/3 -- success")
+        else:
+            log.warning("Guardian info missing xx Plz check")
+            
         formObj.guardianFullname().send_keys("test")
         formObj.guardianEmail().send_keys("test@yopmail.com")
         formObj.guardianContact().send_keys("8100223348")
@@ -122,7 +144,24 @@ class Test_book_now_existing_user(Invokation):
         sourceDrop.select_by_index(3)
         formObj.sourceName().send_keys("Mr Test")
         formObj.guardianSubmitBtn().click()
-        time.sleep(10)
-        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\forms\\BookNowNow.png")
+        time.sleep(3)
+        
+#---------------------------------------------------------- Final Submit Validations-------------------------------xxxx-------------------------------
+
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\forms\\BookNowNow.png")
         
         assert Test_book_now_existing_user.bookNow_url == self.driver.current_url
+        
+        if Test_book_now_existing_user.bookNow_url == self.driver.current_url:
+            log.info("step 3/3 -- success")
+            log.info("Booking success")
+        else:
+            log.warning("step 3/3 -- issue found xxx plz check")
+            
+            
+        
+        
+        
+        
+        
+        
