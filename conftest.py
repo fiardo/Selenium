@@ -10,6 +10,9 @@ from selenium.webdriver.support import expected_conditions as ECchromedriver
 from selenium.webdriver.common.action_chains import ActionChains
 import sys
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.chrome.options import Options
+
+
 driver = None
 
 
@@ -29,13 +32,12 @@ def setup(request):
     if browser_name == "chrome":
         s = Service("C:/Users/TUL/Desktop/cd/cd4.exe")
         driver = webdriver.Chrome(service=s)
+        
         driver.get('https://www.universityliving.com/')
-        wait = 1
     else:
         s = Service("C:/Users/TUL/Desktop/cd/geckodriver.exe")
         driver = webdriver.Firefox(service=s)
         driver.get('https://www.universityliving.com/')
-        wait = 1
     driver.maximize_window()
     request.cls.driver = driver
     yield                           

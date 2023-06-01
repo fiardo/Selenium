@@ -50,8 +50,8 @@ class Test_Login_existing_user(Invokation):        # test class
         else:
             log.warning("dashboard data does not matched wiht login profile")
             
-        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\homepage&dashboard\\Login_Dashboard.png")
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\homepage&dashboard\\Login_Dashboard.png")
             
         homepageObject.headerLogo().click()
-        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\homepage&dashboard\\After_Login_Homepage.png")
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\homepage&dashboard\\After_Login_Homepage.png")
     

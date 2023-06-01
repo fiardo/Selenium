@@ -19,6 +19,8 @@ from pageData.contactusPage import contactusClass
 import pytest
 import string
 import random
+from seleniumbase import BaseCase
+
 N = 7
 
 class Test_contact_us_form(Invokation):
@@ -54,10 +56,10 @@ class Test_contact_us_form(Invokation):
             log.info("Thank You Url is working fine")
         else:
             log.critical("Thank you URL is not correct plz check")
-        self.driver.save_screenshot("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\forms\\contact_us.png")
+        self.driver.save_screenshot("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\forms\\contact_us.png")
         contactpage.okBtn().click()
         
-        self.driver.save_screenshot("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\forms\\After_contact_us.png")
+        self.driver.save_screenshot("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\forms\\After_contact_us.png")
         
         if self.driver.current_url == contactpageUrl:
             log.info("contact page url is working fine")

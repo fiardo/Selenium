@@ -104,7 +104,7 @@ class Test_unihall_new_user(Invokation):
         
         assert thankyouURL == self.driver.current_url
         
-        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\forms\\unihallThakyou.png")
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\forms\\unihallThakyou.png")
         
         if thankyouURL == self.driver.current_url:
             log.info("Thank you url page of unihall is Woring fine")
@@ -116,7 +116,7 @@ class Test_unihall_new_user(Invokation):
         
         formobj.OKbtnThankyou().click()
         time.sleep(2)
-        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\forms\\afterOKbuttonINunihall.png")
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\forms\\afterOKbuttonINunihall.png")
         assert detailpageURL == self.driver.current_url
         
         if detailpageURL == self.driver.current_url:

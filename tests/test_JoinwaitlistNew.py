@@ -75,7 +75,7 @@ class Test_join_Waitlist_new_user(Invokation):
         joinwaitlistObj.uniItem().click()
         joinwaitlistObj.submitBtnEnquire().click()
         time.sleep(3)
-        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\forms\\NewUserJoinwaitlist.png")
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\forms\\NewUserJoinwaitlist.png")
         currenturl = self.driver.current_url
         
         assert thankyouURL == currenturl

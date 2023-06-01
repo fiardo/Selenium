@@ -17,12 +17,14 @@ from pageData.detailPage import detailpageClass
 from pageData.Forms import FormClass
 import pytest
 
+
+
 class Test_book_now_existing_user(Invokation):
     
     bookNow_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"
     
     def test_bookNowForm_existing_user(self):
-        
+    
         log = self.getLogger()
         self.driver.implicitly_wait(5)
         
