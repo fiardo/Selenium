@@ -1,0 +1,13 @@
+07/06/2023 03:52:39 PM: INFO: test_detailPage: test_detail_page_validations: Overview link is present
+07/06/2023 03:52:39 PM: INFO: test_detailPage: test_detail_page_validations: Room type link in present
+07/06/2023 03:52:39 PM: INFO: test_detailPage: test_detail_page_validations: Payment info link in present
+07/06/2023 03:52:39 PM: INFO: test_detailPage: test_detail_page_validations: Review link in present
+07/06/2023 03:52:39 PM: INFO: test_detailPage: test_detail_page_validations: Similar Properties link in present
+07/06/2023 03:52:39 PM: INFO: test_detailPage: test_detail_page_validations: Price -->324
+07/06/2023 03:54:35 PM: INFO: test_detailPage: test_detail_page_validations: Overview link is present
+07/06/2023 03:54:35 PM: INFO: test_detailPage: test_detail_page_validations: Room type link in present
+07/06/2023 03:54:35 PM: INFO: test_detailPage: test_detail_page_validations: Payment info link in present
+07/06/2023 03:54:35 PM: INFO: test_detailPage: test_detail_page_validations: Review link in present
+07/06/2023 03:54:36 PM: INFO: test_detailPage: test_detail_page_validations: Similar Properties link in present
+07/06/2023 03:54:36 PM: INFO: test_detailPage: test_detail_page_validations: Price -->£324
+07/06/2023 03:54:36 PM: INFO: test_detailPage: test_detail_page_validations: --------------------------------------------------------------------------------------------------

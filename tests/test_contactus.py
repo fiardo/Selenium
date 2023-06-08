@@ -1,5 +1,4 @@
 import time
-from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
@@ -7,9 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ECchromedriver
 from selenium.webdriver.common.action_chains import ActionChains
-import sys
 from selenium.common.exceptions import NoSuchElementException
-import pytest
 from invokeBaseClass import Invokation
 from pageData.homePage import Homepageclass
 from pageData.loginPopup import loginpopupClass
@@ -19,7 +16,6 @@ from pageData.contactusPage import contactusClass
 import pytest
 import string
 import random
-from seleniumbase import BaseCase
 
 N = 7
 
@@ -39,9 +35,8 @@ class Test_contact_us_form(Invokation):
         self.driver.implicitly_wait(5)
         
         homepage = Homepageclass(self.driver)
-        contactpage = contactusClass(self.driver)
-        
-        
+        contactpage = contactusClass(self.driver) 
+            
         homepage.contactus().click()
         contactpage.fullName().send_keys("test test")
         contactpage.email().send_keys(Test_contact_us_form.newEmail)

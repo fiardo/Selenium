@@ -13,6 +13,8 @@ class Homepageclass:
     servicesSelector = (By.XPATH,"//a[text()='Services']")
     contactusSelector = (By.XPATH,"//a[text()='Contact Us']")
     headerSearchSelector = (By.XPATH,"//input[@placeholder='Search by City, University or Property']")
+    chatIcon_Selector = (By.XPATH,"//img[@alt='Chat Icon']")
+    
     
     
     def searchbar(self):
@@ -38,3 +40,8 @@ class Homepageclass:
     
     def headerSearch(self):
         return self.driver.find_element(*Homepageclass.headerSearchSelector)
+    
+    def chatIcon(self):
+        return self.driver.find_element(*Homepageclass.chatIcon_Selector)
+    
+    
