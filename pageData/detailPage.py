@@ -45,8 +45,10 @@ class detailpageClass:
     similarCards_selector = (By.XPATH,"//div[@class='relative h-52']")
     similarPropertyNames_selector = (By.XPATH,"//div[@class='flex mb-2 justify-between items-center']")
     viewAllProperitesBtn_selector = (By.XPATH,"//div[text()='View All Properties']")
-    
-    
+    roomName_selector = (By.XPATH,"//div[@class='text-lg font-bold mb-4 text-gray-800']")
+    uniCount_selector = (By.XPATH,"//img[@alt='university-cap']")
+    BookNowCount_selector = (By.XPATH,"//div[text()='Book Now']")
+    joinWaitlistCount_selector = (By.XPATH,"//div[text()='Join Waitlist']")
     
     
     
@@ -164,16 +166,25 @@ class detailpageClass:
         return self.driver.find_element(*detailpageClass.whatWeLoveSection_selector)
     
     def similarCardsNames(self):
-        return self.driver.find_element(*detailpageClass.similarCards_selector)    
+        return self.driver.find_elements(*detailpageClass.similarCards_selector)    
     
     def similarPropertyNames(self):
-        return self.driver.find_element(*detailpageClass.similarPropertyNames_selector)
+        return self.driver.find_elements(*detailpageClass.similarPropertyNames_selector)
     
     def viewAllPropertiesBtn(self):
         return self.driver.find_element(*detailpageClass.viewAllProperitesBtn_selector)
     
+    def roomNames(self):
+        return self.driver.find_elements(*detailpageClass.roomName_selector)
     
+    def universityCount(self):
+        return self.driver.find_elements(*detailpageClass.uniCount_selector)
     
+    def BookNowCount(self):
+        return self.driver.find_elements(*detailpageClass.BookNowCount_selector)
+    
+    def joinWaitlistCount(self):
+        return self.driver.find_elements(*detailpageClass.joinWaitlistCount_selector)
     
     
     
