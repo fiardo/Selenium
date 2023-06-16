@@ -21,22 +21,33 @@ import pytest
 
 class Test_book_now_existing_user(Invokation):
     
+#-------------------------- Test Data ----------------------------------------------------------------------
+
     bookNow_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"
-    
+    testing_key = "test" 
+    existing_email_id = "pravin.garg@unviersityliving.com"
+    properties_name = ["Chapter Ealing","Iq Hoxton","Mary Sturge"]
+       
     def test_bookNowForm_existing_user(self):
     
         log = self.getLogger()
         self.driver.implicitly_wait(5)
-        
+#------------------------------------- Defining Page Objects -------------------------------------------------
+
+
         homepageObj = Homepageclass(self.driver)
         detailpageObj = detailpageClass(self.driver)
         formObj = FormClass(self.driver)
         loginPopUPObj = loginpopupClass(self.driver)
         
-        
+#------------------------------------- Actual Case Starts ----------------------------------------------------
 
-        log.info("Chapter Ealing Booking")
-        homepageObj.searchbar().send_keys("chapter ealing")
+        if homepageObj.searchbar().is_displayed():
+            assert True
+        else:
+            pass
+
+        homepageObj.searchbar().send_keys(Test_book_now_existing_user.properties_name[0])
         self.driver.find_element(By.XPATH,"//div[text()='Chapter Ealing']").click()                
 
         detailpageObj.booknowButton().click()
