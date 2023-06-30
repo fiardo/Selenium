@@ -145,7 +145,7 @@ class Test_Detail_page_class(Invokation):
         except Exception:
             log.warning("Ensuite category is not interactable plz check")
             
-        time.sleep(3)
+        # time.sleep(3)
             
 #------------------------------------- Others -------------------------------------
             

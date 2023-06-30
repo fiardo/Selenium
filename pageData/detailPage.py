@@ -49,6 +49,7 @@ class detailpageClass:
     uniCount_selector = (By.XPATH,"//img[@alt='university-cap']")
     BookNowCount_selector = (By.XPATH,"//div[text()='Book Now']")
     joinWaitlistCount_selector = (By.XPATH,"//div[text()='Join Waitlist']")
+    propertyNameInSummaryCard_selector = (By.XPATH,"//h3[text()='Chapter Ealing']")
     
     
     
@@ -185,6 +186,10 @@ class detailpageClass:
     
     def joinWaitlistCount(self):
         return self.driver.find_elements(*detailpageClass.joinWaitlistCount_selector)
+    
+    def propertyNameInSummaryCard(self):
+        return self.driver.find_element(*detailpageClass.propertyNameInSummaryCard_selector)
+    
     
     
     

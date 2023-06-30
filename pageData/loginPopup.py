@@ -32,6 +32,7 @@ class loginpopupClass:
     lastnameSelector = (By.NAME,"lastName")
     PhoneNumberSelector = (By.ID,"contactNumber")
     signUpBtnSelector = (By.XPATH,"//div[text()='Sign Up']")
+    PopUpTitleSelector = (By.XPATH,"//p[text()='Welcome to University Living']")
     
     
     def emailfield(self):
@@ -87,3 +88,6 @@ class loginpopupClass:
     
     def signUpBtn(self):
         return self.driver.find_element(*loginpopupClass.signUpBtnSelector)
+    
+    def popUpTitle(self):
+        return self.driver.find_element(*loginpopupClass.PopUpTitleSelector)

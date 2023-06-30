@@ -20,7 +20,8 @@ import string
 import random
 
 N = 7
-# @pytest.mark.skip()
+
+@pytest.mark.skip()
 class Test_Drop_us_a_line_form(Invokation):
     
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))

@@ -1,0 +1,3 @@
+clearing cookies --> driver.delete_all_cookies()
+drag or scroll (vertically) --> scroll_element = driver.find_element_by_id("my-scroll-element") || actions = ActionChains(driver) || actions.click_and_hold(scroll_element).move_by_offset(0, 100).release().perform()
+drag or scroll (horizontally) --> scroll_element = driver.find_element_by_id("my-scroll-element") || actions = ActionChains(driver) || actions.click_and_hold(scroll_element).move_by_offset(100, 0).release().perform()
