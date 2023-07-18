@@ -1,3 +1,11 @@
 clearing cookies --> driver.delete_all_cookies()
 drag or scroll (vertically) --> scroll_element = driver.find_element_by_id("my-scroll-element") || actions = ActionChains(driver) || actions.click_and_hold(scroll_element).move_by_offset(0, 100).release().perform()
 drag or scroll (horizontally) --> scroll_element = driver.find_element_by_id("my-scroll-element") || actions = ActionChains(driver) || actions.click_and_hold(scroll_element).move_by_offset(100, 0).release().perform()
+to run javasript code = driver.execute_script("JS code with semi-colon")
+bottom of page --> window.scrollBy(0,document.body.scrollHeight)
+
+for headless:
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument("headless")
+chrome_options.add_argument("--ignore-certificate-errors")
+with service + options = chrome_options

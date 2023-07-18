@@ -11,6 +11,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 import sys
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.alert import Alert
+from selenium.webdriver.support import expected_conditions as EC
 
 
 driver = None
@@ -29,16 +31,17 @@ def setup(request):
     
     global driver
     browser_name = request.config.getoption("browser_name")
+    # chrome_options = Options()
+    # chrome_options.add_argument('--auto-open-devtools-for-tabs')
     if browser_name == "chrome":
         s = Service("C:/Users/TUL/Desktop/cd/cd14.exe")
         driver = webdriver.Chrome(service=s)
-        
         driver.get('https://www.universityliving.com/')
     else:
         s = Service("C:/Users/TUL/Desktop/cd/geckodriver.exe")
         driver = webdriver.Firefox(service=s)
         driver.get('https://www.universityliving.com/')
-    driver.maximize_window()
+    driver.maximize_window()   
     request.cls.driver = driver
     yield                           
     driver.quit()

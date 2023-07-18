@@ -33,7 +33,7 @@ class Test_Detail_page_class(Invokation):
         time.sleep(2)
         Homepage.searchbar().send_keys(Keys.ENTER)  
             
-#---------------------------------------validating the overview link --------------------------------------
+#--------------------------------------- validating the overview link -------------------------------
 
         try:
             if Detailpage.overveiwLink().is_displayed():

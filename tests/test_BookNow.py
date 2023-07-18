@@ -16,17 +16,20 @@ from pageData.loginPopup import loginpopupClass
 from pageData.detailPage import detailpageClass
 from pageData.Forms import FormClass
 import pytest
-
+from pageData.thankyouPage import ThankyouClass
 
 
 class Test_book_now_existing_user(Invokation):
     
 #-------------------------- Test Data ----------------------------------------------------------------------
 
-    bookNow_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"
+    bookNow_url_one = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"
+    bookNow_url_two = "https://www.universityliving.com/united-kingdom/london/iq-hoxton/book-now/thank-you"
+    bookNow_url_three = "https://www.universityliving.com/australia/melbourne/scape-berkeley-2/book-now/thank-you"
     testing_key = "test" 
     existing_email_id = "pravin.garg@universityliving.com"
-    properties_name = ["Galway Central","iQ Hoxton","Mary Sturge"]
+    properties_name = ["iq kopa","iQ Hoxton","scape berkeley 2"]
+    Thankyou_urls = [bookNow_url_one,bookNow_url_two,bookNow_url_three]
     
 # ---------------------------- Method Name -------------------------------------------------------------------
        
@@ -42,6 +45,7 @@ class Test_book_now_existing_user(Invokation):
         DetailPage = detailpageClass(self.driver)
         Form = FormClass(self.driver)
         loginPopUP = loginpopupClass(self.driver)
+        ThankyouPage = ThankyouClass(self.driver)
         
 #------------------------------------- Actual Case Starts ----------------------------------------------------
 
@@ -50,17 +54,20 @@ class Test_book_now_existing_user(Invokation):
         assert HomePage.searchbar().is_displayed()
         
         HomePage.searchbar().send_keys(Test_book_now_existing_user.properties_name[0])
-        self.driver.find_element(By.XPATH,"//div[text()='Galway Central']").click() 
+        self.driver.find_element(By.XPATH,"//div[text()='iQ Kopa']").click()
         
         try:
             DetailPage.booknowButton().click()
             log.info("Book Now Form is available on " + Test_book_now_existing_user.properties_name[0])
-            propertyFlag = True
-            propertyName = Test_book_now_existing_user.properties_name[0]
+            
+            if DetailPage.booknowButton().is_displayed():
+                propertyFlag = True
+                if propertyFlag == True:
+                    propertyName = Test_book_now_existing_user.properties_name[0]
+                    thankYou_url = Test_book_now_existing_user.Thankyou_urls[0]
             
         
         except Exception:
-            log.info("Book now is not available")
             HomePage.headerLogo().click()
         
             HomePage.searchbar().send_keys(Test_book_now_existing_user.properties_name[1])
@@ -69,23 +76,33 @@ class Test_book_now_existing_user(Invokation):
             try:
                 DetailPage.booknowButton().click()
                 log.info("Book Now Form is available on " + Test_book_now_existing_user.properties_name[1])
-                propertyFlag = True
-                propertyName = Test_book_now_existing_user.properties_name[1]
+                
+                if DetailPage.booknowButton().is_displayed():
+                    propertyFlag = True
+                    if propertyFlag == True:
+                        propertyName = Test_book_now_existing_user.properties_name[1]
+                        thankYou_url = Test_book_now_existing_user.Thankyou_urls[1]
             except Exception:
                 HomePage.headerLogo().click()
-            
-            
                 HomePage.searchbar().send_keys(Test_book_now_existing_user.properties_name[2])
-                self.driver.find_element(By.XPATH,"//div[text()='Mary Sturge']").click()
+                self.driver.find_element(By.XPATH,"//div[text()='Scape Berkeley 2']").click()
         
                 try:
                     DetailPage.booknowButton().click()
                     log.info("Book Now Form is available on " + Test_book_now_existing_user.properties_name[2])
-                    propertyFlag = True
-                    propertyName = Test_book_now_existing_user.properties_name[2]
+                    
+                    if DetailPage.booknowButton().is_displayed():
+                        propertyFlag = True
+                        if propertyFlag == True:
+                            propertyName = Test_book_now_existing_user.properties_name[2]
+                            thankYou_url = Test_book_now_existing_user.Thankyou_urls[2]
             
                 except Exception:
                     log.info("Book now is not availbale for properties listed in array")
+                    
+                    
+                   
+        log.info("property name -->" + propertyName)
 
 
 #--------------------------------Login Step for Book Now -----------------------------------------------------
@@ -114,14 +131,6 @@ class Test_book_now_existing_user(Invokation):
         loginPopUP.continueBtn().click()
         
 # #-------------------------------- Partial Booking Form -------------------------------------------------------------------------
-
-          # Assertions for Partial Form
-          
-        # if propertyFlag == True:
-        #     log.critical(propertyName)
-        #     log.debug(DetailPage.propertyNameInSummaryCard().text)
-        #     assert DetailPage.propertyNameInSummaryCard().text == propertyName 
-            
             
             
         visastatusDropdown = Select(Form.visaStatus())
@@ -151,7 +160,7 @@ class Test_book_now_existing_user(Invokation):
         Form.bookNowBtn().click()
         log.info("partial Book now journey -- success")
         
-# #----------------------------------------------step 1/3 ------------------------------------------------------xxxx-------------------------------
+#----------------------------------------------step 1/3 ------------------------------------------------------xxxx-------------------------------
         
         # Partial Booking form Validations and origin of step 1/3 of booking.
         
@@ -171,7 +180,7 @@ class Test_book_now_existing_user(Invokation):
         nationality.select_by_index(2)
         Form.nextBtn().click()
         
-# #---------------------------------------------step 2/3----------------------------------------------------------------xxxx-----------------     
+#---------------------------------------------step 2/3----------------------------------------------------------------xxxx-----------------     
 
         # step 1/3 form Validations and origin of step 2/3 of booking
         assert Form.booknow_step2_validator().text == "University Info"
@@ -192,7 +201,7 @@ class Test_book_now_existing_user(Invokation):
         Form.pastAttend().send_keys("test past university")        
         Form.nextBtn().click()
         
-# #---------------------------------------------------step 3/3 ----------------------------------------------xxxx------------------------------
+#---------------------------------------------------step 3/3 ----------------------------------------------xxxx------------------------------
 
         # step 2/3 form Validations and origin of step 3/3 of booking
         assert Form.booknow_step3_validator().text == "Guardian Info"
@@ -206,25 +215,33 @@ class Test_book_now_existing_user(Invokation):
         Form.guardianContact().send_keys("8100223348")
         Form.guardianRelationship().send_keys("testrelation")
         Form.message().send_keys("testing Message")
-        Form.guardianDOB().click()
-        Form.guardianDOBDate().click()
+        
+        try:
+            Form.guardianDOB().click()
+            Form.guardianDOBDate().click()
+        except Exception:
+            log.info("no guardian DOB required")
+            
         sourceDrop = Select(Form.source())
         sourceDrop.select_by_index(3)
         Form.sourceName().send_keys("Mr Test")
         Form.guardianSubmitBtn().click()
-        time.sleep(3)
+        if ThankyouPage.chat_Btn().is_displayed():
+            log.info("step 3/3 -- success")
+            time.sleep(3)
+        else:
+            log.warning("step failure")
         
-# #---------------------------------------------------------- Final Submit Validations-------------------------------xxxx-------------------------------
+#---------------------------------------------------------- Final Submit Validations-------------------------------xxxx-------------------------------
 
-#         self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\forms\\BookNowNow.png")
+        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\logs&Repos\\forms\\BookNowNow.png")
         
-#         assert Test_book_now_existing_user.bookNow_url == self.driver.current_url
+        assert thankYou_url == self.driver.current_url
+        if thankYou_url == self.driver.current_url:
+            log.info("Thankyou URL is working fine")
+        else:
+            log.warning("something is wrong with Thankyou URL")
         
-#         if Test_book_now_existing_user.bookNow_url == self.driver.current_url:
-#             log.info("step 3/3 -- success")
-#             log.info("Booking success")
-#         else:
-#             log.warning("step 3/3 -- issue found xxx plz check")
             
             
         

@@ -17,6 +17,8 @@ import pytest
 import string
 import random
 
+
+
 N = 7
 
 
@@ -36,8 +38,7 @@ class Test_contact_us_form(Invokation):
         self.driver.implicitly_wait(5)
         
         homepage = Homepageclass(self.driver)
-        contactpage = contactusClass(self.driver) 
-            
+        contactpage = contactusClass(self.driver)  
         homepage.contactus().click()
         contactpage.fullName().send_keys("test test")
         time.sleep(3)

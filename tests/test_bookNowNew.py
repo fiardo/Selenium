@@ -22,20 +22,30 @@ N = 10
 
 
 class Test_book_now_new_user(Invokation):
+    
+#------------------------------------Test Data -----------------------------------------
+
     res = ''.join(random.choices(string.ascii_lowercase + string.digits , k=N))
     new_email = res +".university@yopmail.com"
     new_phoneNumber = ''.join([str(random.randint(0,9)) for i in range(10)])
     
-    chapter_ealing_thankyou_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"
-    scape_melbourne_thankyou_url = "https://www.universityliving.com/australia/melbourne/scape-melbourne-central/book-now/thank-you"
-    a_92y_residence_thankyou_url = "https://www.universityliving.com/united-states/newyork/92y-residence/book-now/thank-you"
+    bookNow_url_one = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"
+    bookNow_url_two = "https://www.universityliving.com/united-kingdom/london/iq-hoxton/book-now/thank-you"
+    bookNow_url_three = "https://www.universityliving.com/australia/melbourne/scape-berkeley-2/book-now/thank-you"
     
+    testing_key = "test" 
+    properties_name = ["iq kopa","iQ Hoxton","scape berkeley 2"]
+    Thankyou_urls = [bookNow_url_one,bookNow_url_two,bookNow_url_three]
     
+# ---------------------------- Method Name -------------------------------------------------------------------
+
     def test_bookNowForm_new_user(self):
         
         log = self.getLogger()
         self.driver.implicitly_wait(5)
         
+#------------------------------------- Defining Page Objects -------------------------------------------------
+
         homepageObj = Homepageclass(self.driver)
         detailpageObj = detailpageClass(self.driver)
         formObj = FormClass(self.driver)
