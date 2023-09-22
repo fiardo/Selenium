@@ -349,26 +349,26 @@ class Test_lising(Invokation):
 
         log.info("cleaned price low to high integer list -->%s", cleanedPrice_list)
 
-        for value in cleanedPrice_list:
+        for value in cleanedPrice_list:  # compare the ranged values
             if value >= 200 and value <= 250:
                 flag = True
             else:
                 flag = False
 
-        if flag == True:
+        if flag == True:  # logging the comparison result
             log.info("start and end price filter is working fine")
         elif flag == False:
             log.warning("start and end price filter is not working fine")
 
         listing.filterByBtn().click()
-        listing.filterClearAllBtn().click()
+        listing.filterClearAllBtn().click()  # reseting the filter
         listing.filterMostPopularBtn()
-        listing.filterShowResultBtn().click()
+        listing.filterShowResultBtn().click()  # selecting the most popular filter
 
         # ------------------------------------ Add to favorites ---------------------------------------------
 
         # for new user
-        listing.addToFavIcon().click()
+        listing.addToFavIconOne().click()  # Add to favorite [ login / sign up popup will appear ]
 
         loginPopUPObj.emailfield().send_keys(Test_lising.newEmail.lower())
         loginPopUPObj.loginBtn().click()
@@ -383,24 +383,63 @@ class Test_lising(Invokation):
         loginPopUPObj.otpfifth().send_keys("5")
         loginPopUPObj.continueBtn().click()
 
-        propertynames = []
+        listing.addToFavIconOne().click()  # clicking again on first property fav icon to add the propperty in wishlist.
+        listing.addToFavIconTwo().click()  # clicking on second property fav icon to add the property in wishlist.
+        listing.addFavToaster().is_displayed()  # validate the toaster appearance
 
-        for prop in listing.propertyNames():
+        propertynames = []  # temporary list
+
+        for prop in listing.propertyNames():  # adding property names in the temp list
             propertynames.append(prop.text)
 
-        addToFavProperty = propertynames[0]
+        addToFavProperty = propertynames[
+            0:2
+        ]  # getting two properties which have been added in list
         log.info(addToFavProperty)
-        loginPopUPObj.profileIcon().click()
-        loginPopUPObj.wishListSection().click()
+        loginPopUPObj.profileIcon().click()  # opening the dashboard
+        time.sleep(5)
+        loginPopUPObj.wishListSection().click()  # opening the wishlist section
 
-        wishlistPropertyNames = []
+        wishlistPropertyNames = []  # temporary list for wishlist properties
 
-        for prop in loginPopUPObj.wishListPropertyNames():
+        for (
+            prop
+        ) in (
+            loginPopUPObj.wishListPropertyNames()
+        ):  # adding the wishlist property names to the temporary list
             wishlistPropertyNames.append(prop.text)
 
-        log.info(wishlistPropertyNames[0])
+        log.info(wishlistPropertyNames[0:2])
 
-        if addToFavProperty == wishlistPropertyNames[0]:
+        if (
+            addToFavProperty[0:2] == wishlistPropertyNames[0:2]
+        ):  # compare the properties names in wishlist from the listing.
             log.info("add to favorite is working fine")
         else:
             log.warning("add to favorite is not working fine.")
+
+        self.driver.back()
+        self.driver.back()
+
+        # --------------------------------- compare widget validations ----------------------------------------
+
+        listing.compareWidgetBtn().click()
+        assert listing.goToCompareBtn().is_displayed()
+
+        listing.goToCompareBtn().click()
+        assert (
+            self.driver.current_url
+            == "https://www.universityliving.com/compare-property?ul_utm_source=city-desktop-website"
+        )
+
+        self.drvier.back()
+
+        propertyNames = []
+        for properties in listing.propertyNames():
+            propertyNames.append(properties.text)
+
+        if len(propertyNames < 5 and propertyNames > 0):
+            count = 0
+            while count < 5:
+                listing.addToCompareBtn()[count].click()
+                time.sleep(3)

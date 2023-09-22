@@ -1,0 +1,21 @@
+2023-09-22 17:44:20,711 :INFO : test_listing_e2e :Distance list after after filter application [0.13, 0.16, 0.18, 0.19, 0.2, 0.27, 0.5, 0.79, 1.38, 1.4, 1.44, 2.82]
+2023-09-22 17:44:20,712 :INFO : test_listing_e2e :Sorted distance list from low ot high [0.13, 0.16, 0.18, 0.19, 0.2, 0.27, 0.5, 0.79, 1.38, 1.4, 1.44, 2.82]
+2023-09-22 17:44:20,712 :INFO : test_listing_e2e :Distance filter is working fine
+2023-09-22 17:44:22,358 :INFO : test_listing_e2e :['£144/week', '£149/week', '£164/week', '£164/week', '£169/week', '£170/week', '£173/week', '£175/week', '£176/week', '£189/week', '£190/week', '£193/week']
+2023-09-22 17:44:22,359 :INFO : test_listing_e2e :cleaned price low to high integer list -->[144.0, 149.0, 164.0, 164.0, 169.0, 170.0, 173.0, 175.0, 176.0, 189.0, 190.0, 193.0]
+2023-09-22 17:44:22,359 :INFO : test_listing_e2e :sorted list price low to high [144.0, 149.0, 164.0, 164.0, 169.0, 170.0, 173.0, 175.0, 176.0, 189.0, 190.0, 193.0]
+2023-09-22 17:44:22,359 :INFO : test_listing_e2e :Price low to high filter is working fine
+2023-09-22 17:44:24,071 :INFO : test_listing_e2e :['£305/week', '£210/week', '£206/week', '£193/week', '£190/week', '£189/week', '£176/week', '£175/week', '£173/week', '£170/week', '£169/week', '£164/week']
+2023-09-22 17:44:24,072 :INFO : test_listing_e2e :cleaned price high to low list -->[305.0, 210.0, 206.0, 193.0, 190.0, 189.0, 176.0, 175.0, 173.0, 170.0, 169.0, 164.0]
+2023-09-22 17:44:24,072 :INFO : test_listing_e2e :sorted list price high to low [305.0, 210.0, 206.0, 193.0, 190.0, 189.0, 176.0, 175.0, 173.0, 170.0, 169.0, 164.0]
+2023-09-22 17:44:24,072 :INFO : test_listing_e2e :Price high to low filter is working fine
+2023-09-22 17:44:25,771 :INFO : test_listing_e2e :offer list --> [' £1,325', ' £850', ' £650', ' £550', ' £50', ' £50', ' £50', ' £50', ' £50', ' £50', ' £50', ' £50']
+2023-09-22 17:44:25,771 :INFO : test_listing_e2e :cleaned best offer list -->[1325, 850, 650, 550, 50, 50, 50, 50, 50, 50, 50, 50]
+2023-09-22 17:44:25,771 :INFO : test_listing_e2e :best offer filter is working fine
+2023-09-22 17:44:27,092 :INFO : test_listing_e2e :most popular property names --> ['Chamberlain Place', 'Mary Sturge', 'Bagot Street', 'Vita Student Pebble Mill', 'Belgrave View', 'Brook Studios', 'Onyx', 'iQ Broderick House', 'iQ Penworks House', 'Altura', 'Compass', 'The Heights']
+2023-09-22 17:44:34,388 :INFO : test_listing_e2e :['£206/week', '£210/week', '£214/week', '£219/week', '£225/week', '£205/week', '£204/week', '£249/week', '£231/week']
+2023-09-22 17:44:34,389 :INFO : test_listing_e2e :cleaned price low to high integer list -->[206.0, 210.0, 214.0, 219.0, 225.0, 205.0, 204.0, 249.0, 231.0]
+2023-09-22 17:44:34,389 :INFO : test_listing_e2e :start and end price filter is working fine
+2023-09-22 17:44:38,707 :INFO : test_listing_e2e :['Mary Sturge', 'Bagot Street']
+2023-09-22 17:44:44,546 :INFO : test_listing_e2e :['Mary Sturge', 'Bagot Street']
+2023-09-22 17:44:44,547 :INFO : test_listing_e2e :add to favorite is working fine
