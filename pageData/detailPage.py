@@ -51,7 +51,9 @@ class detailpageClass:
     joinWaitlistCount_selector = (By.XPATH,"//div[text()='Join Waitlist']")
     propertyNameInSummaryCard_selector = (By.XPATH,"//h3[text()='Chapter Ealing']")
     
+#----------------------------------form details -----------------------------------------------
     
+    totalPrice_selector = (By.XPATH,"//span[@automation_id='Total']")
     
     
     
@@ -191,5 +193,8 @@ class detailpageClass:
         return self.driver.find_element(*detailpageClass.propertyNameInSummaryCard_selector)
     
     
+    # ------------------------------------------- form methods -----------------------------------
     
+    def totalPrice(self):
+        return self.driver.find_element(*detailpageClass.totalPrice_selector)
     

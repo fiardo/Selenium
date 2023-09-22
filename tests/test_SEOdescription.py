@@ -1,3 +1,4 @@
+from pytest import mark
 import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -18,61 +19,54 @@ from pageData.listingPage import listingClass
 from pageData.Forms import FormClass
 import pytest
 
+
 @pytest.mark.skip()
 class Test_BookNowForms(Invokation):
-    
-    bookNow_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"
-    
+    bookNow_url = 'https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you'
+
+    @mark.testomatio('@Td10de0ef')
     def test_SeoCampusDescription(self):
-        
-        log = self.getLogger()       
+        log = self.getLogger()
         self.driver.implicitly_wait(5)
-        
         homepageObj = Homepageclass(self.driver)
         listingObj = listingClass(self.driver)
-        
         homepageObj.searchbar().send_keys('London')
-        self.driver.find_element(By.XPATH,"//div[text()='London']").click()
+        self.driver.find_element(By.XPATH, "//div[text()='London']").click()
         eleDescription = listingObj.cityDescription()
-        self.driver.execute_script("arguments[0].scrollIntoView();",eleDescription)
+        self.driver.execute_script(
+            'arguments[0].scrollIntoView();', eleDescription)
         a = listingObj.cityDescription().text
         print(a)
-        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\listing\\listingDescription.png")
-        log.info("Description city -->" + a)
+        self.driver.get_screenshot_as_file(
+            'C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\listing\\listingDescription.png')
+        log.info('Description city -->' + a)
         eleTop = listingObj.homeBreadcrum()
-        
-        
-        self.driver.execute_script("arguments[0].scrollIntoView();",eleTop)
+        self.driver.execute_script('arguments[0].scrollIntoView();', eleTop)
         time.sleep(2)
         listingObj.selectUniversity().click()
         listingObj.universityItem().click()
         time.sleep(3)
         uniDescription = listingObj.uniDesc()
-        self.driver.execute_script("arguments[0].scrollIntoView();",uniDescription)
+        self.driver.execute_script(
+            'arguments[0].scrollIntoView();', uniDescription)
         uniDescTitile = listingObj.uniDesc().text
         print(uniDescTitile)
-        self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\listing\\UniversityDescription.png")
-        log.info("Description university -->" + uniDescTitile)
-        self.driver.execute_script("window.scrollTo(0,0);")
+        self.driver.get_screenshot_as_file(
+            'C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\listing\\UniversityDescription.png')
+        log.info('Description university -->' + uniDescTitile)
+        self.driver.execute_script('window.scrollTo(0,0);')
         time.sleep(2)
-        
-        
         listingObj.campusPill().click()
         scrollToPagetextOfPagination = listingObj.pageTextPagination()
-        self.driver.execute_script("arguments[0].scrollIntoView();",scrollToPagetextOfPagination)
-        
+        self.driver.execute_script(
+            'arguments[0].scrollIntoView();', scrollToPagetextOfPagination)
         try:
             readmore = listingObj.readMoreDesc()
             print(readmore.text)
-            log.warning("read more is present in campus description. pl check")
-            self.driver.get_screenshot_as_file("campusDescription.png")
-            
-            
+            log.warning('read more is present in campus description. pl check')
+            self.driver.get_screenshot_as_file('campusDescription.png')
         except Exception:
-            log.info("No descrioption is available on campus page")
-            print("No descrioption is available on campus page")
-            self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\listing\\campusDescription.png")
-
-        
-        
-        
+            log.info('No descrioption is available on campus page')
+            print('No descrioption is available on campus page')
+            self.driver.get_screenshot_as_file(
+                'C:\\Users\\TUL\\Desktop\\python\\FrameWorkDesign2\\logs&Repos\\listing\\campusDescription.png')

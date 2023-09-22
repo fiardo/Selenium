@@ -73,9 +73,39 @@ class Homepageclass:
     us_selector = (By.ID,"united-states")
     popPropertiesNames_selector = (By.XPATH,"//div[@class='w-[85vw] md:w-[45vw] flex-shrink-0 lg:w-full flex flex-col text-theme-black-text']/a/p[1]")
     popPropertiesPrice_selector = (By.XPATH,"//div[@class='w-[85vw] md:w-[45vw] flex-shrink-0 lg:w-full flex flex-col text-theme-black-text']/a/p[2]")
+    popCountries_selector = (By.XPATH,"//div[@class='flex items-center justify-between mb-4 md:mb-8']/ul/li")
     
+    # -------------------- Our services section -----------------------------------------
     
+    servicesTitle_selector = (By.XPATH,"//div[text()='Our Services']")
+    servicesNames_selector = (By.XPATH,"//div[@class='my-auto pr-4']/p[1]")
+    accommodation_service_selector = (By.XPATH,"(//p[text()='Accommodation'])[2]")
+    studentFlight_service_selector = (By.XPATH,"(//p[text()='Student Flight Tickets'])[2]")
+    guarantor_service_selctor = (By.XPATH,"(//p[text()='Guarantor'])[2]")
     
+    # --------------------- Trending Articles section ----------------------------
+    
+    aricleTitle_selector = (By.XPATH,"//div[text()='Trending Articles']")
+    articleHeading_selector = (By.XPATH,"//div[@class='overflow p-4']/p")
+    
+    # ---------------- Review section ---------------------------------------
+    
+    reviewTitle_selector = (By.XPATH,"//div[text()='What Students Say About Us']")
+    reviewsNames_selector = (By.XPATH,"//div[@class='overflow p-4']/p")
+    
+    # -------------- Media spotlight section ---------------------------------
+    
+    mediaTitleSelector = (By.XPATH,"//div[text()='Media Spotlight']")
+    mediaSpotlightCardsSelector = (By.XPATH,"//a[@class='flex-shrink-0']")
+    mediaSpotlightViewAll_selector = (By.XPATH,"(//div[text()='View All'])[5]")
+  # ---------------------- Seo Description section -----------------------
+  
+    seotitle_selector = (By.XPATH,"//h2[text()='The Ultimate Overseas Student Accommodation Solution']")
+    
+# ---------------------------- Footer section -----------------------------------
+
+    footerServices_selector = (By.XPATH,"//div[@class='basis-5/12 lg:pr-2 lg:m-0 mt-6']/ul/li/a/p[1]")
+    companyLinks_selector = (By.XPATH,"//div[@class='basis-1/2 lg:basis-4/12 pr-4 lg:m-0 mt-5']/ul/li/a/p[1]")
     
     #------------------------------Methods ------------------------------
     def searchbar(self):
@@ -230,3 +260,54 @@ class Homepageclass:
     
     def popularPropertiesPrice(self):
         return self.driver.find_elements(*Homepageclass.popPropertiesPrice_selector)
+    
+    def popCountryNames(self):
+        return self.driver.find_elements(*Homepageclass.popCountries_selector)
+    
+    # ----------------------services methods ----------------------------
+    
+    def servicesTitle(self):
+        return self.driver.find_element(*Homepageclass.servicesTitle_selector)
+    
+    def servicesHomepage(self):
+        return self.driver.find_elements(*Homepageclass.servicesNames_selector)
+    
+    def accommodationService(self):
+        return self.driver.find_element(*Homepageclass.accommodation_service_selector)
+    
+    def studentFlightService(self):
+        return self.driver.find_element(*Homepageclass.studentFlight_service_selector)
+    
+    def guarantorService(self):
+        return self.driver.find_element(*Homepageclass.guarantor_service_selctor)
+    # ---------------------- Review section methods ----------------------------
+    
+    def reviewTitle(self):
+        return self.driver.find_element(*Homepageclass.reviewTitle_selector)
+    
+    def reviewNames(self):
+        return self.driver.find_elements(*Homepageclass.reviewsNames_selector)
+    
+    # -----------------------media spotlight methods ----------------
+    
+    def mediaSpotlightTitle(self):
+        return self.driver.find_element(*Homepageclass.mediaTitleSelector)
+    
+    def mediaSpotlightCards(self):
+        return self.driver.find_elements(*Homepageclass.mediaSpotlightCardsSelector)
+    
+    def mediaSportLightViewAllBtn(self):
+        return self.driver.find_element(*Homepageclass.mediaSpotlightViewAll_selector)
+    
+    # --------------------- SEO description Methods ---------------------
+    
+    def seoTitle(self):
+        return self.driver.find_element(*Homepageclass.seotitle_selector)
+    
+    # ------------------------ Footer services --------------------------
+    
+    def footerServices(self):
+        return self.driver.find_elements(*Homepageclass.footerServices_selector)
+    
+    def companyLInks(self):
+        return self.driver.find_elements(*Homepageclass.companyLinks_selector)

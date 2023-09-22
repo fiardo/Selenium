@@ -1,5 +1,6 @@
-lst = ['a','b','c','d']
-lstone = ['e','f','j']
+import re
 
-for i in range(len(lstone)):
-    print(lst)
+text = "112 Places to Stay"
+number = int("".join(re.findall(r"\d+", text)))
+
+print(type(number))

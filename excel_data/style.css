@@ -1,0 +1,8 @@
+/* styles.css */
+body {
+    background-color: #f0f0f0; /* Initial background color */
+}
+
+.changed-color {
+    background-color: #3498db; /* Changed background color */
+}

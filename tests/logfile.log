@@ -1,0 +1,52 @@
+2023-09-21 15:44:45,220 :INFO : test_listing_e2e :112
+2023-09-21 15:44:45,220 :INFO : test_listing_e2e :<class 'int'>
+2023-09-21 15:44:48,435 :INFO : test_listing_e2e :212
+2023-09-21 15:44:48,435 :INFO : test_listing_e2e :<class 'int'>
+2023-09-21 15:44:48,435 :INFO : test_listing_e2e :total stay count --> 324
+2023-09-21 15:44:54,909 :INFO : test_listing_e2e :112
+2023-09-21 15:45:01,264 :INFO : test_listing_e2e :212
+2023-09-21 15:45:01,264 :INFO : test_listing_e2e :stay count and property card count are same
+2023-09-22 10:53:10,541 :INFO : test_bookNowForm_existing_user :Book now is not availbale for properties listed in array
+2023-09-22 10:57:10,106 :WARNING : test_detail_page_validations :overview link is not present
+2023-09-22 10:57:15,151 :WARNING : test_detail_page_validations :Room Type link is not present
+2023-09-22 10:57:20,169 :WARNING : test_detail_page_validations :Payment info link is not present
+2023-09-22 10:57:25,252 :WARNING : test_detail_page_validations :Review link is not present
+2023-09-22 10:57:30,325 :WARNING : test_detail_page_validations :Similar Properties link is not present
+2023-09-22 10:57:35,363 :WARNING : test_detail_page_validations :Price is not available
+2023-09-22 10:57:40,384 :WARNING : test_detail_page_validations :All category is not interactable plz check
+2023-09-22 10:57:45,449 :WARNING : test_detail_page_validations :Studio category is not interactable plz check
+2023-09-22 10:57:50,483 :WARNING : test_detail_page_validations :Apartments category is not interactable plz check
+2023-09-22 10:57:55,551 :WARNING : test_detail_page_validations :Ensuite category is not interactable plz check
+2023-09-22 10:58:00,631 :WARNING : test_detail_page_validations :Other category is not interactable plz check
+2023-09-22 10:58:05,695 :WARNING : test_detail_page_validations :multiple exceptions occured in similar properties module plz check
+2023-09-22 10:59:35,324 :INFO : test_homepageValidations :homepage url - working
+2023-09-22 10:59:38,485 :INFO : test_homepageValidations :COLC url - working
+2023-09-22 10:59:46,275 :INFO : test_homepageValidations :My kinda url - working
+2023-09-22 10:59:50,249 :INFO : test_homepageValidations :services url - working
+2023-09-22 11:00:00,925 :INFO : test_homepageValidations :about url - working
+2023-09-22 11:00:08,353 :INFO : test_homepageValidations :careers url - working
+2023-09-22 11:00:17,498 :INFO : test_homepageValidations :refer url - working
+2023-09-22 11:00:23,125 :INFO : test_homepageValidations :The download buttons are present
+2023-09-22 11:00:43,250 :INFO : test_homepageValidations :Hero Banner Title - present
+2023-09-22 11:00:43,281 :INFO : test_homepageValidations :Hero Banner search bar - present
+2023-09-22 11:00:43,315 :INFO : test_homepageValidations :Hero Banner kinda - present
+2023-09-22 11:00:43,347 :INFO : test_homepageValidations :Hero Banner kinda desc - present
+2023-09-22 11:00:43,379 :INFO : test_homepageValidations :Hero Banner trust pilot - present
+2023-09-22 11:00:43,408 :INFO : test_homepageValidations :Hero Banner video review - present
+2023-09-22 11:00:54,487 :INFO : test_homepageValidations :Top cities api response ->200
+2023-09-22 11:00:54,488 :INFO : test_homepageValidations :London pass beds ->97700 Beds
+2023-09-22 11:00:54,491 :INFO : test_homepageValidations :Nottingham pass beds ->35292 Beds
+2023-09-22 11:00:54,493 :INFO : test_homepageValidations :Cardiff pass beds ->11860 Beds
+2023-09-22 11:00:54,493 :INFO : test_homepageValidations :Melbourne pass beds ->59496 Beds
+2023-09-22 11:00:54,494 :INFO : test_homepageValidations :Birmingham pass beds ->29332 Beds
+2023-09-22 11:00:54,494 :INFO : test_homepageValidations :Liverpool pass beds ->28822 Beds
+2023-09-22 11:00:54,495 :INFO : test_homepageValidations :Toronto pass beds ->16954 Beds
+2023-09-22 11:00:54,495 :INFO : test_homepageValidations :New York pass beds ->17342 Beds
+2023-09-22 11:01:50,426 :INFO : test_listing_e2e :112
+2023-09-22 11:01:52,981 :INFO : test_listing_e2e :0
+2023-09-22 11:01:52,982 :INFO : test_listing_e2e :total stay count --> 112
+2023-09-22 11:02:00,036 :INFO : test_listing_e2e :112
+2023-09-22 11:02:06,563 :INFO : test_listing_e2e :212
+2023-09-22 11:02:06,563 :CRITICAL : test_listing_e2e :stay count and property card count are not equal plz check
+2023-09-22 11:03:36,549 :INFO : test_unihall_new_user :unihall not available or category is not available
+2023-09-22 11:03:39,550 :INFO : test_unihall_new_user :no property is available on unihall listing
