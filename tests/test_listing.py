@@ -15,12 +15,21 @@ from pageData.loginPopup import loginpopupClass
 from pageData.detailPage import detailpageClass
 from pageData.Forms import FormClass
 from pageData.listingPage import listingClass
+from pageData.header import Headerclass
 import pytest
 from selenium.webdriver.common.alert import Alert
 import re
+import random
+import string
+
+N = 7
 
 
 class Test_lising(Invokation):
+    res = "".join(random.choices(string.ascii_uppercase + string.digits, k=N))
+    phone_number = "".join([str(random.randint(0, 9)) for i in range(10)])
+    newEmail = res + ".university@yopmail.com"
+
     @mark.testomatio("@T51683ec0")
     def test_listing_e2e(self):
         log = self.getLogger()
@@ -28,6 +37,7 @@ class Test_lising(Invokation):
         homepageObj = Homepageclass(self.driver)
         listing = listingClass(self.driver)
         loginPopUPObj = loginpopupClass(self.driver)
+        header = Headerclass(self.driver)
         loginEmail = "harsh.sachan@universityliving.com"
         try:
             self.driver.find_element(By.XPATH, "//button[text()='Accept']").click()
@@ -350,6 +360,47 @@ class Test_lising(Invokation):
         elif flag == False:
             log.warning("start and end price filter is not working fine")
 
+        listing.filterByBtn().click()
+        listing.filterClearAllBtn().click()
+        listing.filterMostPopularBtn()
+        listing.filterShowResultBtn().click()
+
         # ------------------------------------ Add to favorites ---------------------------------------------
 
         # for new user
+        listing.addToFavIcon().click()
+
+        loginPopUPObj.emailfield().send_keys(Test_lising.newEmail.lower())
+        loginPopUPObj.loginBtn().click()
+        loginPopUPObj.firstName().send_keys("test")
+        loginPopUPObj.lastName().send_keys("test")
+        loginPopUPObj.phoneNumber().send_keys(Test_lising.phone_number)
+        loginPopUPObj.signUpBtn().click()
+        loginPopUPObj.otpFirst().send_keys("1")
+        loginPopUPObj.otpsecond().send_keys("2")
+        loginPopUPObj.otpthird().send_keys("3")
+        loginPopUPObj.otpfourth().send_keys("4")
+        loginPopUPObj.otpfifth().send_keys("5")
+        loginPopUPObj.continueBtn().click()
+
+        propertynames = []
+
+        for prop in listing.propertyNames():
+            propertynames.append(prop.text)
+
+        addToFavProperty = propertynames[0]
+        log.info(addToFavProperty)
+        loginPopUPObj.profileIcon().click()
+        loginPopUPObj.wishListSection().click()
+
+        wishlistPropertyNames = []
+
+        for prop in loginPopUPObj.wishListPropertyNames():
+            wishlistPropertyNames.append(prop.text)
+
+        log.info(wishlistPropertyNames[0])
+
+        if addToFavProperty == wishlistPropertyNames[0]:
+            log.info("add to favorite is working fine")
+        else:
+            log.warning("add to favorite is not working fine.")
