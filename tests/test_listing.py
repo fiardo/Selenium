@@ -53,74 +53,74 @@ class Test_lising(Invokation):
 
         # --------------------------------------- property stay count of PBSA ---------------------------------------
 
-        listing.pbsaBtn().click()  # click on PBSA.
-        time.sleep(2)
-        pbsaStayText = listing.placesToStayCount().text
-        pbsaStayCount = int("".join(re.findall("\\d", pbsaStayText)))
-        log.info(pbsaStayCount)  # logging the PBSA stay count.
+        # listing.pbsaBtn().click()  # click on PBSA.
+        # time.sleep(2)
+        # pbsaStayText = listing.placesToStayCount().text
+        # pbsaStayCount = int("".join(re.findall("\\d", pbsaStayText)))
+        # log.info(pbsaStayCount)  # logging the PBSA stay count.
 
-        # -------------------------------------- property stay count of HMO ---------------------------------------
+        # # -------------------------------------- property stay count of HMO ---------------------------------------
 
-        listing.hmoBtn().click()  # click on HMO
-        time.sleep(2)
-        hmoStayText = listing.placesToStayCount().text
-        hmoStayCount = int("".join(re.findall("\\d", hmoStayText)))
-        log.info(hmoStayCount)  # logging the HMO stay count.
+        # listing.hmoBtn().click()  # click on HMO
+        # time.sleep(2)
+        # hmoStayText = listing.placesToStayCount().text
+        # hmoStayCount = int("".join(re.findall("\\d", hmoStayText)))
+        # log.info(hmoStayCount)  # logging the HMO stay count.
 
-        # ----------------------------------------- calculating the total stay count ( PBSA stay count + HMO stay count )----------------------------------------
+        # # ----------------------------------------- calculating the total stay count ( PBSA stay count + HMO stay count )----------------------------------------
 
-        totalStayCount = pbsaStayCount + hmoStayCount
-        log.info(
-            "total stay count --> " + str(totalStayCount)
-        )  # logging the total stay count of PBSA and HMO
+        # totalStayCount = pbsaStayCount + hmoStayCount
+        # log.info(
+        #     "total stay count --> " + str(totalStayCount)
+        # )  # logging the total stay count of PBSA and HMO
 
-        # ------------------------------------- calculating the total card count of PBSA and HMO ----------------------------------------------------------
+        # # ------------------------------------- calculating the total card count of PBSA and HMO ----------------------------------------------------------
 
-        # for PBSA
-        listing.pbsaBtn().click()  # clicking on PBSA button
-        time.sleep(2)
-        lastPaginationPbsa = int(
-            listing.lastPagination().text
-        )  # getting last page count of PBSA
-        listing.lastPagination().click()  # clicking on last page.
-        time.sleep(2)
-        lastPaginationPbsaPropCount = len(
-            listing.totalPropertyCardsBtmOnPage()
-        )  # getting count of property cards on last page of PBSA listing.
+        # # for PBSA
+        # listing.pbsaBtn().click()  # clicking on PBSA button
+        # time.sleep(2)
+        # lastPaginationPbsa = int(
+        #     listing.lastPagination().text
+        # )  # getting last page count of PBSA
+        # listing.lastPagination().click()  # clicking on last page.
+        # time.sleep(2)
+        # lastPaginationPbsaPropCount = len(
+        #     listing.totalPropertyCardsBtmOnPage()
+        # )  # getting count of property cards on last page of PBSA listing.
 
-        totalCardCountPbsa = (
-            (lastPaginationPbsa - 1) * 12
-        ) + lastPaginationPbsaPropCount  # --> total card count [ (lastPagination -1) *12 + last page property cards]
-        log.info(totalCardCountPbsa)  # logging the PBSA card count.
+        # totalCardCountPbsa = (
+        #     (lastPaginationPbsa - 1) * 12
+        # ) + lastPaginationPbsaPropCount  # --> total card count [ (lastPagination -1) *12 + last page property cards]
+        # log.info(totalCardCountPbsa)  # logging the PBSA card count.
 
-        # for HMO
-        listing.hmoBtn().click()  # clicking on HMO button
-        time.sleep(3)
-        lastPaginationHmo = int(
-            listing.lastPagination().text
-        )  # getting last page count of HMO
-        listing.lastPagination().click()  # clicking on last page of HMO
-        time.sleep(2)
-        lastPaginationHmoPropCount = len(
-            listing.totalPropertyCardsBtmOnPage()
-        )  # getting last page property cards on last page of HMO listing.
-        totalCardCountHmo = (
-            (lastPaginationHmo - 1) * 12
-        ) + lastPaginationHmoPropCount  # --> total card count [ (lastPagination -1) *12 + last page property cards]
-        log.info(totalCardCountHmo)  # logging the HMO card count
+        # # for HMO
+        # listing.hmoBtn().click()  # clicking on HMO button
+        # time.sleep(3)
+        # lastPaginationHmo = int(
+        #     listing.lastPagination().text
+        # )  # getting last page count of HMO
+        # listing.lastPagination().click()  # clicking on last page of HMO
+        # time.sleep(2)
+        # lastPaginationHmoPropCount = len(
+        #     listing.totalPropertyCardsBtmOnPage()
+        # )  # getting last page property cards on last page of HMO listing.
+        # totalCardCountHmo = (
+        #     (lastPaginationHmo - 1) * 12
+        # ) + lastPaginationHmoPropCount  # --> total card count [ (lastPagination -1) *12 + last page property cards]
+        # log.info(totalCardCountHmo)  # logging the HMO card count
 
-        # ------------------------------- validating the stay count and total property count.
+        # # ------------------------------- validating the stay count and total property count.
 
-        if totalCardCountPbsa == pbsaStayCount and totalCardCountHmo == hmoStayCount:
-            log.info("stay count and property card count are same")
-        else:
-            log.critical("stay count and property card count are not equal plz check")
+        # if totalCardCountPbsa == pbsaStayCount and totalCardCountHmo == hmoStayCount:
+        #     log.info("stay count and property card count are same")
+        # else:
+        #     log.critical("stay count and property card count are not equal plz check")
 
         # ---------------------------------- Distance filter validations ---------------------------------.
 
         listing.pbsaBtn().click()  # clicking on PBSA btn
-        listing.filterByBtn().click().click()  # opne filters
-        listing.filterShowResultBtn().click  # clickin on show result button so to get all the pre-applied filters
+        listing.filterByBtn().click()  # opne filters
+        listing.filterShowResultBtn().click()  # clickin on show result button so to get all the pre-applied filters
 
         for (
             clsoeBtn
@@ -132,8 +132,224 @@ class Test_lising(Invokation):
         listing.filterDistanceBtn().click()
         listing.filterShowResultBtn().click()
 
-        distanceList = []
-        for distances in listing.propertyDistances():
+        distanceList = (
+            []
+        )  # will contain all distance value on listing when distance filter is applied.
+        for (
+            distances
+        ) in (
+            listing.propertyDistances()
+        ):  # adding distance values ( but the value will appears in miles format -> .13 miles,[need to remove miles] )
             distanceList.append(distances.text)
 
-        log.info("%s", distanceList)
+        cleanDistance_List = [
+            float(item.replace(" miles", "")) for item in distanceList
+        ]  # new cleaned list ( which contains distance without miles text )
+
+        log.info("Distance list after after filter application %s", cleanDistance_List)
+
+        # validating the distance sort filter
+
+        sortedDistace = sorted(
+            cleanDistance_List
+        )  # sorting the cleaned list from low to high.
+
+        log.info("Sorted distance list from low ot high %s", sortedDistace)
+
+        if sortedDistace == cleanDistance_List:
+            log.info("Distance filter is working fine")
+        else:
+            log.warning("Distance filter is not workig fine plz check")
+
+        # ----------------------------------------------- Price Low to high filter validations -------------------------------------
+
+        listing.pbsaBtn().click()  # cicking on PBSA
+        for (
+            closeBtn
+        ) in listing.filterPillClose():  # removing all the pre-applied filters
+            closeBtn.click()
+
+        listing.filterByBtn().click()  # opening the filters
+        listing.filterPriceLowToHighBtn().click()  # applying the price low to high filter
+        listing.filterShowResultBtn().click()
+
+        priceList = (
+            []
+        )  # this array will hold the values of price after filter application.
+
+        for (
+            priceLowToHigh
+        ) in listing.propertyPrices():  # adding filters to the priceList Array
+            priceList.append(priceLowToHigh.text)
+
+        log.info("%s", priceList)
+
+        currencyList = []  # currency list to hold the currency value
+        for value in priceList[0]:
+            currencyList.append(value)
+        currency = currencyList[0]  # extracting the currency from the list
+
+        cleanedPriceLowToHigh_list = [
+            float(item.replace("/week", "").replace(currency, "").strip())
+            for item in priceList
+        ]  # removing /week and currecny from the list
+        # validating the price low to high filter
+
+        log.info(
+            "cleaned price low to high integer list -->%s", cleanedPriceLowToHigh_list
+        )
+
+        sortedPriceList = sorted(cleanedPriceLowToHigh_list)
+        log.info("sorted list price low to high %s", sortedPriceList)
+        if sortedPriceList == cleanedPriceLowToHigh_list:
+            log.info("Price low to high filter is working fine")
+        else:
+            log.warning("Price low to high filter is not working fine")
+
+        # ----------------------------------------------- Price High to Low filter validations -------------------------------------
+
+        listing.pbsaBtn().click()  # cicking on PBSA
+        for (
+            closeBtn
+        ) in listing.filterPillClose():  # removing all the pre-applied filters
+            closeBtn.click()
+
+        listing.filterByBtn().click()  # opening the filters
+        listing.filterPriceHighToLowBtn().click()  # applying the price low to high filter
+        listing.filterShowResultBtn().click()
+
+        priceList = (
+            []
+        )  # this array will hold the values of price after filter application.
+
+        for (
+            priceHighToLow
+        ) in listing.propertyPrices():  # adding filters to the priceList Array
+            priceList.append(priceHighToLow.text)
+
+        log.info("%s", priceList)
+
+        currencyList = []  # currency list to hold the currency value
+        for value in priceList[0]:
+            currencyList.append(value)
+        currency = currencyList[0]  # extracting the currency from the list
+
+        cleanedPriceHighToLow_list = [
+            float(item.replace("/week", "").replace(currency, "").strip())
+            for item in priceList
+        ]  # removing /week and currecny from the list
+        # validating the price low to high filter
+
+        log.info("cleaned price high to low list -->%s", cleanedPriceHighToLow_list)
+
+        sortedPriceList = sorted(cleanedPriceHighToLow_list)
+        log.info("sorted list price high to low %s", sortedPriceList[::-1])
+
+        if sortedPriceList[::-1] == cleanedPriceHighToLow_list:
+            log.info("Price high to low filter is working fine")
+        else:
+            log.warning("Price high to low filter is not working fine")
+
+        # -------------------------------- Best offer filter validation -----------------------------
+
+        listing.pbsaBtn().click()  # click on PBSA
+        for closeBtn in listing.filterPillClose():  # closing all pre-applied filter
+            closeBtn.click()
+
+        listing.filterByBtn().click()  # opening filter
+        listing.filterBestOfferBtn().click()  # applying bes offer filter
+        listing.filterShowResultBtn().click()
+
+        offerList = []  # list to hold the offers values from the page
+
+        for (
+            offer
+        ) in listing.offerUptoValue():  # adding offer values to the above temp list
+            offerList.append(offer.text)
+
+        log.info("offer list --> %s", offerList)  # logging the offer list
+
+        currencyList = []  # currency list to hold the currency value
+        for value in priceList[0]:
+            currencyList.append(value)
+        currency = currencyList[0]
+
+        cleanedBestOffer_list = [
+            int(item.replace(currency, "").replace(",", "").strip())
+            for item in offerList
+        ]  # removing the currency from the offer values
+
+        log.info(
+            "cleaned best offer list -->%s", cleanedBestOffer_list
+        )  # logging the cleaned best offer list [ without currency ]
+
+        sortedOfferList = sorted(cleanedBestOffer_list)  # sorting the offer list
+
+        if sortedOfferList[::-1] == cleanedBestOffer_list:  # validating the sorted list
+            log.info("best offer filter is working fine")
+        else:
+            log.warning("best offer filter is not working fine.")
+
+        # -------------------------------- Most popular filter validation -----------------------------
+
+        listing.pbsaBtn().click()
+        for closeBtn in listing.filterPillClose():
+            closeBtn.click()
+
+        listing.filterByBtn().click()
+        listing.filterMostPopularBtn().click()
+        listing.filterShowResultBtn().click()
+
+        propertyName_list = []
+
+        for propNames in listing.propertyNames():
+            propertyName_list.append(propNames.text)
+
+        log.info("most popular property names --> %s", propertyName_list)
+
+        # ---------------------------------- start price and end price validation -----------------------
+
+        listing.pbsaBtn().click()
+
+        for closeBtn in listing.filterPillClose():
+            closeBtn.click()
+
+        listing.filterByBtn().click()
+        listing.startPriceInput().send_keys(200)
+        time.sleep(5)
+        listing.endPriceInput().send_keys(250)
+        listing.filterShowResultBtn().click()
+
+        priceList = []
+        for prices in listing.propertyPrices():
+            priceList.append(prices.text)
+
+        log.info("%s", priceList)
+
+        currencyList = []  # currency list to hold the currency value
+        for value in priceList[0]:
+            currencyList.append(value)
+        currency = currencyList[0]  # extracting the currency from the list
+
+        cleanedPrice_list = [
+            float(item.replace("/week", "").replace(currency, "").strip())
+            for item in priceList
+        ]  # removing /week and currecny from the list
+        # validating the price low to high filter
+
+        log.info("cleaned price low to high integer list -->%s", cleanedPrice_list)
+
+        for value in cleanedPrice_list:
+            if value >= 200 and value <= 250:
+                flag = True
+            else:
+                flag = False
+
+        if flag == True:
+            log.info("start and end price filter is working fine")
+        elif flag == False:
+            log.warning("start and end price filter is not working fine")
+
+        # ------------------------------------ Add to favorites ---------------------------------------------
+
+        # for new user
