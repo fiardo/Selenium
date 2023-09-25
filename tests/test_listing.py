@@ -29,6 +29,7 @@ class Test_lising(Invokation):
     res = "".join(random.choices(string.ascii_uppercase + string.digits, k=N))
     phone_number = "".join([str(random.randint(0, 9)) for i in range(10)])
     newEmail = res + ".university@yopmail.com"
+    faqPageUrl = "https://www.universityliving.com/faq"
 
     @mark.testomatio("@T51683ec0")
     def test_listing_e2e(self):
@@ -43,7 +44,7 @@ class Test_lising(Invokation):
             self.driver.find_element(By.XPATH, "//button[text()='Accept']").click()
         except Exception:
             pass
-        cityKey = "birmingham"
+        cityKey = "london"
         homepageObj.searchbar().send_keys(cityKey)
         time.sleep(3)
         homepageObj.searchbar().send_keys(Keys.ENTER)
@@ -61,70 +62,72 @@ class Test_lising(Invokation):
         assert listing.helpCenterLinkFAQ().is_displayed()
         assert listing.breadCrumCity().text == cityKey.capitalize()
 
+        assert listing
+
         # --------------------------------------- property stay count of PBSA ---------------------------------------
 
-        # listing.pbsaBtn().click()  # click on PBSA.
-        # time.sleep(2)
-        # pbsaStayText = listing.placesToStayCount().text
-        # pbsaStayCount = int("".join(re.findall("\\d", pbsaStayText)))
-        # log.info(pbsaStayCount)  # logging the PBSA stay count.
+        listing.pbsaBtn().click()  # click on PBSA.
+        time.sleep(2)
+        pbsaStayText = listing.placesToStayCount().text
+        pbsaStayCount = int("".join(re.findall("\\d", pbsaStayText)))
+        log.info(pbsaStayCount)  # logging the PBSA stay count.
 
         # # -------------------------------------- property stay count of HMO ---------------------------------------
 
-        # listing.hmoBtn().click()  # click on HMO
-        # time.sleep(2)
-        # hmoStayText = listing.placesToStayCount().text
-        # hmoStayCount = int("".join(re.findall("\\d", hmoStayText)))
-        # log.info(hmoStayCount)  # logging the HMO stay count.
+        listing.hmoBtn().click()  # click on HMO
+        time.sleep(2)
+        hmoStayText = listing.placesToStayCount().text
+        hmoStayCount = int("".join(re.findall("\\d", hmoStayText)))
+        log.info(hmoStayCount)  # logging the HMO stay count.
 
         # # ----------------------------------------- calculating the total stay count ( PBSA stay count + HMO stay count )----------------------------------------
 
-        # totalStayCount = pbsaStayCount + hmoStayCount
-        # log.info(
-        #     "total stay count --> " + str(totalStayCount)
-        # )  # logging the total stay count of PBSA and HMO
+        totalStayCount = pbsaStayCount + hmoStayCount
+        log.info(
+            "total stay count --> " + str(totalStayCount)
+        )  # logging the total stay count of PBSA and HMO
 
         # # ------------------------------------- calculating the total card count of PBSA and HMO ----------------------------------------------------------
 
-        # # for PBSA
-        # listing.pbsaBtn().click()  # clicking on PBSA button
-        # time.sleep(2)
-        # lastPaginationPbsa = int(
-        #     listing.lastPagination().text
-        # )  # getting last page count of PBSA
-        # listing.lastPagination().click()  # clicking on last page.
-        # time.sleep(2)
-        # lastPaginationPbsaPropCount = len(
-        #     listing.totalPropertyCardsBtmOnPage()
-        # )  # getting count of property cards on last page of PBSA listing.
+        # for PBSA
+        listing.pbsaBtn().click()  # clicking on PBSA button
+        time.sleep(2)
+        lastPaginationPbsa = int(
+            listing.lastPagination().text
+        )  # getting last page count of PBSA
+        listing.lastPagination().click()  # clicking on last page.
+        time.sleep(2)
+        lastPaginationPbsaPropCount = len(
+            listing.totalPropertyCardsBtmOnPage()
+        )  # getting count of property cards on last page of PBSA listing.
 
-        # totalCardCountPbsa = (
-        #     (lastPaginationPbsa - 1) * 12
-        # ) + lastPaginationPbsaPropCount  # --> total card count [ (lastPagination -1) *12 + last page property cards]
-        # log.info(totalCardCountPbsa)  # logging the PBSA card count.
+        totalCardCountPbsa = (
+            (lastPaginationPbsa - 1) * 12
+        ) + lastPaginationPbsaPropCount  # --> total card count [ (lastPagination -1) *12 + last page property cards]
+        log.info(totalCardCountPbsa)  # logging the PBSA card count.
 
-        # # for HMO
-        # listing.hmoBtn().click()  # clicking on HMO button
-        # time.sleep(3)
-        # lastPaginationHmo = int(
-        #     listing.lastPagination().text
-        # )  # getting last page count of HMO
-        # listing.lastPagination().click()  # clicking on last page of HMO
-        # time.sleep(2)
-        # lastPaginationHmoPropCount = len(
-        #     listing.totalPropertyCardsBtmOnPage()
-        # )  # getting last page property cards on last page of HMO listing.
-        # totalCardCountHmo = (
-        #     (lastPaginationHmo - 1) * 12
-        # ) + lastPaginationHmoPropCount  # --> total card count [ (lastPagination -1) *12 + last page property cards]
-        # log.info(totalCardCountHmo)  # logging the HMO card count
+        # for HMO
+        listing.hmoBtn().click()  # clicking on HMO button
+        time.sleep(3)
+        lastPaginationHmo = int(
+            listing.lastPagination().text
+        )  # getting last page count of HMO
+        listing.lastPagination().click()  # clicking on last page of HMO
+        time.sleep(2)
+        lastPaginationHmoPropCount = len(
+            listing.totalPropertyCardsBtmOnPage()
+        )  # getting last page property cards on last page of HMO listing.
+        totalCardCountHmo = (
+            (lastPaginationHmo - 1) * 12
+        ) + lastPaginationHmoPropCount  # --> total card count [ (lastPagination -1) *12 + last page property cards]
+        log.info(totalCardCountHmo)  # logging the HMO card count
 
         # # ------------------------------- validating the stay count and total property count.
 
-        # if totalCardCountPbsa == pbsaStayCount and totalCardCountHmo == hmoStayCount:
-        #     log.info("stay count and property card count are same")
-        # else:
-        #     log.critical("stay count and property card count are not equal plz check")
+        if totalCardCountPbsa == pbsaStayCount and totalCardCountHmo == hmoStayCount:
+            log.info("stay count and property card count are same")
+        else:
+            log.critical("stay count and property card count are not equal plz check")
 
         # ---------------------------------- Distance filter validations ---------------------------------.
 
@@ -216,7 +219,7 @@ class Test_lising(Invokation):
         else:
             log.warning("Price low to high filter is not working fine")
 
-        # ----------------------------------------------- Price High to Low filter validations -------------------------------------
+        # # ----------------------------------------------- Price High to Low filter validations -------------------------------------
 
         listing.pbsaBtn().click()  # cicking on PBSA
         for (
@@ -260,7 +263,7 @@ class Test_lising(Invokation):
         else:
             log.warning("Price high to low filter is not working fine")
 
-        # -------------------------------- Best offer filter validation -----------------------------
+        # # -------------------------------- Best offer filter validation -----------------------------
 
         listing.pbsaBtn().click()  # click on PBSA
         for closeBtn in listing.filterPillClose():  # closing all pre-applied filter
@@ -300,7 +303,7 @@ class Test_lising(Invokation):
         else:
             log.warning("best offer filter is not working fine.")
 
-        # -------------------------------- Most popular filter validation -----------------------------
+        # # -------------------------------- Most popular filter validation -----------------------------
 
         listing.pbsaBtn().click()
         for closeBtn in listing.filterPillClose():
@@ -317,7 +320,7 @@ class Test_lising(Invokation):
 
         log.info("most popular property names --> %s", propertyName_list)
 
-        # ---------------------------------- start price and end price validation -----------------------
+        # # ---------------------------------- start price and end price validation -----------------------
 
         listing.pbsaBtn().click()
 
@@ -365,7 +368,7 @@ class Test_lising(Invokation):
         listing.filterMostPopularBtn()
         listing.filterShowResultBtn().click()  # selecting the most popular filter
 
-        # ------------------------------------ Add to favorites ---------------------------------------------
+        # # ------------------------------------ Add to favorites ---------------------------------------------
 
         # for new user
         listing.addToFavIconOne().click()  # Add to favorite [ login / sign up popup will appear ]
@@ -423,23 +426,219 @@ class Test_lising(Invokation):
 
         # --------------------------------- compare widget validations ----------------------------------------
 
-        listing.compareWidgetBtn().click()
-        assert listing.goToCompareBtn().is_displayed()
-
-        listing.goToCompareBtn().click()
+        listing.compareWidgetBtn().click()  # openin the compare widget
         assert (
-            self.driver.current_url
-            == "https://www.universityliving.com/compare-property?ul_utm_source=city-desktop-website"
-        )
+            listing.goToCompareBtn().is_displayed()
+        )  # asserting the go to compare button displayed property
 
-        self.drvier.back()
+        listing.goToCompareBtn().click()  # moving to compare page using go to compare button.
+        time.sleep(3)
+        # assert (
+        #     self.driver.current_url
+        #     == "https://www.universityliving.com/compare-property?ul_utm_source=city-desktop-website"
+        # )
+
+        self.driver.back()  # moving back to listing page
+        time.sleep(3)
 
         propertyNames = []
-        for properties in listing.propertyNames():
+        for (
+            properties
+        ) in listing.propertyNames():  #   adding property names in temporary list
             propertyNames.append(properties.text)
 
-        if len(propertyNames < 5 and propertyNames > 0):
-            count = 0
-            while count < 5:
-                listing.addToCompareBtn()[count].click()
-                time.sleep(3)
+        addToCompareEventList = []
+        for (
+            i
+        ) in (
+            listing.addToCompareBtn()
+        ):  # adding add to compare elements in temporary list
+            addToCompareEventList.append(i)
+
+        compareCount = 0
+        while compareCount < 4:  # clicking on the add to compare till 4th element
+            addToCompareEventList[compareCount].click()
+            compareCount = compareCount + 1
+
+        listing.compareWidgetBtn().click()
+        compareWidgetProperteis = []
+        for item in listing.compareWidgetPropertiesName():
+            compareWidgetProperteis.append(item.text)
+
+        assert listing.compareWidgetBtnCount().text == "4"
+
+        log.info("listing properties -> %s", propertyNames[0:4])
+        log.info("widget property names -> %s", compareWidgetProperteis)
+
+        assert propertyNames[0:4] == compareWidgetProperteis
+
+        # ------------------------------------------ university selction validations ----------------------------------------
+
+        listing.selectUniversityBar().click()  # opening the unviersity bar
+        universities = []
+        for (
+            item
+        ) in (
+            listing.universityNameList()
+        ):  # getting all university name list with city and country names
+            universities.append(item.text)
+
+        try:
+            while (
+                listing.universityNameList()[-1].text == "Load more"
+            ):  # clicking on load more and selcting the last university
+                listing.universityNameList()[-1].click()
+
+            log.info(
+                "last university name -> %s", listing.universityNameList()[-1].text
+            )
+            listing.universityNameList()[-1].click()
+            log.info("universities name list -> %s", universities)
+
+            time.sleep(3)
+        except (
+            Exception
+        ):  # if no load more element is present then select the first university
+            listing.universityNameList()[0].click()
+            log.info("universities name list -> %s", universities)
+
+        listing.filterByBtn().click()  # opening the filter window
+        listing.filterShowResultBtn().click()  # clicking on the show result btn
+
+        filterKeyAfterUniversity = []  # temporary list for filter key
+        filterValueAfterUniversity = []  # temporary list for filter value
+
+        for item in listing.filterPillKey():
+            filterKeyAfterUniversity.append(
+                item.text
+            )  # getting all the applied filter keys
+
+        for item in listing.filterPillValue():
+            filterValueAfterUniversity.append(
+                item.text
+            )  # getting all the applied filter values
+
+        log.info("filter key ->%s", filterKeyAfterUniversity)
+        log.info("filter value ->%s", filterValueAfterUniversity)
+
+        appliedFilters = []
+        for i in range(
+            0, len(filterKeyAfterUniversity)
+        ):  # appending key-value pair for the applied filters
+            appliedFilters.append(
+                filterKeyAfterUniversity[i] + filterValueAfterUniversity[i]
+            )
+
+        log.info("applied filters -->%s", appliedFilters)
+
+        assert appliedFilters == [
+            "FillingFast: Yes",
+            "Sort: Distance",
+        ]  # asserting the applied filters after selection of university.
+
+        # ----------------------------------------- near by places validations --------------------------
+
+        isNearBy = listing.nearByText().is_displayed()
+
+        if isNearBy:
+            log.info("near by places are available on the listing page")
+            nearBylist = []
+            for places in listing.nearByPlacesNames():
+                nearBylist.append(places.text)
+
+            log.info("near by places ->%s", nearBylist)
+
+        else:
+            log.info("no near by places are present")
+
+        # ------------------------------------ help center validation ---------------------------------
+
+        assert listing.helpCenterLinkFAQ().is_displayed()
+
+        listing.helpCenterLinkFAQ().click()
+        time.sleep(3)
+
+        helpCentreRedirectionUrl = self.driver.current_url
+
+        assert helpCentreRedirectionUrl == Test_lising.faqPageUrl
+        self.driver.back()
+
+        log.info("FAQ help centre link redirection is working fine.")
+
+        # -------------------------------- city desription validations ------------------------------
+
+        isCityDescription = listing.cityDescMainTitle().is_displayed()
+        if isCityDescription:
+            log.info(listing.cityDescMainTitle().text)
+            assert (
+                listing.cityDescMainTitle().text
+                == "Best " + cityKey.capitalize() + " Accommodation For Students"
+            )
+        else:
+            log.warning("city description is missing")
+
+        # FAQ testing
+
+        isFAQ = listing.faqTitleText().is_displayed()
+
+        if isFAQ:
+            listedFAQ = []
+            for faq in listing.allFAQs():
+                listedFAQ.append(faq.text)
+
+            log.info("Listed FAQs on the pages ->%s", listedFAQ)
+            log.info("Total FAQs on page -> " + str(len(listedFAQ)))
+
+        else:
+            log.critical("FAQs are not present for the respective city")
+
+        # opening all faqs
+
+        for faq in listing.allFAQs():
+            faq.click()
+
+        # --------------------------------------- university cases validation ------------------------------------------
+
+        listing.selectUniversityBar().click()
+        uni = []
+        for item in listing.uniNameOnly():
+            uni.append(item.text)
+        log.info(uni)
+
+        firstUniName = uni[0]
+        listing.uniNameOnly()[0].click()
+
+        isUniDesc = listing.cityDescMainTitle().is_displayed()
+        if isUniDesc:
+            log.info("university description is present")
+            cleaned_text = re.sub(r"\([^)]*\)", "", firstUniName)
+
+            log.info(listing.cityDescMainTitle().text)
+            log.info("Everything about student accommodation near " + cleaned_text)
+            assert (
+                listing.cityDescMainTitle().text
+                == "Everything about student accommodation near "
+                + cleaned_text.rstrip()
+            )
+        else:
+            log.warning("university / campus description is not present")
+
+        # -FAQ testing
+
+        isFAQ = listing.faqTitleText().is_displayed()
+
+        if isFAQ:
+            listedFAQ = []
+            for faq in listing.allFAQs():
+                listedFAQ.append(faq.text)
+
+            log.info("Listed FAQs on the pages ->%s", listedFAQ)
+            log.info("Total FAQs on page -> " + str(len(listedFAQ)))
+
+        else:
+            log.critical("FAQs are not present for the respective university")
+
+        # opening all faqs
+
+        for faq in listing.allFAQs():
+            faq.click()
