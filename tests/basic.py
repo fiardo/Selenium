@@ -1,6 +1,7 @@
-import re
+import requests
 
-text = "112 Places to Stay"
-number = int("".join(re.findall(r"\d+", text)))
+url = "https://api-next.devbeta.in/v1/mix/country-list"
 
-print(type(number))
+response = requests.get(url=url)
+
+print(response)
