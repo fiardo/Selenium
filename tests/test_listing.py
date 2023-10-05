@@ -31,6 +31,7 @@ class Test_lising(Invokation):
     newEmail = res + ".university@yopmail.com"
     faqPageUrl = "https://www.universityliving.com/faq"
 
+    @mark.testomatio("@T561e803d")
     def test_listing_e2e(self):
         log = self.getLogger()
         self.driver.implicitly_wait(5)
@@ -39,22 +40,16 @@ class Test_lising(Invokation):
         loginPopUPObj = loginpopupClass(self.driver)
         header = Headerclass(self.driver)
         loginEmail = "harsh.sachan@universityliving.com"
-
         try:
             self.driver.find_element(By.XPATH, "//button[text()='Accept']").click()
         except Exception:
             pass
-
-        cityKey = "london"  # selectd city for automation
+        cityKey = "london"
         log.info("selected city for listing automation " + cityKey)
-
         homepageObj.searchbar().send_keys(cityKey)
         time.sleep(3)
         homepageObj.searchbar().send_keys(Keys.ENTER)
         log.info("search bar is working fine")
-
-        # asserting important elements of page
-
         assert listing.selectUniversityBar().is_displayed()
         assert listing.filterByBtn().is_displayed()
         log.info("filters are available on the selected listing page")
@@ -69,7 +64,6 @@ class Test_lising(Invokation):
         log.info("help centre FAQ link is present")
         assert listing.breadCrumCity().text == cityKey.capitalize()
         log.info("city name is correct in listing breadcrum")
-
         isCityDescription = listing.cityDescMainTitle().is_displayed()
         if isCityDescription:
             log.info(listing.cityDescMainTitle().text)
@@ -79,258 +73,67 @@ class Test_lising(Invokation):
             )
         else:
             log.warning("city description is missing")
-
-        # --------------------------------------- property stay count of PBSA ---------------------------------------
-
-        listing.pbsaBtn().click()  # click on PBSA.
+        listing.pbsaBtn().click()
         time.sleep(2)
         pbsaStayText = listing.placesToStayCount().text
         pbsaStayCount = int("".join(re.findall("\\d", pbsaStayText)))
-        log.info(
-            "stay count on PBSA -->" + str(pbsaStayCount)
-        )  # logging the PBSA stay count.
-
-        # # -------------------------------------- property stay count of HMO ---------------------------------------
-
-        listing.hmoBtn().click()  # click on HMO
+        log.info("stay count on PBSA -->" + str(pbsaStayCount))
+        listing.hmoBtn().click()
         time.sleep(2)
         hmoStayText = listing.placesToStayCount().text
         hmoStayCount = int("".join(re.findall("\\d", hmoStayText)))
-        log.info(
-            "stay count on HMO -->" + str(pbsaStayCount)
-        )  # logging the HMO stay count.
-
-        # # ----------------------------------------- calculating the total stay count ( PBSA stay count + HMO stay count )----------------------------------------
-
+        log.info("stay count on HMO -->" + str(hmoStayCount))
         totalStayCount = pbsaStayCount + hmoStayCount
-        log.info(
-            "total stay count [ PBSA + HMO ] --> " + str(totalStayCount)
-        )  # logging the total stay count of PBSA and HMO
-
-        # # ------------------------------------- calculating the total card count of PBSA and HMO ----------------------------------------------------------
-
-        # for PBSA
-        listing.pbsaBtn().click()  # clicking on PBSA button
+        log.info("total stay count [ PBSA + HMO ] --> " + str(totalStayCount))
+        listing.pbsaBtn().click()
         time.sleep(2)
-        lastPaginationPbsa = int(
-            listing.lastPagination().text
-        )  # getting last page count of PBSA
-        listing.lastPagination().click()  # clicking on last page.
+        lastPaginationPbsa = int(listing.lastPagination().text)
+        listing.lastPagination().click()
         time.sleep(2)
-        lastPaginationPbsaPropCount = len(
-            listing.totalPropertyCardsBtmOnPage()
-        )  # getting count of property cards on last page of PBSA listing.
-
-        totalCardCountPbsa = (
-            (lastPaginationPbsa - 1) * 12
-        ) + lastPaginationPbsaPropCount  # --> total card count [ (lastPagination -1) *12 + last page property cards]
-        log.info(
-            "total property cards present on PBSA -->" + str(totalCardCountPbsa)
-        )  # logging the PBSA card count.
-
-        # for HMO
-        listing.hmoBtn().click()  # clicking on HMO button
+        lastPaginationPbsaPropCount = len(listing.totalPropertyCardsBtmOnPage())
+        totalCardCountPbsa = (lastPaginationPbsa - 1) * 12 + lastPaginationPbsaPropCount
+        log.info("total property cards present on PBSA -->" + str(totalCardCountPbsa))
+        listing.hmoBtn().click()
         time.sleep(3)
-        lastPaginationHmo = int(
-            listing.lastPagination().text
-        )  # getting last page count of HMO
-        listing.lastPagination().click()  # clicking on last page of HMO
+        lastPaginationHmo = int(listing.lastPagination().text)
+        listing.lastPagination().click()
         time.sleep(2)
-        lastPaginationHmoPropCount = len(
-            listing.totalPropertyCardsBtmOnPage()
-        )  # getting last page property cards on last page of HMO listing.
-        totalCardCountHmo = (
-            (lastPaginationHmo - 1) * 12
-        ) + lastPaginationHmoPropCount  # --> total card count [ (lastPagination -1) *12 + last page property cards]
-        log.info(
-            "total property cards present on HMO -->" + str(totalCardCountHmo)
-        )  # logging the HMO card count
-
-        # # ------------------------------- validating the stay count and total property count.
-
+        lastPaginationHmoPropCount = len(listing.totalPropertyCardsBtmOnPage())
+        totalCardCountHmo = (lastPaginationHmo - 1) * 12 + lastPaginationHmoPropCount
+        log.info("total property cards present on HMO -->" + str(totalCardCountHmo))
         if totalCardCountPbsa == pbsaStayCount and totalCardCountHmo == hmoStayCount:
             log.info(
                 "stay count and property card count is same for both category type"
             )
         else:
             log.critical("stay count and property card count are not equal plz check")
-
-        # ---------------------------------- Distance filter validations ---------------------------------.
-
-        listing.pbsaBtn().click()  # clicking on PBSA btn
-        listing.filterByBtn().click()  # opne filters
-        listing.filterShowResultBtn().click()  # clickin on show result button so to get all the pre-applied filters
-
-        for (
-            clsoeBtn
-        ) in listing.filterPillClose():  # removing all the pre-applied filters
+        listing.pbsaBtn().click()
+        listing.filterByBtn().click()
+        listing.filterShowResultBtn().click()
+        for clsoeBtn in listing.filterPillClose():
             clsoeBtn.click()
-
-        # applying the distance filter only.
         listing.filterByBtn().click()
         listing.filterDistanceBtn().click()
         listing.filterShowResultBtn().click()
-
-        distanceList = (
-            []
-        )  # will contain all distance value on listing when distance filter is applied.
-        for (
-            distances
-        ) in (
-            listing.propertyDistances()
-        ):  # adding distance values ( but the value will appears in miles format -> .13 miles,[need to remove miles] )
-            distanceList.append(distances.text)
+        time.sleep(3)
+        distanceList = []
+        for distances in listing.propertyDistances():
+            try:
+                distanceList.append(distances.text)
+            except Exception:
+                listing.propertyDistances()
+                distanceList.append(distances.text)
 
         cleanDistance_List = [
             float(item.replace(" miles", "")) for item in distanceList
-        ]  # new cleaned list ( which contains distance without miles text )
-
+        ]
         log.info("Distance list after after filter application %s", cleanDistance_List)
-
-        # validating the distance sort filter
-
-        sortedDistace = sorted(
-            cleanDistance_List
-        )  # sorting the cleaned list from low to high.
-
+        sortedDistace = sorted(cleanDistance_List)
         log.info("Sorted distance list from low ot high %s", sortedDistace)
-
         if sortedDistace == cleanDistance_List:
             log.info("Distance filter is working fine")
         else:
             log.warning("Distance filter is not workig fine plz check")
-
-        # ----------------------------------------------- Price Low to high filter validations -------------------------------------
-
-        listing.pbsaBtn().click()  # cicking on PBSA
-        for (
-            closeBtn
-        ) in listing.filterPillClose():  # removing all the pre-applied filters
-            closeBtn.click()
-
-        listing.filterByBtn().click()  # opening the filters
-        listing.filterPriceLowToHighBtn().click()  # applying the price low to high filter
-        listing.filterShowResultBtn().click()
-
-        priceList = (
-            []
-        )  # this array will hold the values of price after filter application.
-
-        for (
-            priceLowToHigh
-        ) in listing.propertyPrices():  # adding filters to the priceList Array
-            priceList.append(priceLowToHigh.text)
-
-        log.info("price list after filter application %s", priceList)
-
-        currencyList = []  # currency list to hold the currency value
-        for value in priceList[0]:
-            currencyList.append(value)
-        currency = currencyList[0]  # extracting the currency from the list
-
-        cleanedPriceLowToHigh_list = [
-            float(item.replace("/week", "").replace(currency, "").strip())
-            for item in priceList
-        ]  # removing /week and currecny from the list
-        # validating the price low to high filter
-
-        log.info(
-            "cleaned price low to high integer list -->%s", cleanedPriceLowToHigh_list
-        )
-
-        sortedPriceList = sorted(cleanedPriceLowToHigh_list)
-        log.info("sorted list price low to high %s", sortedPriceList)
-        if sortedPriceList == cleanedPriceLowToHigh_list:
-            log.info("Price low to high filter is working fine")
-        else:
-            log.warning("Price low to high filter is not working fine")
-
-        # # ----------------------------------------------- Price High to Low filter validations -------------------------------------
-
-        listing.pbsaBtn().click()  # cicking on PBSA
-        for (
-            closeBtn
-        ) in listing.filterPillClose():  # removing all the pre-applied filters
-            closeBtn.click()
-
-        listing.filterByBtn().click()  # opening the filters
-        listing.filterPriceHighToLowBtn().click()  # applying the price low to high filter
-        listing.filterShowResultBtn().click()
-
-        priceList = (
-            []
-        )  # this array will hold the values of price after filter application.
-
-        for (
-            priceHighToLow
-        ) in listing.propertyPrices():  # adding filters to the priceList Array
-            priceList.append(priceHighToLow.text)
-
-        log.info("price high to low list -->%s", priceList)
-
-        currencyList = []  # currency list to hold the currency value
-        for value in priceList[0]:
-            currencyList.append(value)
-        currency = currencyList[0]  # extracting the currency from the list
-
-        cleanedPriceHighToLow_list = [
-            float(item.replace("/week", "").replace(currency, "").strip())
-            for item in priceList
-        ]  # removing /week and currecny from the list
-        # validating the price low to high filter
-
-        log.info("cleaned price high to low list -->%s", cleanedPriceHighToLow_list)
-
-        sortedPriceList = sorted(cleanedPriceHighToLow_list)
-        log.info("sorted list price high to low %s", sortedPriceList[::-1])
-
-        if sortedPriceList[::-1] == cleanedPriceHighToLow_list:
-            log.info("Price high to low filter is working fine")
-        else:
-            log.warning("Price high to low filter is not working fine")
-
-        # # -------------------------------- Best offer filter validation -----------------------------
-
-        listing.pbsaBtn().click()  # click on PBSA
-        for closeBtn in listing.filterPillClose():  # closing all pre-applied filter
-            closeBtn.click()
-
-        listing.filterByBtn().click()  # opening filter
-        listing.filterBestOfferBtn().click()  # applying bes offer filter
-        listing.filterShowResultBtn().click()
-
-        offerList = []  # list to hold the offers values from the page
-
-        for (
-            offer
-        ) in listing.offerUptoValue():  # adding offer values to the above temp list
-            offerList.append(offer.text)
-
-        log.info("offer list --> %s", offerList)  # logging the offer list
-
-        currencyList = []  # currency list to hold the currency value
-        for value in priceList[0]:
-            currencyList.append(value)
-        currency = currencyList[0]
-
-        cleanedBestOffer_list = [
-            int(item.replace(currency, "").replace(",", "").strip())
-            for item in offerList
-        ]  # removing the currency from the offer values
-
-        log.info(
-            "cleaned best offer list -->%s", cleanedBestOffer_list
-        )  # logging the cleaned best offer list [ without currency ]
-
-        sortedOfferList = sorted(cleanedBestOffer_list)  # sorting the offer list
-
-        if sortedOfferList[::-1] == cleanedBestOffer_list:  # validating the sorted list
-            log.info("best offer filter is working fine")
-        else:
-            log.warning("best offer filter is not working fine.")
-
-        # # -------------------------------- Most popular filter validation -----------------------------
-
         listing.pbsaBtn().click()
         for closeBtn in listing.filterPillClose():
             closeBtn.click()
@@ -342,7 +145,129 @@ class Test_lising(Invokation):
             time.sleep(3)
             self.driver.find_element(By.ID, "min_window").click()
             self.driver.switch_to.default_content()
+            listing.filterByBtn().click()
 
+        listing.filterPriceLowToHighBtn().click()
+        listing.filterShowResultBtn().click()
+        time.sleep(2)
+        priceList = []
+        for priceLowToHigh in listing.propertyPrices():
+            priceList.append(priceLowToHigh.text)
+        log.info("price list after filter application %s", priceList)
+        currencyList = []
+        for value in priceList[0]:
+            currencyList.append(value)
+        currency = currencyList[0]
+        cleanedPriceLowToHigh_list = [
+            float(item.replace("/week", "").replace(currency, "").strip())
+            for item in priceList
+        ]
+        log.info(
+            "cleaned price low to high integer list -->%s", cleanedPriceLowToHigh_list
+        )
+        sortedPriceList = sorted(cleanedPriceLowToHigh_list)
+        log.info("sorted list price low to high %s", sortedPriceList)
+        if sortedPriceList == cleanedPriceLowToHigh_list:
+            log.info("Price low to high filter is working fine")
+        else:
+            log.warning("Price low to high filter is not working fine")
+        listing.pbsaBtn().click()
+        for closeBtn in listing.filterPillClose():
+            closeBtn.click()
+        try:
+            listing.filterByBtn().click()
+        except Exception:
+            self.driver.switch_to.frame(self.driver.find_element(By.ID, "siqiframe"))
+            time.sleep(3)
+            self.driver.find_element(By.ID, "min_window").click()
+            self.driver.switch_to.default_content()
+            time.sleep(3)
+            listing.filterByBtn().click()
+
+        # listing.filterPriceHighToLowBtn().click()
+        try:
+            listing.filterPriceHighToLowBtn().click()
+            listing.filterShowResultBtn().click()
+        except Exception:
+            self.driver.switch_to.frame(self.driver.find_element(By.ID, "siqiframe"))
+            time.sleep(3)
+            self.driver.find_element(By.ID, "min_window").click()
+            self.driver.switch_to.default_content()
+            listing.filterPriceHighToLowBtn().click()
+            listing.filterShowResultBtn().click()
+
+        time.sleep(2)
+        priceList = []
+        for priceHighToLow in listing.propertyPrices():
+            priceList.append(priceHighToLow.text)
+        log.info("price high to low list -->%s", priceList)
+        currencyList = []
+        for value in priceList[0]:
+            currencyList.append(value)
+        currency = currencyList[0]
+        cleanedPriceHighToLow_list = [
+            float(item.replace("/week", "").replace(currency, "").strip())
+            for item in priceList
+        ]
+        log.info("cleaned price high to low list -->%s", cleanedPriceHighToLow_list)
+        sortedPriceList = sorted(cleanedPriceHighToLow_list)
+        log.info("sorted list price high to low %s", sortedPriceList[::-1])
+        if sortedPriceList[::-1] == cleanedPriceHighToLow_list:
+            log.info("Price high to low filter is working fine")
+        else:
+            log.warning("Price high to low filter is not working fine")
+        listing.pbsaBtn().click()
+        for closeBtn in listing.filterPillClose():
+            closeBtn.click()
+        try:
+            listing.filterByBtn().click()
+        except Exception:
+            self.driver.switch_to.frame(self.driver.find_element(By.ID, "siqiframe"))
+            time.sleep(3)
+            self.driver.find_element(By.ID, "min_window").click()
+            self.driver.switch_to.default_content()
+            listing.filterByBtn().click()
+
+        listing.filterBestOfferBtn().click()
+        try:
+            listing.filterShowResultBtn().click()
+        except Exception:
+            self.driver.switch_to.frame(self.driver.find_element(By.ID, "siqiframe"))
+            time.sleep(3)
+            self.driver.find_element(By.ID, "min_window").click()
+            self.driver.switch_to.default_content()
+            listing.filterShowResultBtn().click()
+
+        time.sleep(2)
+        offerList = []
+        for offer in listing.offerUptoValue():
+            offerList.append(offer.text)
+        log.info("offer list --> %s", offerList)
+        currencyList = []
+        for value in priceList[0]:
+            currencyList.append(value)
+        currency = currencyList[0]
+        cleanedBestOffer_list = [
+            int(item.replace(currency, "").replace(",", "").strip())
+            for item in offerList
+        ]
+        log.info("cleaned best offer list -->%s", cleanedBestOffer_list)
+        sortedOfferList = sorted(cleanedBestOffer_list)
+        if sortedOfferList[::-1] == cleanedBestOffer_list:
+            log.info("best offer filter is working fine")
+        else:
+            log.warning("best offer filter is not working fine.")
+        listing.pbsaBtn().click()
+        for closeBtn in listing.filterPillClose():
+            closeBtn.click()
+        try:
+            listing.filterByBtn().click()
+        except Exception:
+            self.driver.switch_to.frame(self.driver.find_element(By.ID, "siqiframe"))
+            time.sleep(3)
+            self.driver.find_element(By.ID, "min_window").click()
+            self.driver.switch_to.default_content()
+            listing.filterByBtn().click()
         listing.filterMostPopularBtn().click()
         try:
             listing.filterShowResultBtn().click()
@@ -351,26 +276,17 @@ class Test_lising(Invokation):
             time.sleep(3)
             self.driver.find_element(By.ID, "min_window").click()
             self.driver.switch_to.default_content()
-
         propertyName_list = []
-
         for propNames in listing.propertyNames():
             propertyName_list.append(propNames.text)
-
         log.info("most popular property names --> %s", propertyName_list)
-
-        # # ---------------------------------- start price and end price validation -----------------------
-
         listing.pbsaBtn().click()
-
         for closeBtn in listing.filterPillClose():
             closeBtn.click()
-
         listing.filterByBtn().click()
         listing.startPriceInput().send_keys(200)
         time.sleep(5)
         listing.endPriceInput().send_keys(250)
-
         try:
             listing.filterShowResultBtn().click()
         except Exception:
@@ -378,51 +294,38 @@ class Test_lising(Invokation):
             time.sleep(3)
             self.driver.find_element(By.ID, "min_window").click()
             self.driver.switch_to.default_content()
-
             time.sleep(3)
             listing.filterShowResultBtn().click()
 
+        time.sleep(2)
         priceList = []
         for prices in listing.propertyPrices():
             priceList.append(prices.text)
-            time.sleep(0.5)
-
+            time.sleep(1)
         log.info("price list ->%s", priceList)
-
-        currencyList = []  # currency list to hold the currency value
+        currencyList = []
         for value in priceList[0]:
             currencyList.append(value)
-        currency = currencyList[0]  # extracting the currency from the list
-
+        currency = currencyList[0]
         cleanedPrice_list = [
             float(item.replace("/week", "").replace(currency, "").strip())
             for item in priceList
-        ]  # removing /week and currecny from the list
-        # validating the price low to high filter
-
+        ]
         log.info("cleaned price low to high integer list -->%s", cleanedPrice_list)
-
-        for value in cleanedPrice_list:  # compare the ranged values
+        for value in cleanedPrice_list:
             if value >= 200 and value <= 250:
                 flag = True
             else:
                 flag = False
-
-        if flag == True:  # logging the comparison result
+        if flag == True:
             log.info("start and end price filter is working fine")
         elif flag == False:
             log.warning("start and end price filter is not working fine")
-
         listing.filterByBtn().click()
-        listing.filterClearAllBtn().click()  # reseting the filter
+        listing.filterClearAllBtn().click()
         listing.filterMostPopularBtn()
-        listing.filterShowResultBtn().click()  # selecting the most popular filter
-
-        # # ------------------------------------ Add to favorites ---------------------------------------------
-
-        # for new user
-        listing.addToFavIconOne().click()  # Add to favorite [ login / sign up popup will appear ]
-
+        listing.filterShowResultBtn().click()
+        listing.addToFavIconOne().click()
         loginPopUPObj.emailfield().send_keys(Test_lising.newEmail.lower())
         log.info(
             "used email id for add to favorite-->" + str(Test_lising.newEmail.lower())
@@ -442,220 +345,121 @@ class Test_lising(Invokation):
         loginPopUPObj.otpfourth().send_keys("4")
         loginPopUPObj.otpfifth().send_keys("5")
         loginPopUPObj.continueBtn().click()
-
-        listing.addToFavIconOne().click()  # clicking again on first property fav icon to add the propperty in wishlist.
-        listing.addToFavIconTwo().click()  # clicking on second property fav icon to add the property in wishlist.
-        listing.addFavToaster().is_displayed()  # validate the toaster appearance
-
-        propertynames = []  # temporary list
-
-        for prop in listing.propertyNames():  # adding property names in the temp list
+        listing.addToFavIconOne().click()
+        listing.addToFavIconTwo().click()
+        listing.addFavToaster().is_displayed()
+        propertynames = []
+        for prop in listing.propertyNames():
             propertynames.append(prop.text)
-
-        addToFavProperty = propertynames[
-            0:2
-        ]  # getting two properties which have been added in list
+        addToFavProperty = propertynames[0:2]
         log.info("Add to favorite properties-->%s", addToFavProperty)
-        loginPopUPObj.profileIcon().click()  # opening the dashboard
+        loginPopUPObj.profileIcon().click()
         time.sleep(5)
-        loginPopUPObj.wishListSection().click()  # opening the wishlist section
-
-        wishlistPropertyNames = []  # temporary list for wishlist properties
-
-        for (
-            prop
-        ) in (
-            loginPopUPObj.wishListPropertyNames()
-        ):  # adding the wishlist property names to the temporary list
+        loginPopUPObj.wishListSection().click()
+        wishlistPropertyNames = []
+        for prop in loginPopUPObj.wishListPropertyNames():
             wishlistPropertyNames.append(prop.text)
-
         log.info("Property names in profile wishlist -->%s", wishlistPropertyNames[0:2])
-
-        if (
-            addToFavProperty[0:2] == wishlistPropertyNames[0:2]
-        ):  # compare the properties names in wishlist from the listing.
+        if addToFavProperty[0:2] == wishlistPropertyNames[0:2]:
             log.info("add to favorite is working fine")
         else:
             log.warning("add to favorite is not working fine.")
-
         self.driver.back()
         self.driver.back()
-
-        # --------------------------------- compare widget validations ----------------------------------------
-
-        listing.compareWidgetBtn().click()  # openin the compare widget
-        assert (
-            listing.goToCompareBtn().is_displayed()
-        )  # asserting the go to compare button displayed property
-
-        listing.goToCompareBtn().click()  # moving to compare page using go to compare button.
+        listing.compareWidgetBtn().click()
+        assert listing.goToCompareBtn().is_displayed()
+        listing.goToCompareBtn().click()
         time.sleep(3)
-        # assert (
-        #     self.driver.current_url
-        #     == "https://www.universityliving.com/compare-property?ul_utm_source=city-desktop-website"
-        # )
-
-        self.driver.back()  # moving back to listing page
+        self.driver.back()
         time.sleep(3)
-
         propertyNames = []
-        for (
-            properties
-        ) in listing.propertyNames():  #   adding property names in temporary list
+        for properties in listing.propertyNames():
             propertyNames.append(properties.text)
-
         addToCompareEventList = []
-        for (
-            i
-        ) in (
-            listing.addToCompareBtn()
-        ):  # adding add to compare elements in temporary list
+        for i in listing.addToCompareBtn():
             addToCompareEventList.append(i)
-
         compareCount = 0
-        while compareCount < 4:  # clicking on the add to compare till 4th element
+        while compareCount < 4:
             addToCompareEventList[compareCount].click()
             compareCount = compareCount + 1
-
         listing.compareWidgetBtn().click()
         compareWidgetProperteis = []
         for item in listing.compareWidgetPropertiesName():
             compareWidgetProperteis.append(item.text)
-
         assert listing.compareWidgetBtnCount().text == "4"
-
         log.info("added properties in compare -> %s", propertyNames[0:4])
         log.info("widget property names -> %s", compareWidgetProperteis)
-
         assert propertyNames[0:4] == compareWidgetProperteis
-
         listing.compareWidgetBtn().click()
-
-        # ------------------------------------------ university selction validations ----------------------------------------
-
-        listing.selectUniversityBar().click()  # opening the unviersity bar
+        listing.selectUniversityBar().click()
         universities = []
-        for (
-            item
-        ) in (
-            listing.universityNameList()
-        ):  # getting all university name list with city and country names
+        for item in listing.universityNameList():
             universities.append(item.text)
-
         try:
-            while (
-                listing.universityNameList()[-1].text == "Load more"
-            ):  # clicking on load more and selcting the last university
+            while listing.universityNameList()[-1].text == "Load more":
                 listing.universityNameList()[-1].click()
-
             log.info(
                 "last university name -> %s", listing.universityNameList()[-1].text
             )
             listing.universityNameList()[-1].click()
             log.info("universities name list -> %s", universities)
-
             time.sleep(3)
-        except (
-            Exception
-        ):  # if no load more element is present then select the first university
+        except Exception:
             listing.universityNameList()[0].click()
             log.info("universities name list -> %s", universities)
-
         try:
-            listing.filterByBtn().click()  # opening the filter window
+            listing.filterByBtn().click()
         except Exception:
             self.driver.switch_to.frame(self.driver.find_element(By.ID, "siqiframe"))
             time.sleep(3)
             self.driver.find_element(By.ID, "min_window").click()
             self.driver.switch_to.default_content()
             listing.filterByBtn().click()
-
-        listing.filterShowResultBtn().click()  # clicking on the show result btn
-
-        filterKeyAfterUniversity = []  # temporary list for filter key
-        filterValueAfterUniversity = []  # temporary list for filter value
-
+        listing.filterShowResultBtn().click()
+        filterKeyAfterUniversity = []
+        filterValueAfterUniversity = []
         for item in listing.filterPillKey():
-            filterKeyAfterUniversity.append(
-                item.text
-            )  # getting all the applied filter keys
-
+            filterKeyAfterUniversity.append(item.text)
         for item in listing.filterPillValue():
-            filterValueAfterUniversity.append(
-                item.text
-            )  # getting all the applied filter values
-
+            filterValueAfterUniversity.append(item.text)
         time.sleep(3)
-
         log.info("filter key ->%s", filterKeyAfterUniversity)
         log.info("filter value ->%s", filterValueAfterUniversity)
-
         appliedFilters = []
-        for i in range(
-            0, len(filterKeyAfterUniversity)
-        ):  # appending key-value pair for the applied filters
+        for i in range(0, len(filterKeyAfterUniversity)):
             appliedFilters.append(
                 filterKeyAfterUniversity[i] + filterValueAfterUniversity[i]
             )
-
         log.info("applied filters -->%s", appliedFilters)
         time.sleep(3)
-
-        # assert appliedFilters == [
-        #     "FillingFast: Yes",
-        #     "Sort: Distance",
-        # ]  # asserting the applied filters after selection of university.
-
-        # ----------------------------------------- near by places validations --------------------------
-
         try:
             isNearBy = listing.nearByText().is_displayed()
         except Exception:
             isNearBy = False
-
         if isNearBy:
             log.info("near by places are available on the listing page")
             nearBylist = []
             for places in listing.nearByPlacesNames():
                 nearBylist.append(places.text)
-
             log.info("near by places ->%s", nearBylist)
-
         else:
             log.info("no near by places are present")
-
-        # ------------------------------------ help center validation ---------------------------------
-
         assert listing.helpCenterLinkFAQ().is_displayed()
-
         listing.helpCenterLinkFAQ().click()
         time.sleep(3)
-
         helpCentreRedirectionUrl = self.driver.current_url
-
         assert helpCentreRedirectionUrl == Test_lising.faqPageUrl
         self.driver.back()
-
         log.info("FAQ help centre link redirection is working fine.")
-
-        # -------------------------------- city desription validations ------------------------------
-
-        # FAQ testing
-
         listing.breadCrumCityUni().click()
         time.sleep(2)
         try:
             listedFAQ = []
             for faq in listing.allFAQs():
                 listedFAQ.append(faq.text)
-
             log.info("Listed FAQs on the pages ->%s", listedFAQ)
             log.info("Total FAQs on page -> " + str(len(listedFAQ)))
-
         except Exception:
             log.critical("FAQs are not present for the respective city")
-
-        # opening all faqs
-
         for faq in listing.allFAQs():
             faq.click()

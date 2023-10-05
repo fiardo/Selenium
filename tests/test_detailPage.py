@@ -17,6 +17,8 @@ import string
 
 
 class Test_Detail_page_class(Invokation):
+
+    @mark.testomatio('@T69455f89')
     def test_detail_page_validations(self):
         log = self.getLogger()
         Homepage = Homepageclass(self.driver)
@@ -24,98 +26,97 @@ class Test_Detail_page_class(Invokation):
         Detailpage = detailpageClass(self.driver)
         formObj = FormClass(self.driver)
         self.driver.implicitly_wait(5)
-        propertyName = "madrid getafe"
+        propertyName = 'madrid getafe'
         Homepage.searchbar().send_keys(propertyName)
         time.sleep(2)
         Homepage.searchbar().send_keys(Keys.ENTER)
         try:
             if Detailpage.overveiwLink().is_displayed():
-                log.info("Overview link is present")
+                log.info('Overview link is present')
             else:
-                log.warning("overview is not present")
+                log.warning('overview is not present')
         except Exception:
-            log.warning("overview link is not present")
+            log.warning('overview link is not present')
         try:
             if Detailpage.roomtypeLink().is_displayed():
-                log.info("Room type link in present")
+                log.info('Room type link in present')
             else:
-                log.warning("Room link is not present")
+                log.warning('Room link is not present')
         except Exception:
-            log.warning("Room Type link is not present")
+            log.warning('Room Type link is not present')
         try:
             if Detailpage.paymentInfoLink().is_displayed():
-                log.info("Payment info link in present")
+                log.info('Payment info link in present')
             else:
-                log.warning("Payment info link is not present")
+                log.warning('Payment info link is not present')
         except Exception:
-            log.warning("Payment info link is not present")
+            log.warning('Payment info link is not present')
         try:
             if Detailpage.reviewsLink().is_displayed():
-                log.info("Review link in present")
+                log.info('Review link in present')
             else:
-                log.warning("Review is not present")
+                log.warning('Review is not present')
         except Exception:
-            log.warning("Review link is not present")
+            log.warning('Review link is not present')
         try:
             if Detailpage.similarPropertyLink().is_displayed():
-                log.info("Similar Properties link in present")
+                log.info('Similar Properties link in present')
             else:
-                log.warning("similar Properties link is not present")
+                log.warning('similar Properties link is not present')
         except Exception:
-            log.warning("Similar Properties link is not present")
+            log.warning('Similar Properties link is not present')
         try:
             a = Detailpage.fromPrice().text
             if Detailpage.fromPrice().is_displayed():
-                log.info("Price is present-->" + a)
+                log.info('Price is present-->' + a)
             else:
-                log.warning("price is missing")
+                log.warning('price is missing')
         except Exception:
-            log.warning("Price is not available")
+            log.warning('Price is not available')
         try:
             if Detailpage.allRoomTypeBtn().is_displayed():
-                log.info("All catagory is present")
+                log.info('All catagory is present')
                 Detailpage.allRoomTypeBtn().click()
             else:
-                log.warning("All category is not available plz check")
+                log.warning('All category is not available plz check')
         except Exception:
-            log.warning("All category is not interactable plz check")
+            log.warning('All category is not interactable plz check')
         try:
             if Detailpage.studioRoomTypeBtn().is_displayed():
-                log.info("Studio catagory is present")
+                log.info('Studio catagory is present')
                 Detailpage.studioRoomTypeBtn().click()
             else:
-                log.warning("Studio category is not available plz check")
+                log.warning('Studio category is not available plz check')
         except Exception:
-            log.warning("Studio category is not interactable plz check")
+            log.warning('Studio category is not interactable plz check')
         try:
             if Detailpage.apartmentRoomTypeBtn().is_displayed():
-                log.info("Apartments catagory is present")
+                log.info('Apartments catagory is present')
                 Detailpage.apartmentRoomTypeBtn().click()
             else:
-                log.warning("Apartments category is not available plz check")
+                log.warning('Apartments category is not available plz check')
         except Exception:
-            log.warning("Apartments category is not interactable plz check")
+            log.warning('Apartments category is not interactable plz check')
         try:
             if Detailpage.ensuiteRoomTypeBtn().is_displayed():
-                log.info("Ensuite catagory is present")
+                log.info('Ensuite catagory is present')
                 Detailpage.ensuiteRoomTypeBtn().click()
             else:
-                log.warning("Ensuite category is not available plz check")
+                log.warning('Ensuite category is not available plz check')
         except Exception:
-            log.warning("Ensuite category is not interactable plz check")
+            log.warning('Ensuite category is not interactable plz check')
         try:
             if Detailpage.othersRoomTypeBtn().is_displayed():
-                log.info("All catagory is present")
+                log.info('All catagory is present')
                 Detailpage.othersRoomTypeBtn().click()
             else:
-                log.warning("Other category is not available plz check")
+                log.warning('Other category is not available plz check')
         except Exception:
-            log.warning("Other category is not interactable plz check")
+            log.warning('Other category is not interactable plz check')
         try:
             if Detailpage.viewAllPropertiesBtn().is_displayed():
                 log.info(
-                    "More than 3 properties are available in the similar cities section"
-                )
+                    'More than 3 properties are available in the similar cities section')
                 Detailpage.viewAllPropertiesBtn().click()
                 a = Detailpage.similarPropertyNames()
                 for ele in a:
@@ -123,8 +124,7 @@ class Test_Detail_page_class(Invokation):
                     log.info(prop_name)
         except Exception:
             log.warning(
-                "multiple exceptions occured in similar properties module plz check"
-            )
+                'multiple exceptions occured in similar properties module plz check')
         Detailpage.roomtypeLink().click()
         time.sleep(3)
         Detailpage.allRoomTypeBtn().click()
@@ -136,17 +136,14 @@ class Test_Detail_page_class(Invokation):
                 names = roomNames.text
                 log.info(names)
         except Exception:
-            log.warning("Error in similar property module -- plz check")
+            log.warning('Error in similar property module -- plz check')
         try:
-            if (
-                Detailpage.noVisaNoPay().is_displayed()
-                and Detailpage.noUniNoPay().is_displayed()
-            ):
-                log.info("property contains no visa no pay module")
+            if Detailpage.noVisaNoPay().is_displayed() and Detailpage.noUniNoPay().is_displayed():
+                log.info('property contains no visa no pay module')
             else:
-                log.warning("property does not have no vis no pay module")
+                log.warning('property does not have no vis no pay module')
         except Exception:
-            log.warning("property does not have no vis no pay module")
+            log.warning('property does not have no vis no pay module')
         try:
             formObj.uniIDone().click()
         except Exception:
@@ -162,22 +159,23 @@ class Test_Detail_page_class(Invokation):
                         try:
                             formObj.uniIDfive().click()
                         except Exception:
-                            log.warning("ID is not interactable")
+                            log.warning('ID is not interactable')
         universities_in_select_university = Detailpage.universityCount()
-        log.info("total university -->" + str(len(universities_in_select_university)))
+        log.info('total university -->' +
+                 str(len(universities_in_select_university)))
         try:
             if Detailpage.booknowButton().is_displayed():
                 bookNowCount = Detailpage.BookNowCount()
-                log.info("total book now count " + str(len(bookNowCount)))
+                log.info('total book now count ' + str(len(bookNowCount)))
             else:
-                log.warning("No Book Now property is Available")
+                log.warning('No Book Now property is Available')
         except Exception:
-            log.warning("No Book Now property is Available")
+            log.warning('No Book Now property is Available')
         try:
             if Detailpage.joinwaitlistBtn().is_displayed():
                 bookNowCount = Detailpage.joinWaitlistCount()
-                log.info("total Join waitlist count " + str(len(bookNowCount)))
+                log.info('total Join waitlist count ' + str(len(bookNowCount)))
             else:
-                log.warning("No Join waitlist room is Available")
+                log.warning('No Join waitlist room is Available')
         except Exception:
-            log.warning("No Join waitlist room is Available")
+            log.warning('No Join waitlist room is Available')

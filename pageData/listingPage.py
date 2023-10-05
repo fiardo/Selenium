@@ -9,6 +9,7 @@ class listingClass:
 
     breadCrum_selector = (By.XPATH, "//nav/ol/li/a")
     breadCrumCity_selector = (By.XPATH, "(//nav/ol/li/span)[3]")
+    breadCrumCityUni_selector = (By.XPATH, "(//nav/ol/li/a)[3]")
 
     # accommodation title selector
     accTitle_selector = (By.XPATH, "//h1")
@@ -34,6 +35,7 @@ class listingClass:
     cityDescTwo_selector = (By.XPATH, "(//h2[2])[1]")
     cityDescThree_selector = (By.XPATH, "(//h2[3])[1]")
     cityDescFour_selector = (By.XPATH, "(//h2[4])[1]")
+    cityDescMainTitle_selector = (By.XPATH, "//h2[@class='mb-1 font-semibold py-4']")
 
     # let us find your perfect home section
 
@@ -67,6 +69,8 @@ class listingClass:
     )
 
     # FAQ section selectors
+
+    faqTitleText_selector = (By.XPATH, "//div[text()='FAQs']")
 
     allFaqs_selector = (
         By.XPATH,
@@ -126,6 +130,7 @@ class listingClass:
     universityNameContainer_selector = (By.ID, "university-search")
     universityNameList_selector = (By.XPATH, "//div[@id='university-search']/a")
     universityFirst_selector = (By.ID, "university-search-item-0")
+    uniNameOnly_selector = (By.XPATH, "//div[@id='university-search']/a/div/div/p[1]")
 
     # ------------------------------------ filter pills selectors ---------------------
 
@@ -175,7 +180,8 @@ class listingClass:
 
     # ------------------------------------ add to favorite icon ----------------------
 
-    addToFavIcon_selector = (By.XPATH, "(//div[@class='absolute top-2 right-2'])[1]")
+    addToFavIconOne_selector = (By.XPATH, "(//div[@class='absolute top-2 right-2'])[1]")
+    addToFavIconTwo_selector = (By.XPATH, "(//div[@class='absolute top-2 right-2'])[2]")
     addFavToaster_selector = (By.XPATH, "//div[@role='alert']")
 
     # ------------------------------ filter selectors ------------------------------------
@@ -192,6 +198,8 @@ class listingClass:
     )
     fillingFastYes_selector = (By.ID, "fillingFast-yes")
     fillingFastNo_selector = (By.ID, "fillingFast-no")
+    startPriceInput_selector = (By.ID, "minPrice")
+    endPriceInput_selector = (By.ID, "maxPrice")
 
     # -------------------------------------- chat box selector ---------------------------------
     chatMinBtn_selector = (By.ID, "min_window")
@@ -201,6 +209,12 @@ class listingClass:
     )
 
     chatWidget_selector = (By.XPATH, "//div[@class='relative'][2]")
+    whatsappWidget_selector = (By.XPATH, "(//div[@class='relative'])[2]")
+
+    # ---------------------------------------------- near by areas selectors ---------------------
+
+    nearByText_selctor = (By.XPATH, "//span[text()='Nearby Areas']")
+    nearByPlacesNames_selector = (By.XPATH, "//div[@class='areaList mt-2']/ul/li/a")
 
     # -------------------------------------- methods -------------------------------------------
 
@@ -211,6 +225,9 @@ class listingClass:
 
     def breadCrumCity(self):
         return self.driver.find_element(*listingClass.breadCrumCity_selector)
+
+    def breadCrumCityUni(self):
+        return self.driver.find_element(*listingClass.breadCrumCityUni_selector)
 
     # accommodation title
 
@@ -246,6 +263,9 @@ class listingClass:
 
     def headingFour(self):
         return self.driver.find_element(*listingClass.cityDescFour_selector)
+
+    def cityDescMainTitle(self):
+        return self.driver.find_element(*listingClass.cityDescMainTitle_selector)
 
     # title and description for let us find your perfect home section
 
@@ -322,6 +342,9 @@ class listingClass:
     def firstUniversity(self):
         return self.driver.find_element(*listingClass.universityFirst_selector)
 
+    def uniNameOnly(self):
+        return self.driver.find_elements(*listingClass.uniNameOnly_selector)
+
     # Faw section Methods
 
     def allFAQs(self):
@@ -329,6 +352,9 @@ class listingClass:
 
     def helpCenterLinkFAQ(self):
         return self.driver.find_element(*listingClass.helpCenterFaq_selector)
+
+    def faqTitleText(self):
+        return self.driver.find_element(*listingClass.faqTitleText_selector)
 
     # fitler pills on page methods
 
@@ -389,8 +415,11 @@ class listingClass:
 
     # ------------------------------- add to fav icon method ------------------------------
 
-    def addToFavIcon(self):
-        return self.driver.find_element(*listingClass.addToFavIcon_selector)
+    def addToFavIconOne(self):
+        return self.driver.find_element(*listingClass.addToFavIconOne_selector)
+
+    def addToFavIconTwo(self):
+        return self.driver.find_element(*listingClass.addToFavIconTwo_selector)
 
     def addFavToaster(self):
         return self.driver.find_element(*listingClass.addFavToaster_selector)
@@ -421,6 +450,12 @@ class listingClass:
     def offerUptoValue(self):
         return self.driver.find_elements(*listingClass.offerUptoValue_selector)
 
+    def startPriceInput(self):
+        return self.driver.find_element(*listingClass.startPriceInput_selector)
+
+    def endPriceInput(self):
+        return self.driver.find_element(*listingClass.endPriceInput_selector)
+
     # -------------------------------------- chat pop up methods -------------------------------
 
     def chatMinimizedBtn(self):
@@ -431,3 +466,14 @@ class listingClass:
 
     def chatWidget(self):
         return self.driver.find_element(*listingClass.chatWidget_selector)
+
+    def whatsappWidget(self):
+        return self.driver.find_element(*listingClass.whatsappWidget_selector)
+
+    # ---------------------------------------------- near by areas methods ----------------------------
+
+    def nearByText(self):
+        return self.driver.find_element(*listingClass.nearByText_selctor)
+
+    def nearByPlacesNames(self):
+        return self.driver.find_elements(*listingClass.nearByPlacesNames_selector)

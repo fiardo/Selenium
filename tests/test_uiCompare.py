@@ -1,3 +1,4 @@
+from pytest import mark
 import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -19,60 +20,32 @@ import pytest
 from PIL import Image, ImageChops, ImageStat
 
 
-
 @pytest.mark.skip()
 class Test_homeUI_check(Invokation):
-    
-    bookNow_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"
-    
+    bookNow_url = 'https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you'
+
+    @mark.testomatio('@T347886fd')
     def test_homeUI_check_cache(self):
-        
         log = self.getLogger()
         self.driver.implicitly_wait(5)
-        
         homepageObj = Homepageclass(self.driver)
         detailpageObj = detailpageClass(self.driver)
         formObj = FormClass(self.driver)
         loginPopUPObj = loginpopupClass(self.driver)
-        
-        
-        element = self.driver.find_element(By.XPATH,"//body")
+        element = self.driver.find_element(By.XPATH, '//body')
         screenshot1 = element.screenshot_as_png
-        
-        
-        # self.driver.get_screenshot_as_file("C:\\Users\\TUL\\Desktop\\FrameWorkDesign2\\tests\\ss1.png")
         screenshot1_file = 'ss1.png'
         with open(screenshot1_file, 'wb') as file:
             file.write(screenshot1)
-            
         ref_file = 'ss2.png'
         ref_image = Image.open(ref_file)
-
-        
         screenshot_image = Image.open(screenshot1_file)
-        
         diff = ImageChops.difference(ref_image, screenshot_image)
         diff.show()
-        
         stat = ImageStat.Stat(diff)
-        
         rms = stat.rms[0]
-        
         threshold = 10
-        if rms  < threshold:
-            log.info("images are similar")
-            
+        if rms < threshold:
+            log.info('images are similar')
         else:
-            log.warning("images are different")  
-        
-                
-            
-            
-                  
-        
-        
-        
-        
-        
-        
-        
+            log.warning('images are different')

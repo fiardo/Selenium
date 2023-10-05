@@ -29,6 +29,7 @@ class Test_Enquire_new_user(Invokation):
     chapter_ealing_thankYou_url = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/enquire-now/thank-you"
     scape_melbourne_central_thankyou_url = "https://www.universityliving.com/australia/melbourne/scape-melbourne-central/enquire-now/thank-you"
 
+    @mark.testomatio("@Tb5d15cfb")
     def test_enquire_new_user(self):
         log = self.getLogger()
         self.driver.implicitly_wait(5)
@@ -36,16 +37,15 @@ class Test_Enquire_new_user(Invokation):
         detailpageObj = detailpageClass(self.driver)
         enquireformObj = FormClass(self.driver)
 
+        time.sleep(2)
         try:
             self.driver.find_element(By.XPATH, "//button[text()='Accept']").click()
         except Exception:
             pass
-
         assert homepageObj.searchbar().is_displayed()
         homepageObj.searchbar().send_keys("chapter ealing")
         time.sleep(3)
         homepageObj.searchbar().send_keys(Keys.ENTER)
-
         try:
             detailpageObj.enquireButton().click()
             log.info("IQ hoxton - Enquire Now")

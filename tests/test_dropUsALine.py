@@ -23,7 +23,6 @@ import random
 N = 7
 
 
-# @pytest.mark.skip()
 class Test_Drop_us_a_line_form(Invokation):
     res = "".join(random.choices(string.ascii_uppercase + string.digits, k=N))
     phone_number = "".join([str(random.randint(0, 9)) for i in range(10)])
@@ -32,17 +31,18 @@ class Test_Drop_us_a_line_form(Invokation):
         "https://www.universityliving.com/united-kingdom/london/property/iq-hoxton"
     )
 
+    @mark.testomatio("@Tf83019b3")
     def test_drop_us_a_line_form(self):
         log = self.getLogger()
         self.driver.implicitly_wait(5)
         homepage = Homepageclass(self.driver)
         detailpage = detailpageClass(self.driver)
-
+        time.sleep(3)
         try:
             self.driver.find_element(By.XPATH, "//button[text()='Accept']").click()
         except Exception:
             pass
-
+        time.sleep(2)
         homepage.searchbar().send_keys("iq hoxton")
         time.sleep(2)
         homepage.searchbar().send_keys(Keys.ENTER)
