@@ -420,8 +420,10 @@ class Test_lising(Invokation):
         filterValueAfterUniversity = []
         for item in listing.filterPillKey():
             filterKeyAfterUniversity.append(item.text)
+            time.sleep(1)
         for item in listing.filterPillValue():
             filterValueAfterUniversity.append(item.text)
+            time.sleep(1)
         time.sleep(3)
         log.info("filter key ->%s", filterKeyAfterUniversity)
         log.info("filter value ->%s", filterValueAfterUniversity)

@@ -25,16 +25,26 @@ def setup(request):
     global driver
     browser_name = request.config.getoption("browser_name")
     if browser_name == "chrome":
-        s = Service("C:/Users/TUL/Desktop/cd/cd16.exe")
+        # s = Service("C:/Users/TUL/Desktop/cd/cd16.exe")
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--disable-notifications")
-        driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
+        # driver = webdriver.Chrome(service=s, options=chrome_options)
+        driver = webdriver.Chrome(options=chrome_options)
 
         driver.get("https://www.universityliving.com/")
-    else:
-        s = Service("C:/Users/TUL/Desktop/cd/gd.exe")
-        driver = webdriver.Firefox(service=s)
+    elif browser_name == "firefox":
+        # s = Service("C:/Users/TUL/Desktop/cd/gd.exe")
+        fireFox_options = webdriver.FirefoxOptions()
+        fireFox_options.add_argument("--disable-notifications")
+        driver = webdriver.Firefox()
         driver.get("https://www.universityliving.com/")
+
+    elif browser_name == "ie":
+        ie_options = webdriver.Safari()
+        ie_options.add_argument("--disable-notifications")
+        driver = webdriver.Safari()
+        driver.get("https://www.universityliving.com/")
+
     driver.maximize_window()
     request.cls.driver = driver
     yield

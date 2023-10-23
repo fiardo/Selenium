@@ -1,9 +1,10 @@
 {
-    "python.analysis.typeCheckingMode": "off",
-    "liveServer.settings.port": 5501,
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
-    },
-    "python.formatting.provider": "none",
-    "livePreview.defaultPreviewPath": "/tests/repo.html"
+  "python.analysis.typeCheckingMode": "off",
+  "liveServer.settings.port": 5501,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.formatting.provider": "none",
+  "livePreview.defaultPreviewPath": "/tests/repo.html",
+  "git.ignoreLimitWarning": true
 }
