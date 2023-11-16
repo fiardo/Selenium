@@ -111,8 +111,8 @@ class Test_book_now_existing_user(Invokation):
         Form.startdateMonth().click()
         Form.endDateField().click()
         Form.enddateMonth().click()
-        Form.pastCourse().send_keys("test past course")
-        Form.pastAttend().send_keys("test past university")
+        # Form.pastCourse().send_keys("test past course")
+        # Form.pastAttend().send_keys("test past university")
         Form.nextBtn().click()
         assert Form.booknow_step3_validator().text == "Guardian Info"
         if Form.booknow_step3_validator().text == "Guardian Info":
