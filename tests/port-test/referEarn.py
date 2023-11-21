@@ -23,6 +23,8 @@ s = Service("C:/Users/TUL/Desktop/cd/cd19.exe")
 opt = Options()
 opt.add_experimental_option("debuggerAddress", "localhost:9222")
 driver = webdriver.Chrome(service=s, options=opt)
+
+
 driver.implicitly_wait(15)
 
 

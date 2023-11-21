@@ -53,3 +53,5 @@
 2023-11-06 18:19:44,410 :INFO : test_E2eLogin :dashboard emai -->wxaoiwh.university@yopmail.com
 2023-11-06 18:19:44,410 :INFO : test_E2eLogin :sign up email -->wxaoiwh.university@yopmail.com
 2023-11-06 18:19:44,410 :INFO : test_E2eLogin :used contact number for sign up -->5517127249
+2023-11-21 17:16:49,080 :INFO : test_bookNowForm_new_user :used new email in service - FL ->qbke0m5upb.university@yopmail.com
+2023-11-21 17:16:50,130 :INFO : test_bookNowForm_new_user :used new phone number in service - FL ->1478857561
