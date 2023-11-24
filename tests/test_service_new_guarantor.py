@@ -16,7 +16,7 @@ from pageData.homePage import Homepageclass
 from pageData.loginPopup import loginpopupClass
 from pageData.detailPage import detailpageClass
 from pageData.Forms import FormClass
-from pageData.FlightTickets import FlightTicketClass
+from pageData.Guarnator import GuarantorClass
 import pytest
 import string
 import random
@@ -24,20 +24,20 @@ import random
 N = 10
 
 
-class Test_New_Student_Flight_Tickets(Invokation):
+class Test_New_Guarantor(Invokation):
     res = "".join(random.choices(string.ascii_lowercase + string.digits, k=N))
     new_email = res + ".university@yopmail.com"
     new_phoneNumber = "".join([str(random.randint(0, 9)) for i in range(10)])
     testing_key = "test"
-    page_url = "https://www.universityliving.com/services/students-flight-ticket"
+    page_url = "https://www.universityliving.com/services/guarantor"
 
-    def test_New_Student_Flight_Tickets(self):
+    def test_New_Guarantor(self):
         log = self.getLogger()
         self.driver.implicitly_wait(5)
 
         homepage = Homepageclass(self.driver)
         login = loginpopupClass(self.driver)
-        flt = FlightTicketClass(self.driver)
+        guarantor = GuarantorClass(self.driver)
 
         try:
             self.driver.find_element(By.XPATH, "//button[text()='Accept']").click()
@@ -46,33 +46,24 @@ class Test_New_Student_Flight_Tickets(Invokation):
 
         hover = ActionChains(self.driver).move_to_element(homepage.services())
         hover.perform()
-        self.driver.find_element(
-            By.XPATH, "//p[text()='Student Flight Tickets']"
-        ).click()
+        self.driver.find_element(By.XPATH, "//p[text()='Guarantor']").click()
         time.sleep(2)
         self.driver.refresh()
+        assert self.driver.current_url == Test_New_Guarantor.page_url
 
-        assert self.driver.current_url == Test_New_Student_Flight_Tickets.page_url
+        countryDropDown = Select(self.driver.find_element(By.ID, "country"))
+        countryDropDown.select_by_visible_text("UK")
+        guarantor.findGuarantorBtn().click()
 
-        flt.toDestination().click()
-        flt.toCitySearchDublin().click()
-        flt.returnDate().click()
-        flt.lastDate().click()
-        flt.travellerAndClass().click()
-        flt.searchFlightsBtn().click()
-
-        login.emailfield().send_keys(Test_New_Student_Flight_Tickets.new_email.lower())
-        log.info(
-            "used new email in service - FL ->"
-            + Test_New_Student_Flight_Tickets.new_email
-        )
+        login.emailfield().send_keys(Test_New_Guarantor.new_email.lower())
+        log.info("used new email in service - FL ->" + Test_New_Guarantor.new_email)
         login.loginBtn().click()
         login.firstName().send_keys("test")
         login.lastName().send_keys("test")
-        login.phoneNumber().send_keys(Test_New_Student_Flight_Tickets.new_phoneNumber)
+        login.phoneNumber().send_keys(Test_New_Guarantor.new_phoneNumber)
         log.info(
             "used new phone number in service - FL ->"
-            + Test_New_Student_Flight_Tickets.new_phoneNumber
+            + Test_New_Guarantor.new_phoneNumber
         )
         login.signUpBtn().click()
         login.otpFirst().send_keys("1")
@@ -82,24 +73,12 @@ class Test_New_Student_Flight_Tickets(Invokation):
         login.otpfifth().send_keys("5")
         login.continueBtn().click()
 
-        flt.searchFlightsBtn().click()
-        flt.submitBtn().click()
+        guarantor.findGuarantorBtn().click()
+        guarantor.formSubmitBtn().click()
 
         time.sleep(3)
-        roundTrip_redirection_url = self.driver.current_url
-        log.info("redirection url of round trip-> " + roundTrip_redirection_url)
+        redirectionUrl = self.driver.current_url
+        log.info("UK - Redirection Url -> " + redirectionUrl)
+        time.sleep(2)
         self.driver.back()
-
-        # ------------------------- checking for one way --------------------------
-
-        flt.oneWay().click()
-        flt.toDestination().click()
-        flt.toCitySearchDublin().click()
-        flt.travellerAndClass().click()
-        flt.searchFlightsBtn().click()
-        flt.submitBtn().click()
-        time.sleep(3)
-        roundTrip_redirection_url = self.driver.current_url
-        log.info("redirection url of round trip-> " + roundTrip_redirection_url)
-        time.sleep(3)
-        self.driver.back()
+        time.sleep(2)

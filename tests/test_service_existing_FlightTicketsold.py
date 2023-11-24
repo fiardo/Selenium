@@ -30,7 +30,7 @@ class Test_Existing_Student_Flight_Tickets(Invokation):
     testing_key = "test"
     page_url = "https://www.universityliving.com/services/students-flight-ticket"
 
-    def test_bookNowForm_new_user(self):
+    def test_Existing_Student_Flight_Tickets(self):
         log = self.getLogger()
         self.driver.implicitly_wait(5)
 
@@ -60,20 +60,22 @@ class Test_Existing_Student_Flight_Tickets(Invokation):
         flt.travellerAndClass().click()
         flt.searchFlightsBtn().click()
 
-        login.emailfield().send_keys(Test_Existing_Student_Flight_Tickets.email.lower())
-        login.loginBtn().click()
-        login.otpFirst().send_keys("1")
-        login.otpsecond().send_keys("2")
-        login.otpthird().send_keys("3")
-        login.otpfourth().send_keys("4")
-        login.otpfifth().send_keys("5")
-        login.continueBtn().click()
+        # login.emailfield().send_keys(Test_Existing_Student_Flight_Tickets.email.lower())
+        # login.loginBtn().click()
+        # login.otpFirst().send_keys("1")
+        # login.otpsecond().send_keys("2")
+        # login.otpthird().send_keys("3")
+        # login.otpfourth().send_keys("4")
+        # login.otpfifth().send_keys("5")
+        # login.continueBtn().click()
+        login.loginMethod()
 
         flt.searchFlightsBtn().click()
         flt.submitBtn().click()
-        self.driver.get
-
         time.sleep(3)
+        roundTrip_redirection_url = self.driver.current_url
+        log.info("redirection url of round trip-> " + roundTrip_redirection_url)
+
         self.driver.back()
 
         # ------------------------- checking for one way --------------------------
@@ -84,6 +86,10 @@ class Test_Existing_Student_Flight_Tickets(Invokation):
         flt.travellerAndClass().click()
         flt.searchFlightsBtn().click()
         flt.submitBtn().click()
+        time.sleep(3)
+        oneWay_redirection_url = self.driver.current_url
+        log.info("redirection url of one way-> " + oneWay_redirection_url)
+        time.sleep(3)
         self.driver.back()
 
         time.sleep(3)
