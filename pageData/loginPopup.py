@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 import string
 import random
+from invokeBaseClass import Invokation
 
 
 class loginpopupClass:
@@ -13,6 +14,10 @@ class loginpopupClass:
     newEmail = res + ".university@yopmail.com"
 
     emailfieldSelector = (By.ID, "email")
+    emailfieldSelector_usingPlaceholder = (
+        By.XPATH,
+        "//input[@placeholder='Enter Email']",
+    )
     loginBtnSelector = (By.XPATH, "//div[text()='Login']")
     otp1Selector = (By.NAME, "otp0")
     otp2Selector = (By.NAME, "otp1")
@@ -52,6 +57,11 @@ class loginpopupClass:
 
     def emailfield(self):
         return self.driver.find_element(*loginpopupClass.emailfieldSelector)
+
+    def emailfield_using_placeholder(self):
+        return self.driver.find_element(
+            *loginpopupClass.emailfieldSelector_usingPlaceholder
+        )
 
     def loginBtn(self):
         return self.driver.find_element(*loginpopupClass.loginBtnSelector)
@@ -114,3 +124,62 @@ class loginpopupClass:
 
     def wishListPropertyNames(self):
         return self.driver.find_elements(*loginpopupClass.wishlistPropertyName_selector)
+
+    # --------------------------------- login method --------------------------------
+
+    def loginMethod(self):
+        self.driver.find_element(*loginpopupClass.emailfieldSelector).send_keys(
+            "harsh.sachan@universityliving.com"
+        )
+        self.driver.find_element(*loginpopupClass.loginBtnSelector).click()
+        self.driver.find_element(*loginpopupClass.otp1Selector).send_keys(1)
+        self.driver.find_element(*loginpopupClass.otp2Selector).send_keys(2)
+        self.driver.find_element(*loginpopupClass.otp3Selector).send_keys(3)
+        self.driver.find_element(*loginpopupClass.otp4Selector).send_keys(4)
+        self.driver.find_element(*loginpopupClass.otp5Selector).send_keys(5)
+        self.driver.find_element(*loginpopupClass.continueBtnSelector).click()
+
+    # -------------------------------------- sign up method ----------------------------------
+
+    def signUPMethod(self):
+        res = "".join(random.choices(string.ascii_lowercase + string.digits, k=10))
+        new_email = res + ".university@yopmail.com"
+        new_phoneNumber = "".join([str(random.randint(0, 9)) for i in range(10)])
+        testing_key = "test"
+
+        self.driver.find_element(*loginpopupClass.emailfieldSelector).send_keys(
+            new_email
+        )
+
+        self.driver.find_element(*loginpopupClass.loginBtnSelector).click()
+
+        self.driver.find_element(*loginpopupClass.firstnameSelector).send_keys(
+            testing_key
+        )
+        self.driver.find_element(*loginpopupClass.lastnameSelector).send_keys(
+            testing_key
+        )
+        self.driver.find_element(*loginpopupClass.PhoneNumberSelector).send_keys(
+            new_phoneNumber
+        )
+        self.driver.find_element(*loginpopupClass.signUpBtnSelector).click()
+        self.driver.find_element(*loginpopupClass.otp1Selector).send_keys(1)
+        self.driver.find_element(*loginpopupClass.otp2Selector).send_keys(2)
+        self.driver.find_element(*loginpopupClass.otp3Selector).send_keys(3)
+        self.driver.find_element(*loginpopupClass.otp4Selector).send_keys(4)
+        self.driver.find_element(*loginpopupClass.otp5Selector).send_keys(5)
+        self.driver.find_element(*loginpopupClass.continueBtnSelector).click()
+
+    # ----------------------------------------  login method using name ---------------------------
+
+    def loginMethodUsingPlaceholder(self):
+        self.driver.find_element(
+            *loginpopupClass.emailfieldSelector_usingPlaceholder
+        ).send_keys("harsh.sachan@universityliving.com")
+        self.driver.find_element(*loginpopupClass.loginBtnSelector).click()
+        self.driver.find_element(*loginpopupClass.otp1Selector).send_keys(1)
+        self.driver.find_element(*loginpopupClass.otp2Selector).send_keys(2)
+        self.driver.find_element(*loginpopupClass.otp3Selector).send_keys(3)
+        self.driver.find_element(*loginpopupClass.otp4Selector).send_keys(4)
+        self.driver.find_element(*loginpopupClass.otp5Selector).send_keys(5)
+        self.driver.find_element(*loginpopupClass.continueBtnSelector).click()
