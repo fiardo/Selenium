@@ -24,13 +24,14 @@ import random
 N = 10
 
 
-class Test_Existing_Bank_Account(Invokation):
-    email = "harsh.sachan@universityliving.com"
-    phoneNumber = "8505813979"
+class Test_New_GetVisa(Invokation):
+    res = "".join(random.choices(string.ascii_lowercase + string.digits, k=N))
+    new_email = res + ".university@yopmail.com"
+    new_phoneNumber = "".join([str(random.randint(0, 9)) for i in range(10)])
     testing_key = "test"
     page_url = "https://www.universityliving.com/services/visa-assistance"
 
-    def test_Existing_Bank_Account(self):
+    def test_New_Remittance(self):
         log = self.getLogger()
         self.driver.implicitly_wait(5)
 
@@ -47,12 +48,11 @@ class Test_Existing_Bank_Account(Invokation):
         hover.perform()
         self.driver.find_element(By.XPATH, "//p[text()='Get Visa']").click()
         time.sleep(2)
+        assert self.driver.current_url == Test_New_GetVisa.page_url
         self.driver.get_screenshot_as_file(
-            "C:\\Users\\TUL\\Desktop\\selenium_things\\selenium_framework\\screenshots\\services\\get_visa\\visaHome.png"
+            "C:\\Users\\TUL\\Desktop\\selenium_things\\selenium_framework\\screenshots\\services\\get_visa\\visaHomeNew.png"
         )
-
-        assert self.driver.current_url == Test_Existing_Bank_Account.page_url
-
+        time.sleep(1)
         visa.submitBtn().click()
         time.sleep(1)
 
@@ -67,12 +67,31 @@ class Test_Existing_Bank_Account(Invokation):
         visa.phoneNumber().send_keys("8505813979")
         visa.submitBtn().click()
 
-        login.loginMethod()
+        login.emailfield_using_placeholder().send_keys(Test_New_GetVisa.new_email)
+        login.loginBtn().click()
+
+        time.sleep(2)
+        login.firstName().send_keys("test")
+        login.lastName().send_keys("test")
+        login.phoneNumber().send_keys(Test_New_GetVisa.new_phoneNumber)
+
+        log.info("new email for get visa -> " + Test_New_GetVisa.new_email)
+        log.info("new phone number for get visa -> " + Test_New_GetVisa.new_phoneNumber)
+
+        login.signUpBtn().click()
+        login.otpFirst().send_keys(1)
+        login.otpsecond().send_keys(2)
+        login.otpthird().send_keys(3)
+        login.otpfourth().send_keys(4)
+        login.otpfifth().send_keys(5)
+        login.continueBtn().click()
+
+        time.sleep(2)
 
         visa.submitBtn().click()
         time.sleep(3)
-        redirection_Url_getVisa = self.driver.current_url
-        log.info("get visa redirection url -> " + redirection_Url_getVisa)
+        redirection_url_new_user_getVisa = self.driver.current_url
+        log.info("redirection url of get visa -> " + redirection_url_new_user_getVisa)
 
         visa.okBtn().click()
         time.sleep(2)
