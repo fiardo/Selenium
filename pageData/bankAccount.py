@@ -12,6 +12,7 @@ class BankAccountClass:
         By.XPATH,
         "//div[@class='border-0 p-3 md:p-6 rounded-xl shadow-xl flex flex-col w-full bg-white focus:outline-none bg-white max-h-[80vh] overflow-y-auto']",
     )
+    OKbutton_selector = (By.XPATH, "//div[text()='OK']")
 
     # ------------------------ Methods ------------------------------------------
 
@@ -23,3 +24,6 @@ class BankAccountClass:
 
     def irelandPopup(self):
         return self.driver.find_element(*BankAccountClass.irelandBankPopup_selector)
+
+    def okBtn(self):
+        return self.driver.find_element(*BankAccountClass.OKbutton_selector)

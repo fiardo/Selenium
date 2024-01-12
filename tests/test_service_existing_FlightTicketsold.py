@@ -39,7 +39,7 @@ class Test_Existing_Student_Flight_Tickets(Invokation):
         flt = FlightTicketClass(self.driver)
 
         try:
-            self.driver.find_element(By.XPATH, "//button[text()='Accept']").click()
+            self.driver.find_element(By.XPATH, "//button[text()='×']").click()
         except Exception:
             pass
 

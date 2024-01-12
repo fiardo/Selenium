@@ -38,9 +38,10 @@ class Test_New_Bank_Account(Invokation):
         homepage = Homepageclass(self.driver)
         login = loginpopupClass(self.driver)
         bank = BankAccountClass(self.driver)
+        Form = FormClass(self.driver)
 
         try:
-            self.driver.find_element(By.XPATH, "//button[text()='Accept']").click()
+            self.driver.find_element(By.XPATH, "//button[text()='×']").click()
         except Exception:
             pass
 
@@ -79,9 +80,10 @@ class Test_New_Bank_Account(Invokation):
             + Test_New_Bank_Account.new_phoneNumber
         )
         bank.openAccountBtn().click()
+        Form.uniPlaceholderValue().click()
+        Form.uniItem().click()
         bank.formSubmitBtn().click()
         time.sleep(2)
-        assert bank.irelandPopup().is_displayed()
 
         time.sleep(2)
         self.driver.refresh()

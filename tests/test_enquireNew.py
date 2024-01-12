@@ -67,8 +67,6 @@ class Test_Enquire_new_user(Invokation):
         enquireformObj.email().send_keys(Test_Enquire_new_user.newEmail)
         enquireformObj.phoneNumber().send_keys(Test_Enquire_new_user.phone_number)
         enquireformObj.message().send_keys("this is test message :)")
-        visastatusDropdown = Select(enquireformObj.visaStatus())
-        visastatusDropdown.select_by_index(3)
         bestPlatformDropdown = Select(enquireformObj.platform())
         bestPlatformDropdown.select_by_index(10)
         enquireformObj.platformInfo().send_keys("Discord1234")
@@ -91,6 +89,8 @@ class Test_Enquire_new_user(Invokation):
                                 "id is not available for the univerisity select field"
                             )
         enquireformObj.uniItem().click()
+        nationalityDropDown = Select(enquireformObj.nationalityDrop())
+        nationalityDropDown.select_by_index(3)
         enquireformObj.submitBtnEnquire().click()
         time.sleep(3)
         self.driver.get_screenshot_as_file(

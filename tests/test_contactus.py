@@ -36,11 +36,12 @@ class Test_contact_us_form(Invokation):
         contactpage = contactusClass(self.driver)
 
         time.sleep(2)
+
         try:
-            self.driver.find_element(By.XPATH, "//button[text()='Accept']").click()
+            self.driver.find_element(By.XPATH, "//button[text()='×']").click()
         except Exception:
             pass
-        time.sleep(2)
+
         homepage.contactus().click()
         contactpage.fullName().send_keys("test test")
         time.sleep(1)

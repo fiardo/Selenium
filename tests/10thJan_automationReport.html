@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Test Report</title>
+    <link href="assets/style1.css" rel="stylesheet" type="text/css" />
+    <style>
+      body {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        /* do not increase min-width as some may use split screens */
+        min-width: 800px;
+        color: #999;
+      }
+
+      h1 {
+        font-size: 24px;
+        color: black;
+      }
+
+      h2 {
+        font-size: 16px;
+        color: black;
+      }
+
+      p {
+        color: black;
+      }
+
+      a {
+        color: #999;
+      }
+
+      table {
+        border-collapse: collapse;
+      }
+
+      /******************************
+ * SUMMARY INFORMATION
+ ******************************/
+
+      #environment td {
+        padding: 5px;
+        border: 1px solid #e6e6e6;
+      }
+
+      #environment tr:nth-child(odd) {
+        background-color: #f6f6f6;
+      }
+
+      /******************************
+ * TEST RESULT COLORS
+ ******************************/
+      span.passed,
+      .passed .col-result {
+        color: green;
+      }
+      span.skipped,
+      span.xfailed,
+      span.rerun,
+      .skipped .col-result,
+      .xfailed .col-result,
+      .rerun .col-result {
+        color: orange;
+      }
+      span.error,
+      span.failed,
+      span.xpassed,
+      .error .col-result,
+      .failed .col-result,
+      .xpassed .col-result {
+        color: red;
+      }
+
+      /******************************
+ * RESULTS TABLE
+ *
+ * 1. Table Layout
+ * 2. Extra
+ * 3. Sorting items
+ *
+ ******************************/
+
+      /*------------------
+ * 1. Table Layout
+ *------------------*/
+
+      #results-table {
+        border: 1px solid #e6e6e6;
+        color: #999;
+        font-size: 12px;
+        width: 100%;
+      }
+
+      #results-table th,
+      #results-table td {
+        padding: 5px;
+        border: 1px solid #e6e6e6;
+        text-align: left;
+      }
+      #results-table th {
+        font-weight: bold;
+      }
+
+      /*------------------
+ * 2. Extra
+ *------------------*/
+
+      .log:only-child {
+        height: inherit;
+      }
+      .log {
+        background-color: #e6e6e6;
+        border: 1px solid #e6e6e6;
+        color: black;
+        display: block;
+        font-family: "Courier New", Courier, monospace;
+        height: 230px;
+        overflow-y: scroll;
+        padding: 5px;
+        white-space: pre-wrap;
+      }
+      div.image {
+        border: 1px solid #e6e6e6;
+        float: right;
+        height: 240px;
+        margin-left: 5px;
+        overflow: hidden;
+        width: 320px;
+      }
+      div.image img {
+        width: 320px;
+      }
+      .collapsed {
+        display: none;
+      }
+      .expander::after {
+        content: " (show details)";
+        color: #bbb;
+        font-style: italic;
+        cursor: pointer;
+      }
+      .collapser::after {
+        content: " (hide details)";
+        color: #bbb;
+        font-style: italic;
+        cursor: pointer;
+      }
+
+      /*------------------
+ * 3. Sorting items
+ *------------------*/
+      .sortable {
+        cursor: pointer;
+      }
+
+      .sort-icon {
+        font-size: 0px;
+        float: left;
+        margin-right: 5px;
+        margin-top: 5px;
+        /*triangle*/
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+      }
+
+      .inactive .sort-icon {
+        /*finish triangle*/
+        border-top: 8px solid #e6e6e6;
+      }
+
+      .asc.active .sort-icon {
+        /*finish triangle*/
+        border-bottom: 8px solid #999;
+      }
+
+      .desc.active .sort-icon {
+        /*finish triangle*/
+        border-top: 8px solid #999;
+      }
+    </style>
+  </head>
+  <body onLoad="init()">
+    <script>
+      /* This Source Code Form is subject to the terms of the Mozilla Public
+       * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+       * You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+      function toArray(iter) {
+        if (iter === null) {
+          return null;
+        }
+        return Array.prototype.slice.call(iter);
+      }
+
+      function find(selector, elem) {
+        if (!elem) {
+          elem = document;
+        }
+        return elem.querySelector(selector);
+      }
+
+      function find_all(selector, elem) {
+        if (!elem) {
+          elem = document;
+        }
+        return toArray(elem.querySelectorAll(selector));
+      }
+
+      function sort_column(elem) {
+        toggle_sort_states(elem);
+        var colIndex = toArray(elem.parentNode.childNodes).indexOf(elem);
+        var key;
+        if (elem.classList.contains("numeric")) {
+          key = key_num;
+        } else if (elem.classList.contains("result")) {
+          key = key_result;
+        } else {
+          key = key_alpha;
+        }
+        sort_table(elem, key(colIndex));
+      }
+
+      function show_all_extras() {
+        find_all(".col-result").forEach(show_extras);
+      }
+
+      function hide_all_extras() {
+        find_all(".col-result").forEach(hide_extras);
+      }
+
+      function show_extras(colresult_elem) {
+        var extras = colresult_elem.parentNode.nextElementSibling;
+        var expandcollapse = colresult_elem.firstElementChild;
+        extras.classList.remove("collapsed");
+        expandcollapse.classList.remove("expander");
+        expandcollapse.classList.add("collapser");
+      }
+
+      function hide_extras(colresult_elem) {
+        var extras = colresult_elem.parentNode.nextElementSibling;
+        var expandcollapse = colresult_elem.firstElementChild;
+        extras.classList.add("collapsed");
+        expandcollapse.classList.remove("collapser");
+        expandcollapse.classList.add("expander");
+      }
+
+      function show_filters() {
+        var filter_items = document.getElementsByClassName("filter");
+        for (var i = 0; i < filter_items.length; i++)
+          filter_items[i].hidden = false;
+      }
+
+      function add_collapse() {
+        // Add links for show/hide all
+        var resulttable = find("table#results-table");
+        var showhideall = document.createElement("p");
+        showhideall.innerHTML =
+          '<a href="javascript:show_all_extras()">Show all details</a> / ' +
+          '<a href="javascript:hide_all_extras()">Hide all details</a>';
+        resulttable.parentElement.insertBefore(showhideall, resulttable);
+
+        // Add show/hide link to each result
+        find_all(".col-result").forEach(function (elem) {
+          var collapsed = get_query_parameter("collapsed") || "Passed";
+          var extras = elem.parentNode.nextElementSibling;
+          var expandcollapse = document.createElement("span");
+          if (collapsed.includes(elem.innerHTML)) {
+            extras.classList.add("collapsed");
+            expandcollapse.classList.add("expander");
+          } else {
+            expandcollapse.classList.add("collapser");
+          }
+          elem.appendChild(expandcollapse);
+
+          elem.addEventListener("click", function (event) {
+            if (
+              event.currentTarget.parentNode.nextElementSibling.classList.contains(
+                "collapsed"
+              )
+            ) {
+              show_extras(event.currentTarget);
+            } else {
+              hide_extras(event.currentTarget);
+            }
+          });
+        });
+      }
+
+      function get_query_parameter(name) {
+        var match = RegExp("[?&]" + name + "=([^&]*)").exec(
+          window.location.search
+        );
+        return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+      }
+
+      function init() {
+        reset_sort_headers();
+
+        add_collapse();
+
+        show_filters();
+
+        sort_column(find(".initial-sort"));
+
+        find_all(".sortable").forEach(function (elem) {
+          elem.addEventListener(
+            "click",
+            function (event) {
+              sort_column(elem);
+            },
+            false
+          );
+        });
+      }
+
+      function sort_table(clicked, key_func) {
+        var rows = find_all(".results-table-row");
+        var reversed = !clicked.classList.contains("asc");
+        var sorted_rows = sort(rows, key_func, reversed);
+        /* Whole table is removed here because browsers acts much slower
+         * when appending existing elements.
+         */
+        var thead = document.getElementById("results-table-head");
+        document.getElementById("results-table").remove();
+        var parent = document.createElement("table");
+        parent.id = "results-table";
+        parent.appendChild(thead);
+        sorted_rows.forEach(function (elem) {
+          parent.appendChild(elem);
+        });
+        document.getElementsByTagName("BODY")[0].appendChild(parent);
+      }
+
+      function sort(items, key_func, reversed) {
+        var sort_array = items.map(function (item, i) {
+          return [key_func(item), i];
+        });
+
+        sort_array.sort(function (a, b) {
+          var key_a = a[0];
+          var key_b = b[0];
+
+          if (key_a == key_b) return 0;
+
+          if (reversed) {
+            return key_a < key_b ? 1 : -1;
+          } else {
+            return key_a > key_b ? 1 : -1;
+          }
+        });
+
+        return sort_array.map(function (item) {
+          var index = item[1];
+          return items[index];
+        });
+      }
+
+      function key_alpha(col_index) {
+        return function (elem) {
+          return elem.childNodes[1].childNodes[
+            col_index
+          ].firstChild.data.toLowerCase();
+        };
+      }
+
+      function key_num(col_index) {
+        return function (elem) {
+          return parseFloat(
+            elem.childNodes[1].childNodes[col_index].firstChild.data
+          );
+        };
+      }
+
+      function key_result(col_index) {
+        return function (elem) {
+          var strings = [
+            "Error",
+            "Failed",
+            "Rerun",
+            "XFailed",
+            "XPassed",
+            "Skipped",
+            "Passed",
+          ];
+          return strings.indexOf(
+            elem.childNodes[1].childNodes[col_index].firstChild.data
+          );
+        };
+      }
+
+      function reset_sort_headers() {
+        find_all(".sort-icon").forEach(function (elem) {
+          elem.parentNode.removeChild(elem);
+        });
+        find_all(".sortable").forEach(function (elem) {
+          var icon = document.createElement("div");
+          icon.className = "sort-icon";
+          icon.textContent = "vvv";
+          elem.insertBefore(icon, elem.firstChild);
+          elem.classList.remove("desc", "active");
+          elem.classList.add("asc", "inactive");
+        });
+      }
+
+      function toggle_sort_states(elem) {
+        //if active, toggle between asc and desc
+        if (elem.classList.contains("active")) {
+          elem.classList.toggle("asc");
+          elem.classList.toggle("desc");
+        }
+
+        //if inactive, reset all other functions and add ascending active
+        if (elem.classList.contains("inactive")) {
+          reset_sort_headers();
+          elem.classList.remove("inactive");
+          elem.classList.add("active");
+        }
+      }
+
+      function is_all_rows_hidden(value) {
+        return value.hidden == false;
+      }
+
+      function filter_table(elem) {
+        var outcome_att = "data-test-result";
+        var outcome = elem.getAttribute(outcome_att);
+        class_outcome = outcome + " results-table-row";
+        var outcome_rows = document.getElementsByClassName(class_outcome);
+
+        for (var i = 0; i < outcome_rows.length; i++) {
+          outcome_rows[i].hidden = !elem.checked;
+        }
+
+        var rows = find_all(".results-table-row").filter(is_all_rows_hidden);
+        var all_rows_hidden = rows.length == 0 ? true : false;
+        var not_found_message = document.getElementById("not-found-message");
+        not_found_message.hidden = !all_rows_hidden;
+      }
+    </script>
+    <h1>10thJan_automationReport.html</h1>
+    <p>
+      Report generated on 10-Jan-2024 at 18:38:52 by
+      <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v2.0.1
+    </p>
+    <h2>Summary</h2>
+    <p>22 tests ran in 673.81 seconds.</p>
+    <p class="filter" hidden="true">
+      (Un)check the boxes to filter the results.
+    </p>
+    <input
+      checked="true"
+      class="filter"
+      data-test-result="passed"
+      hidden="true"
+      name="filter_checkbox"
+      onChange="filter_table(this)"
+      type="checkbox"
+    /><span class="passed">21 passed</span>,
+    <input
+      checked="true"
+      class="filter"
+      data-test-result="skipped"
+      hidden="true"
+      name="filter_checkbox"
+      onChange="filter_table(this)"
+      type="checkbox"
+    /><span class="skipped">2 skipped</span>,
+    <input
+      checked="true"
+      class="filter"
+      data-test-result="failed"
+      hidden="true"
+      name="filter_checkbox"
+      onChange="filter_table(this)"
+      type="checkbox"
+    /><span class="failed">1 failed</span>,
+    <input
+      checked="true"
+      class="filter"
+      data-test-result="error"
+      disabled="true"
+      hidden="true"
+      name="filter_checkbox"
+      onChange="filter_table(this)"
+      type="checkbox"
+    /><span class="error">0 errors</span>,
+    <input
+      checked="true"
+      class="filter"
+      data-test-result="xfailed"
+      disabled="true"
+      hidden="true"
+      name="filter_checkbox"
+      onChange="filter_table(this)"
+      type="checkbox"
+    /><span class="xfailed">0 expected failures</span>,
+    <input
+      checked="true"
+      class="filter"
+      data-test-result="xpassed"
+      disabled="true"
+      hidden="true"
+      name="filter_checkbox"
+      onChange="filter_table(this)"
+      type="checkbox"
+    /><span class="xpassed">0 unexpected passes</span>,
+    <input
+      checked="true"
+      class="filter"
+      data-test-result="rerun"
+      disabled="true"
+      hidden="true"
+      name="filter_checkbox"
+      onChange="filter_table(this)"
+      type="checkbox"
+    /><span class="rerun">0 rerun</span>
+    <h2>Results</h2>
+    <table id="results-table">
+      <thead id="results-table-head">
+        <tr>
+          <th class="sortable result initial-sort" col="result">Result</th>
+          <th class="sortable" col="name">Test</th>
+          <th class="sortable numeric" col="duration">Duration</th>
+          <th>Links</th>
+        </tr>
+        <tr hidden="true" id="not-found-message">
+          <th colspan="4">No results found. Try to check the filters</th>
+        </tr>
+      </thead>
+      <tbody class="failed results-table-row">
+        <tr>
+          <td class="col-result">Failed</td>
+          <td class="col-name">
+            test_service_new_bankAccount.py::Test_New_Bank_Account::test_New_Bank_Account
+          </td>
+          <td class="col-duration">18.03</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div>
+              <div>
+                <img
+                  src="test_service_new_bankAccount.py_Test_New_Bank_Account_test_New_Bank_Account.png"
+                  alt="screenshot"
+                  style="width: 304px; height: 228px"
+                  onclick="window.open(this.src)"
+                  align="right"
+                />
+              </div>
+            </div>
+            <div class="log">
+              self = &lt;test_service_new_bankAccount.Test_New_Bank_Account
+              object at 0x000001B327CA9A90&gt;<br /><br />
+              def test_New_Bank_Account(self):<br />
+              log = self.getLogger()<br />
+              self.driver.implicitly_wait(5)<br />
+              <br />
+              homepage = Homepageclass(self.driver)<br />
+              login = loginpopupClass(self.driver)<br />
+              bank = BankAccountClass(self.driver)<br />
+              Form = FormClass(self.driver)<br />
+              <br />
+              try:<br />
+              self.driver.find_element(By.XPATH,
+              &quot;//button[text()=&#x27;×&#x27;]&quot;).click()<br />
+              except Exception:<br />
+              pass<br />
+              <br />
+              hover =
+              ActionChains(self.driver).move_to_element(homepage.services())<br />
+              hover.perform()<br />
+              self.driver.find_element(By.XPATH, &quot;//p[text()=&#x27;Student
+              Bank Account&#x27;]&quot;).click()<br />
+              time.sleep(2)<br />
+              self.driver.refresh()<br />
+              assert self.driver.current_url ==
+              Test_New_Bank_Account.page_url<br />
+              <br />
+              countryDropDown = Select(self.driver.find_element(By.ID,
+              &quot;country&quot;))<br />
+              countryDropDown.select_by_visible_text(&quot;Ireland&quot;)<br />
+              <br />
+              bank.openAccountBtn().click()<br />
+              <br />
+              login.emailfield().send_keys(Test_New_Bank_Account.new_email.lower())<br />
+              log.info(&quot;used new email in bank account -&gt;&quot; +
+              Test_New_Bank_Account.new_email)<br />
+              login.loginBtn().click()<br />
+              login.firstName().send_keys(&quot;test&quot;)<br />
+              login.lastName().send_keys(&quot;test&quot;)<br />
+              login.phoneNumber().send_keys(Test_New_Bank_Account.new_phoneNumber)<br />
+              log.info(<br />
+              &quot;used new phone number in bank account -&gt;&quot;<br />
+              + Test_New_Bank_Account.new_phoneNumber<br />
+              )<br />
+              login.signUpBtn().click()<br />
+              login.otpFirst().send_keys(&quot;1&quot;)<br />
+              login.otpsecond().send_keys(&quot;2&quot;)<br />
+              login.otpthird().send_keys(&quot;3&quot;)<br />
+              login.otpfourth().send_keys(&quot;4&quot;)<br />
+              login.otpfifth().send_keys(&quot;5&quot;)<br />
+              login.continueBtn().click()<br />
+              log.info(&quot;used new email for bank account -&gt;&quot; +
+              Test_New_Bank_Account.new_email)<br />
+              log.info(<br />
+              &quot;used new phone number for bank account -&gt;&quot;<br />
+              + Test_New_Bank_Account.new_phoneNumber<br />
+              )<br />
+              bank.openAccountBtn().click()<br />
+              Form.uniPlaceholderValue().click()<br />
+              Form.uniItem().click()<br />
+              bank.formSubmitBtn().click()<br />
+              time.sleep(2)<br />
+              <br />
+              time.sleep(2)<br />
+              self.driver.refresh()<br />
+              <br />
+              # ------------------------------ check for canada
+              -----------------------<br />
+              <br />&gt; countryDropDown =
+              Select(self.driver.find_element(By.ID, &quot;country&quot;))<br /><br />test_service_new_bankAccount.py:93:
+              <br />_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+              _ _ _ _ _ _ _ _ _ _
+              <br />..\..\..\..\AppData\Local\Programs\Python\Python311\Lib\site-packages\selenium\webdriver\remote\webdriver.py:738:
+              in find_element<br />
+              return self.execute(Command.FIND_ELEMENT, {&quot;using&quot;: by,
+              &quot;value&quot;: value})[&quot;value&quot;]<br />..\..\..\..\AppData\Local\Programs\Python\Python311\Lib\site-packages\selenium\webdriver\remote\webdriver.py:344:
+              in execute<br />
+              self.error_handler.check_response(response)<br />_ _ _ _ _ _ _ _ _
+              _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+              <br /><br />self =
+              &lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at
+              0x000001B327F05A50&gt;<br />response = {&#x27;status&#x27;: 404,
+              &#x27;value&#x27;:
+              &#x27;{&quot;value&quot;:{&quot;error&quot;:&quot;no such
+              element&quot;,&quot;message&quot;:&quot;no such element: Unable to
+              locate element: {\...07FF632E288C4]\\n\\tBaseThreadInitThunk
+              [0x00007FFA82F07344+20]\\n\\tRtlUserThreadStart
+              [0x00007FFA84E826B1+33]\\n&quot;}}&#x27;}<br /><br />
+              def check_response(self, response: Dict[str, Any]) -&gt; None:<br />
+              &quot;&quot;&quot;Checks that a JSON response from the WebDriver
+              does not have an<br />
+              error.<br />
+              <br />
+              :Args:<br />
+              - response - The JSON response from the WebDriver server as a
+              dictionary<br />
+              object.<br />
+              <br />
+              :Raises: If the response contains an error message.<br />
+              &quot;&quot;&quot;<br />
+              status = response.get(&quot;status&quot;, None)<br />
+              if not status or status == ErrorCode.SUCCESS:<br />
+              return<br />
+              value = None<br />
+              message = response.get(&quot;message&quot;, &quot;&quot;)<br />
+              screen: str = response.get(&quot;screen&quot;, &quot;&quot;)<br />
+              stacktrace = None<br />
+              if isinstance(status, int):<br />
+              value_json = response.get(&quot;value&quot;, None)<br />
+              if value_json and isinstance(value_json, str):<br />
+              import json<br />
+              <br />
+              try:<br />
+              value = json.loads(value_json)<br />
+              if len(value) == 1:<br />
+              value = value[&quot;value&quot;]<br />
+              status = value.get(&quot;error&quot;, None)<br />
+              if not status:<br />
+              status = value.get(&quot;status&quot;, ErrorCode.UNKNOWN_ERROR)<br />
+              message = value.get(&quot;value&quot;) or
+              value.get(&quot;message&quot;)<br />
+              if not isinstance(message, str):<br />
+              value = message<br />
+              message = message.get(&quot;message&quot;)<br />
+              else:<br />
+              message = value.get(&quot;message&quot;, None)<br />
+              except ValueError:<br />
+              pass<br />
+              <br />
+              exception_class: Type[WebDriverException]<br />
+              e = ErrorCode()<br />
+              error_codes = [item for item in dir(e) if not
+              item.startswith(&quot;__&quot;)]<br />
+              for error_code in error_codes:<br />
+              error_info = getattr(ErrorCode, error_code)<br />
+              if isinstance(error_info, list) and status in error_info:<br />
+              exception_class = getattr(ExceptionMapping, error_code,
+              WebDriverException)<br />
+              break<br />
+              else:<br />
+              exception_class = WebDriverException<br />
+              <br />
+              if not value:<br />
+              value = response[&quot;value&quot;]<br />
+              if isinstance(value, str):<br />
+              raise exception_class(value)<br />
+              if message == &quot;&quot; and &quot;message&quot; in value:<br />
+              message = value[&quot;message&quot;]<br />
+              <br />
+              screen = None # type: ignore[assignment]<br />
+              if &quot;screen&quot; in value:<br />
+              screen = value[&quot;screen&quot;]<br />
+              <br />
+              stacktrace = None<br />
+              st_value = value.get(&quot;stackTrace&quot;) or
+              value.get(&quot;stacktrace&quot;)<br />
+              if st_value:<br />
+              if isinstance(st_value, str):<br />
+              stacktrace = st_value.split(&quot;\n&quot;)<br />
+              else:<br />
+              stacktrace = []<br />
+              try:<br />
+              for frame in st_value:<br />
+              line = frame.get(&quot;lineNumber&quot;, &quot;&quot;)<br />
+              file = frame.get(&quot;fileName&quot;,
+              &quot;&lt;anonymous&gt;&quot;)<br />
+              if line:<br />
+              file = f&quot;{file}:{line}&quot;<br />
+              meth = frame.get(&quot;methodName&quot;,
+              &quot;&lt;anonymous&gt;&quot;)<br />
+              if &quot;className&quot; in frame:<br />
+              meth = f&quot;{frame[&#x27;className&#x27;]}.{meth}&quot;<br />
+              msg = &quot; at %s (%s)&quot;<br />
+              msg = msg % (meth, file)<br />
+              stacktrace.append(msg)<br />
+              except TypeError:<br />
+              pass<br />
+              if exception_class == UnexpectedAlertPresentException:<br />
+              alert_text = None<br />
+              if &quot;data&quot; in value:<br />
+              alert_text = value[&quot;data&quot;].get(&quot;text&quot;)<br />
+              elif &quot;alert&quot; in value:<br />
+              alert_text = value[&quot;alert&quot;].get(&quot;text&quot;)<br />
+              raise exception_class(message, screen, stacktrace, alert_text) #
+              type: ignore[call-arg] # mypy is not smart enough here<br />&gt;
+              raise exception_class(message, screen, stacktrace)<br /><span
+                class="error"
+                >E selenium.common.exceptions.NoSuchElementException: Message:
+                no such element: Unable to locate element:
+                {&quot;method&quot;:&quot;css
+                selector&quot;,&quot;selector&quot;:&quot;[id=&quot;country&quot;]&quot;}</span
+              ><br /><span class="error"
+                >E (Session info: chrome=120.0.6099.200); For documentation on
+                this error, please visit:
+                https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception</span
+              ><br /><span class="error">E Stacktrace:</span><br /><span
+                class="error"
+                >E GetHandleVerifier [0x00007FF633212142+3514994]</span
+              ><br /><span class="error"
+                >E (No symbol) [0x00007FF632E30CE2]</span
+              ><br /><span class="error"
+                >E (No symbol) [0x00007FF632CD76AA]</span
+              ><br /><span class="error"
+                >E (No symbol) [0x00007FF632D21860]</span
+              ><br /><span class="error"
+                >E (No symbol) [0x00007FF632D2197C]</span
+              ><br /><span class="error"
+                >E (No symbol) [0x00007FF632D64EE7]</span
+              ><br /><span class="error"
+                >E (No symbol) [0x00007FF632D4602F]</span
+              ><br /><span class="error"
+                >E (No symbol) [0x00007FF632D628F6]</span
+              ><br /><span class="error"
+                >E (No symbol) [0x00007FF632D45D93]</span
+              ><br /><span class="error"
+                >E (No symbol) [0x00007FF632D14BDC]</span
+              ><br /><span class="error"
+                >E (No symbol) [0x00007FF632D15C64]</span
+              ><br /><span class="error"
+                >E GetHandleVerifier [0x00007FF63323E16B+3695259]</span
+              ><br /><span class="error"
+                >E GetHandleVerifier [0x00007FF633296737+4057191]</span
+              ><br /><span class="error"
+                >E GetHandleVerifier [0x00007FF63328E4E3+4023827]</span
+              ><br /><span class="error"
+                >E GetHandleVerifier [0x00007FF632F604F9+689705]</span
+              ><br /><span class="error"
+                >E (No symbol) [0x00007FF632E3C048]</span
+              ><br /><span class="error"
+                >E (No symbol) [0x00007FF632E38044]</span
+              ><br /><span class="error"
+                >E (No symbol) [0x00007FF632E381C9]</span
+              ><br /><span class="error"
+                >E (No symbol) [0x00007FF632E288C4]</span
+              ><br /><span class="error"
+                >E BaseThreadInitThunk [0x00007FFA82F07344+20]</span
+              ><br /><span class="error"
+                >E RtlUserThreadStart [0x00007FFA84E826B1+33]</span
+              ><br /><br />..\..\..\..\AppData\Local\Programs\Python\Python311\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:229:
+              NoSuchElementException<br />
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_New_Bank_Account:test_service_new_bankAccount.py:61 used new
+              email in bank account -&gt;tygylpz7t5.university@yopmail.com [32mINFO [0m
+              test_New_Bank_Account:test_service_new_bankAccount.py:66 used new
+              phone number in bank account -&gt;1889849580 [32mINFO [0m
+              test_New_Bank_Account:test_service_new_bankAccount.py:77 used new
+              email for bank account -&gt;tygylpz7t5.university@yopmail.com [32mINFO
+              [0m test_New_Bank_Account:test_service_new_bankAccount.py:78 used new
+              phone number for bank account -&gt;1889849580<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="skipped results-table-row">
+        <tr>
+          <td class="col-result">Skipped</td>
+          <td class="col-name">
+            test_homepage.py::Test_Homepage_class::test_homepageValidations::setup
+          </td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              (&#x27;C:\\Users\\TUL\\Desktop\\selenium_things\\selenium_framework\\tests\\test_homepage.py&#x27;,
+              44, &#x27;Skipped: unconditional skip&#x27;)<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="skipped results-table-row">
+        <tr>
+          <td class="col-result">Skipped</td>
+          <td class="col-name">
+            test_listing.py::Test_lising::test_listing_e2e::setup
+          </td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              (&#x27;C:\\Users\\TUL\\Desktop\\selenium_things\\selenium_framework\\tests\\test_listing.py&#x27;,
+              35, &#x27;Skipped: unconditional skip&#x27;)<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_BookNow.py::Test_book_now_existing_user::test_bookNowForm_existing_user
+          </td>
+          <td class="col-duration">45.18</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_bookNowForm_existing_user:test_BookNow.py:58 Existing Email
+              -&gt; pravin.garg@universityliving.com [32mINFO [0m
+              test_bookNowForm_existing_user:test_BookNow.py:90 partial Book now
+              journey -- success [32mINFO [0m
+              test_bookNowForm_existing_user:test_BookNow.py:93 Partial booking
+              -- completed [32mINFO [0m
+              test_bookNowForm_existing_user:test_BookNow.py:119 step 1/3 --
+              success [32mINFO [0m test_bookNowForm_existing_user:test_BookNow.py:136
+              step 2/3 -- success [32mINFO [0m
+              test_bookNowForm_existing_user:test_BookNow.py:155 step 3/3 --
+              success<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_EnquireForm.py::Test_Enquire_exisitng_user::test_enquire_form_existing_user
+          </td>
+          <td class="col-duration">18.77</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_enquire_form_existing_user:test_EnquireForm.py:46 IQ hoxton -
+              Enquire Now [32mINFO [0m
+              test_enquire_form_existing_user:test_EnquireForm.py:109 Thankyou
+              URL is working Fine<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_JoinwaitlistNew.py::Test_join_Waitlist_new_user::test_join_Waitlist_new_user
+          </td>
+          <td class="col-duration">16.55</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_join_Waitlist_new_user:test_JoinwaitlistNew.py:82 new email
+              id is HFTFCS8@yopmail.com [32mINFO [0m
+              test_join_Waitlist_new_user:test_JoinwaitlistNew.py:83 new phone
+              number is2415344387<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_LoginE2E.py::Test_Login_existing_user::test_login_existing_user
+          </td>
+          <td class="col-duration">6.42</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_login_existing_user:test_LoginE2E.py:49 login successfull +
+              Dashboard data matched<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_bookNowNew.py::Test_book_now_new_user::test_bookNowForm_new_user
+          </td>
+          <td class="col-duration">52.43</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_bookNowForm_new_user:test_bookNowNew.py:83 partial Book now
+              journey -- success [32mINFO [0m
+              test_bookNowForm_new_user:test_bookNowNew.py:86 Partial booking --
+              completed [32mINFO [0m test_bookNowForm_new_user:test_bookNowNew.py:112
+              step 1/3 -- success [32mINFO [0m
+              test_bookNowForm_new_user:test_bookNowNew.py:129 step 2/3 --
+              success [32mINFO [0m test_bookNowForm_new_user:test_bookNowNew.py:149
+              step 3/3 -- success<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_contactus.py::Test_contact_us_form::test_contact_us_form
+          </td>
+          <td class="col-duration">12.05</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_contact_us_form:test_contactus.py:57 Thank You Url is working
+              fine [32mINFO [0m test_contact_us_form:test_contactus.py:68 contact page
+              url is working fine<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_dropUsALine.py::Test_Drop_us_a_line_form::test_drop_us_a_line_form
+          </td>
+          <td class="col-duration">17.20</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_drop_us_a_line_form:test_dropUsALine.py:67 page is working
+              fine<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_enquireNew.py::Test_Enquire_new_user::test_enquire_new_user
+          </td>
+          <td class="col-duration">22.65</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              ------------------------------Captured stdout
+              call------------------------------
+              <br />https://www.universityliving.com/united-kingdom/london/chapter-ealing/enquire-now/thank-you
+              COTZS4E@yopmail.com <br />
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_enquire_new_user:test_enquireNew.py:51 IQ hoxton - Enquire
+              Now [32mINFO [0m test_enquire_new_user:test_enquireNew.py:107 new email
+              id is COTZS4E@yopmail.com [32mINFO [0m
+              test_enquire_new_user:test_enquireNew.py:108 new phone number is
+              6236942553<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_newsLetter.py::Test_book_now_existing_user::test_bookNowForm_existing_user
+          </td>
+          <td class="col-duration">4.33</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_service_existing_FlightTicketsold.py::Test_Existing_Student_Flight_Tickets::test_Existing_Student_Flight_Tickets
+          </td>
+          <td class="col-duration">22.06</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_Existing_Student_Flight_Tickets:test_service_existing_FlightTicketsold.py:77
+              redirection url of round trip-&gt;
+              https://www.makemytrip.com/flight/search?cabinClass=E&amp;ccde=IN&amp;intl=true&amp;itinerary=DEL-DUB-10%2F01%2F2024_DEL-DUB-30%2F01%2F2024&amp;lang=eng&amp;paxType=A-1_C-0_I-0&amp;pft=STU&amp;tripType=R&amp;tsource=UNIVLIV
+              [32mINFO [0m
+              test_Existing_Student_Flight_Tickets:test_service_existing_FlightTicketsold.py:91
+              redirection url of one way-&gt;
+              https://www.makemytrip.com/flight/search?cabinClass=E&amp;ccde=IN&amp;intl=true&amp;itinerary=DEL-DUB-10%2F01%2F2024&amp;lang=eng&amp;paxType=A-1_C-0_I-0&amp;pft=STU&amp;tripType=O&amp;tsource=UNIVLIV<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_service_existing_StudentFinance.py::Test_Existing_Student_Financing::test_Existing_Student_Financing
+          </td>
+          <td class="col-duration">19.56</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_Existing_Student_Financing:test_service_existing_StudentFinance.py:72
+              Gyandhan redirection url
+              -&gt;https://www.universityliving.com/thankyou?page=student-finance
+              [32mINFO [0m
+              test_Existing_Student_Financing:test_service_existing_StudentFinance.py:79
+              HDFC redirection url
+              -&gt;https://www.universityliving.com/thankyou?page=student-finance
+              [32mINFO [0m
+              test_Existing_Student_Financing:test_service_existing_StudentFinance.py:86
+              ICIC redirection url
+              -&gt;https://loans.icicibank.com/loans/education-loan/#/verify/EducationLoan/Student-VerifyDetailsPage?utm_source=DSAChanel&amp;utm_medium=325798&amp;utm_campaign=UniversityLivingAccomodationPvtLtd<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_service_existing_bankAccount.py::Test_Existing_Bank_Account::test_Existing_Bank_Account
+          </td>
+          <td class="col-duration">18.15</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_Existing_Bank_Account:test_service_existing_bankAccount.py:59
+              used existing email -&gt; harsh.sachan@universityliving.com [32mINFO [0m
+              test_Existing_Bank_Account:test_service_existing_bankAccount.py:102
+              student bank account - canada
+              --&gt;https://partners.koho.ca/university-living/?irclickid=xNSyO0WptxyNTgu2KJQO91ukUkFz3YW%3ATWCaRQ0&amp;irgwc=1&amp;campaign_id=4192122&amp;af_channel=University%20Living%20Accommodation%20Pvt%20Limited&amp;utm_source=Impact&amp;adset_id=4192122&amp;utm_content=4192122<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_service_existing_get_visa.py::Test_Existing_Bank_Account::test_Existing_Bank_Account
+          </td>
+          <td class="col-duration">13.23</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_Existing_Bank_Account:test_service_existing_get_visa.py:75
+              get visa redirection url -&gt;
+              https://www.universityliving.com/thankyou?page=visa-assistance<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_service_existing_guarantor.py::Test_Existing_Guarantor::test_Existing_Guarantor
+          </td>
+          <td class="col-duration">50.02</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_Existing_Guarantor:test_service_existing_guarantor.py:62 UK -
+              Redirection Url -&gt;
+              https://hh.housinghand.co.uk/create-account?code=uni-living [32mINFO [0m
+              test_Existing_Guarantor:test_service_existing_guarantor.py:76
+              Ireland - Redirection Url -&gt;
+              https://hh.housinghand.co.uk/create-account?code=uniliv-ie [32mINFO [0m
+              test_Existing_Guarantor:test_service_existing_guarantor.py:90
+              France - Redirection Url -&gt;
+              https://garantme.fr/en/university-living [32mINFO [0m
+              test_Existing_Guarantor:test_service_existing_guarantor.py:104 USA
+              - Redirection Url -&gt;
+              https://www.theguarantors.com/university-living<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_service_existing_remittance.py::Test_Existing_Remittance::test_Existing_Remittance
+          </td>
+          <td class="col-duration">32.17</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_Existing_Remittance:test_service_existing_remittance.py:60
+              sending amount -&gt;200 [32mINFO [0m
+              test_Existing_Remittance:test_service_existing_remittance.py:61
+              selected recipients coutnry -&gt; GBP [32mINFO [0m
+              test_Existing_Remittance:test_service_existing_remittance.py:64
+              selected Sender amount -&gt; 21340.71 [32mINFO [0m
+              test_Existing_Remittance:test_service_existing_remittance.py:65
+              selected Sender coutnry -&gt; INR [32mINFO [0m
+              test_Existing_Remittance:test_service_existing_remittance.py:79
+              Receiving amount -&gt;200 GBP [32mINFO [0m
+              test_Existing_Remittance:test_service_existing_remittance.py:80
+              Amount need to pay-&gt;21340.71 INR + Charges [32mINFO [0m
+              test_Existing_Remittance:test_service_existing_remittance.py:81 FX
+              rate wire transfer -&gt;1 GBP = 106.7036 INR [32mINFO [0m
+              test_Existing_Remittance:test_service_existing_remittance.py:87
+              wire transfer redirection url -&gt;
+              https://universityliving.transfermateeducation.com/ [32mINFO [0m
+              test_Existing_Remittance:test_service_existing_remittance.py:103
+              Receiving amount -&gt;200 GBP [32mINFO [0m
+              test_Existing_Remittance:test_service_existing_remittance.py:104
+              Amount need to pay-&gt;21340.71 INR + Charges [32mINFO [0m
+              test_Existing_Remittance:test_service_existing_remittance.py:105
+              FX rate of agent assisted-&gt;1 GBP = 106.7036 INR [32mINFO [0m
+              test_Existing_Remittance:test_service_existing_remittance.py:112
+              Agent assisted redirection url -&gt;
+              https://www.universityliving.com/thankyou<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_service_new_FlightTickets.py::Test_New_Student_Flight_Tickets::test_New_Student_Flight_Tickets
+          </td>
+          <td class="col-duration">21.61</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_New_Student_Flight_Tickets:test_service_new_FlightTickets.py:65
+              used new email in service - FL
+              -&gt;rc4ttshpgt.university@yopmail.com [32mINFO [0m
+              test_New_Student_Flight_Tickets:test_service_new_FlightTickets.py:73
+              used new phone number in service - FL -&gt;6584110392 [32mINFO [0m
+              test_New_Student_Flight_Tickets:test_service_new_FlightTickets.py:90
+              redirection url of round trip-&gt;
+              https://www.makemytrip.com/flight/search?cabinClass=E&amp;ccde=IN&amp;intl=true&amp;itinerary=DEL-DUB-10%2F01%2F2024_DEL-DUB-30%2F01%2F2024&amp;lang=eng&amp;paxType=A-1_C-0_I-0&amp;pft=STU&amp;tripType=R&amp;tsource=UNIVLIV
+              [32mINFO [0m
+              test_New_Student_Flight_Tickets:test_service_new_FlightTickets.py:103
+              redirection url of round trip-&gt;
+              https://www.makemytrip.com/flight/search?cabinClass=E&amp;ccde=IN&amp;intl=true&amp;itinerary=DEL-DUB-10%2F01%2F2024&amp;lang=eng&amp;paxType=A-1_C-0_I-0&amp;pft=STU&amp;tripType=O&amp;tsource=UNIVLIV<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_service_new_StudentFinance.py::Test_New_Student_Finance::test_New_Student_Finance
+          </td>
+          <td class="col-duration">4.54</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_service_new_getVisa.py::Test_New_GetVisa::test_New_Remittance
+          </td>
+          <td class="col-duration">18.09</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_New_Remittance:test_service_new_getVisa.py:78 new email for
+              get visa -&gt; f579she2pw.university@yopmail.com [32mINFO [0m
+              test_New_Remittance:test_service_new_getVisa.py:79 new phone
+              number for get visa -&gt; 3830754465 [32mINFO [0m
+              test_New_Remittance:test_service_new_getVisa.py:94 redirection url
+              of get visa -&gt;
+              https://www.universityliving.com/thankyou?page=visa-assistance<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_service_new_guarantor.py::Test_New_Guarantor::test_New_Guarantor
+          </td>
+          <td class="col-duration">22.01</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_New_Guarantor:test_service_new_guarantor.py:59 used new email
+              in service - FL -&gt;hqdc46l7fh.university@yopmail.com [32mINFO [0m
+              test_New_Guarantor:test_service_new_guarantor.py:64 used new phone
+              number in service - FL -&gt;9207833115 [32mINFO [0m
+              test_New_Guarantor:test_service_new_guarantor.py:81 UK -
+              Redirection Url -&gt;
+              https://hh.housinghand.co.uk/create-account?code=uni-living<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_service_new_remittance.py::Test_New_Remittance::test_New_Remittance
+          </td>
+          <td class="col-duration">38.73</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_New_Remittance:test_service_new_remittance.py:64 sending
+              amount -&gt;200 [32mINFO [0m
+              test_New_Remittance:test_service_new_remittance.py:65 selected
+              recipients coutnry -&gt; GBP [32mINFO [0m
+              test_New_Remittance:test_service_new_remittance.py:68 selected
+              Sender amount -&gt; 21339.20 [32mINFO [0m
+              test_New_Remittance:test_service_new_remittance.py:69 selected
+              Sender coutnry -&gt; INR [32mINFO [0m
+              test_New_Remittance:test_service_new_remittance.py:78 new email
+              for remittance -&gt; 0n92dztgr8.university@yopmail.com [32mINFO [0m
+              test_New_Remittance:test_service_new_remittance.py:79 new phone
+              number for remittance -&gt; 8700379729 [32mINFO [0m
+              test_New_Remittance:test_service_new_remittance.py:102 Receiving
+              amount -&gt;200 GBP [32mINFO [0m
+              test_New_Remittance:test_service_new_remittance.py:103 Amount need
+              to pay-&gt;21339.20 INR + Charges [32mINFO [0m
+              test_New_Remittance:test_service_new_remittance.py:104 FX rate
+              wire transfer -&gt;1 GBP = 106.6960 INR [32mINFO [0m
+              test_New_Remittance:test_service_new_remittance.py:110 wire
+              transfer redirection url -&gt;
+              https://universityliving.transfermateeducation.com/ [32mINFO [0m
+              test_New_Remittance:test_service_new_remittance.py:129 Receiving
+              amount -&gt;200 GBP [32mINFO [0m
+              test_New_Remittance:test_service_new_remittance.py:130 Amount need
+              to pay-&gt;21339.20 INR + Charges [32mINFO [0m
+              test_New_Remittance:test_service_new_remittance.py:131 FX rate of
+              agent assisted-&gt;1 GBP = 106.6960 INR [32mINFO [0m
+              test_New_Remittance:test_service_new_remittance.py:138 Agent
+              assisted redirection url -&gt;
+              https://www.universityliving.com/thankyou<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">
+            test_signUP.py::Test_SignupE2e::test_E2eLogin
+          </td>
+          <td class="col-duration">5.98</td>
+          <td class="col-links"></td>
+        </tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">
+              -------------------------------Captured log
+              call-------------------------------- <br />[32mINFO [0m
+              test_E2eLogin:test_signUP.py:59 Sign up id matched with dashboard
+              id [32mINFO [0m test_E2eLogin:test_signUP.py:66 dashboard emai
+              --&gt;3lu6rw3.university@yopmail.com [32mINFO [0m
+              test_E2eLogin:test_signUP.py:67 sign up email
+              --&gt;3lu6rw3.university@yopmail.com [32mINFO [0m
+              test_E2eLogin:test_signUP.py:68 used contact number for sign up
+              --&gt;9590599002<br />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

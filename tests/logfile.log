@@ -1,0 +1,99 @@
+2024-01-10 18:27:52,679 :INFO : test_bookNowForm_existing_user :Existing Email -> pravin.garg@universityliving.com
+2024-01-10 18:28:05,701 :INFO : test_bookNowForm_existing_user :partial Book now journey -- success
+2024-01-10 18:28:06,662 :INFO : test_bookNowForm_existing_user :Partial booking -- completed
+2024-01-10 18:28:17,125 :INFO : test_bookNowForm_existing_user :step 1/3 -- success
+2024-01-10 18:28:18,907 :INFO : test_bookNowForm_existing_user :step 2/3 -- success
+2024-01-10 18:28:25,437 :INFO : test_bookNowForm_existing_user :step 3/3 -- success
+2024-01-10 18:28:45,492 :INFO : test_enquire_form_existing_user :IQ hoxton - Enquire Now
+2024-01-10 18:28:57,398 :INFO : test_enquire_form_existing_user :Thankyou URL is working Fine
+2024-01-10 18:29:24,840 :INFO : test_join_Waitlist_new_user :new email id is HFTFCS8@yopmail.com
+2024-01-10 18:29:24,840 :INFO : test_join_Waitlist_new_user :new phone number is2415344387
+2024-01-10 18:29:36,555 :INFO : test_login_existing_user :login successfull + Dashboard data matched
+2024-01-10 18:30:15,154 :INFO : test_bookNowForm_new_user :partial Book now journey -- success
+2024-01-10 18:30:16,184 :INFO : test_bookNowForm_new_user :Partial booking -- completed
+2024-01-10 18:30:26,551 :INFO : test_bookNowForm_new_user :step 1/3 -- success
+2024-01-10 18:30:28,286 :INFO : test_bookNowForm_new_user :step 2/3 -- success
+2024-01-10 18:30:34,479 :INFO : test_bookNowForm_new_user :step 3/3 -- success
+2024-01-10 18:30:59,330 :INFO : test_contact_us_form :Thank You Url is working fine
+2024-01-10 18:31:00,378 :INFO : test_contact_us_form :contact page url is working fine
+2024-01-10 18:31:27,621 :INFO : test_drop_us_a_line_form :page is working fine
+2024-01-10 18:31:48,100 :INFO : test_enquire_new_user :IQ hoxton - Enquire Now
+2024-01-10 18:31:59,086 :INFO : test_enquire_new_user :new email id is COTZS4E@yopmail.com
+2024-01-10 18:31:59,086 :INFO : test_enquire_new_user :new phone number is 6236942553
+2024-01-10 18:32:32,138 :INFO : test_Existing_Student_Flight_Tickets :redirection url of round trip-> https://www.makemytrip.com/flight/search?cabinClass=E&ccde=IN&intl=true&itinerary=DEL-DUB-10%2F01%2F2024_DEL-DUB-30%2F01%2F2024&lang=eng&paxType=A-1_C-0_I-0&pft=STU&tripType=R&tsource=UNIVLIV
+2024-01-10 18:32:37,039 :INFO : test_Existing_Student_Flight_Tickets :redirection url of one way-> https://www.makemytrip.com/flight/search?cabinClass=E&ccde=IN&intl=true&itinerary=DEL-DUB-10%2F01%2F2024&lang=eng&paxType=A-1_C-0_I-0&pft=STU&tripType=O&tsource=UNIVLIV
+2024-01-10 18:33:03,494 :INFO : test_Existing_Student_Financing :Gyandhan redirection url ->https://www.universityliving.com/thankyou?page=student-finance
+2024-01-10 18:33:06,899 :INFO : test_Existing_Student_Financing :HDFC redirection url ->https://www.universityliving.com/thankyou?page=student-finance
+2024-01-10 18:33:12,503 :INFO : test_Existing_Student_Financing :ICIC redirection url ->https://loans.icicibank.com/loans/education-loan/#/verify/EducationLoan/Student-VerifyDetailsPage?utm_source=DSAChanel&utm_medium=325798&utm_campaign=UniversityLivingAccomodationPvtLtd
+2024-01-10 18:33:28,712 :INFO : test_Existing_Bank_Account :used existing email -> harsh.sachan@universityliving.com
+2024-01-10 18:33:36,887 :INFO : test_Existing_Bank_Account :student bank account - canada -->https://partners.koho.ca/university-living/?irclickid=xNSyO0WptxyNTgu2KJQO91ukUkFz3YW%3ATWCaRQ0&irgwc=1&campaign_id=4192122&af_channel=University%20Living%20Accommodation%20Pvt%20Limited&utm_source=Impact&adset_id=4192122&utm_content=4192122
+2024-01-10 18:33:58,626 :INFO : test_Existing_Bank_Account :get visa redirection url -> https://www.universityliving.com/thankyou?page=visa-assistance
+2024-01-10 18:33:58,626 :INFO : test_Existing_Bank_Account :get visa redirection url -> https://www.universityliving.com/thankyou?page=visa-assistance
+2024-01-10 18:34:23,783 :INFO : test_Existing_Guarantor :UK - Redirection Url -> https://hh.housinghand.co.uk/create-account?code=uni-living
+2024-01-10 18:34:32,615 :INFO : test_Existing_Guarantor :Ireland - Redirection Url -> https://hh.housinghand.co.uk/create-account?code=uniliv-ie
+2024-01-10 18:34:41,480 :INFO : test_Existing_Guarantor :France - Redirection Url -> https://garantme.fr/en/university-living
+2024-01-10 18:34:53,941 :INFO : test_Existing_Guarantor :USA - Redirection Url -> https://www.theguarantors.com/university-living
+2024-01-10 18:35:22,107 :INFO : test_Existing_Remittance :sending amount ->200
+2024-01-10 18:35:22,145 :INFO : test_Existing_Remittance :selected recipients coutnry -> GBP
+2024-01-10 18:35:22,175 :INFO : test_Existing_Remittance :selected Sender amount -> 21340.71
+2024-01-10 18:35:22,205 :INFO : test_Existing_Remittance :selected Sender coutnry -> INR
+2024-01-10 18:35:26,718 :INFO : test_Existing_Remittance :Receiving amount ->200 GBP
+2024-01-10 18:35:26,718 :INFO : test_Existing_Remittance :Amount need to pay->21340.71 INR + 
+Charges
+2024-01-10 18:35:26,718 :INFO : test_Existing_Remittance :FX rate wire transfer ->1 GBP = 106.7036 INR
+2024-01-10 18:35:33,418 :INFO : test_Existing_Remittance :wire transfer redirection url -> https://universityliving.transfermateeducation.com/
+2024-01-10 18:35:37,700 :INFO : test_Existing_Remittance :Receiving amount ->200 GBP
+2024-01-10 18:35:37,700 :INFO : test_Existing_Remittance :Amount need to pay->21340.71 INR + 
+Charges
+2024-01-10 18:35:37,700 :INFO : test_Existing_Remittance :FX rate of agent assisted->1 GBP = 106.7036 INR
+2024-01-10 18:35:40,798 :INFO : test_Existing_Remittance :Agent assisted redirection url -> https://www.universityliving.com/thankyou
+2024-01-10 18:35:57,222 :INFO : test_New_Student_Flight_Tickets :used new email in service - FL ->rc4ttshpgt.university@yopmail.com
+2024-01-10 18:35:58,569 :INFO : test_New_Student_Flight_Tickets :used new phone number in service - FL ->6584110392
+2024-01-10 18:36:02,912 :INFO : test_New_Student_Flight_Tickets :redirection url of round trip-> https://www.makemytrip.com/flight/search?cabinClass=E&ccde=IN&intl=true&itinerary=DEL-DUB-10%2F01%2F2024_DEL-DUB-30%2F01%2F2024&lang=eng&paxType=A-1_C-0_I-0&pft=STU&tripType=R&tsource=UNIVLIV
+2024-01-10 18:36:07,700 :INFO : test_New_Student_Flight_Tickets :redirection url of round trip-> https://www.makemytrip.com/flight/search?cabinClass=E&ccde=IN&intl=true&itinerary=DEL-DUB-10%2F01%2F2024&lang=eng&paxType=A-1_C-0_I-0&pft=STU&tripType=O&tsource=UNIVLIV
+2024-01-10 18:36:36,336 :INFO : test_New_Bank_Account :used new email in bank account ->tygylpz7t5.university@yopmail.com
+2024-01-10 18:36:37,163 :INFO : test_New_Bank_Account :used new phone number in bank account ->1889849580
+2024-01-10 18:36:37,911 :INFO : test_New_Bank_Account :used new email for bank account ->tygylpz7t5.university@yopmail.com
+2024-01-10 18:36:37,911 :INFO : test_New_Bank_Account :used new phone number for bank account ->1889849580
+2024-01-10 18:37:08,531 :INFO : test_New_Remittance :new email for get visa -> f579she2pw.university@yopmail.com
+2024-01-10 18:37:08,531 :INFO : test_New_Remittance :new phone number for get visa -> 3830754465
+2024-01-10 18:37:14,405 :INFO : test_New_Remittance :redirection url of get visa -> https://www.universityliving.com/thankyou?page=visa-assistance
+2024-01-10 18:37:32,966 :INFO : test_New_Guarantor :used new email in service - FL ->hqdc46l7fh.university@yopmail.com
+2024-01-10 18:37:33,897 :INFO : test_New_Guarantor :used new phone number in service - FL ->9207833115
+2024-01-10 18:37:40,649 :INFO : test_New_Guarantor :UK - Redirection Url -> https://hh.housinghand.co.uk/create-account?code=uni-living
+2024-01-10 18:38:09,503 :INFO : test_New_Remittance :sending amount ->200
+2024-01-10 18:38:09,503 :INFO : test_New_Remittance :sending amount ->200
+2024-01-10 18:38:09,543 :INFO : test_New_Remittance :selected recipients coutnry -> GBP
+2024-01-10 18:38:09,543 :INFO : test_New_Remittance :selected recipients coutnry -> GBP
+2024-01-10 18:38:09,573 :INFO : test_New_Remittance :selected Sender amount -> 21339.20
+2024-01-10 18:38:09,573 :INFO : test_New_Remittance :selected Sender amount -> 21339.20
+2024-01-10 18:38:09,612 :INFO : test_New_Remittance :selected Sender coutnry -> INR
+2024-01-10 18:38:09,612 :INFO : test_New_Remittance :selected Sender coutnry -> INR
+2024-01-10 18:38:11,233 :INFO : test_New_Remittance :new email for remittance -> 0n92dztgr8.university@yopmail.com
+2024-01-10 18:38:11,233 :INFO : test_New_Remittance :new email for remittance -> 0n92dztgr8.university@yopmail.com
+2024-01-10 18:38:11,233 :INFO : test_New_Remittance :new phone number for remittance -> 8700379729
+2024-01-10 18:38:11,233 :INFO : test_New_Remittance :new phone number for remittance -> 8700379729
+2024-01-10 18:38:15,106 :INFO : test_New_Remittance :Receiving amount ->200 GBP
+2024-01-10 18:38:15,106 :INFO : test_New_Remittance :Receiving amount ->200 GBP
+2024-01-10 18:38:15,106 :INFO : test_New_Remittance :Amount need to pay->21339.20 INR + 
+Charges
+2024-01-10 18:38:15,106 :INFO : test_New_Remittance :Amount need to pay->21339.20 INR + 
+Charges
+2024-01-10 18:38:15,106 :INFO : test_New_Remittance :FX rate wire transfer ->1 GBP = 106.6960 INR
+2024-01-10 18:38:15,106 :INFO : test_New_Remittance :FX rate wire transfer ->1 GBP = 106.6960 INR
+2024-01-10 18:38:23,508 :INFO : test_New_Remittance :wire transfer redirection url -> https://universityliving.transfermateeducation.com/
+2024-01-10 18:38:23,508 :INFO : test_New_Remittance :wire transfer redirection url -> https://universityliving.transfermateeducation.com/
+2024-01-10 18:38:28,176 :INFO : test_New_Remittance :Receiving amount ->200 GBP
+2024-01-10 18:38:28,176 :INFO : test_New_Remittance :Receiving amount ->200 GBP
+2024-01-10 18:38:28,176 :INFO : test_New_Remittance :Amount need to pay->21339.20 INR + 
+Charges
+2024-01-10 18:38:28,176 :INFO : test_New_Remittance :Amount need to pay->21339.20 INR + 
+Charges
+2024-01-10 18:38:28,176 :INFO : test_New_Remittance :FX rate of agent assisted->1 GBP = 106.6960 INR
+2024-01-10 18:38:28,176 :INFO : test_New_Remittance :FX rate of agent assisted->1 GBP = 106.6960 INR
+2024-01-10 18:38:31,293 :INFO : test_New_Remittance :Agent assisted redirection url -> https://www.universityliving.com/thankyou
+2024-01-10 18:38:31,293 :INFO : test_New_Remittance :Agent assisted redirection url -> https://www.universityliving.com/thankyou
+2024-01-10 18:38:47,023 :INFO : test_E2eLogin :Sign up id matched with dashboard id
+2024-01-10 18:38:49,092 :INFO : test_E2eLogin :dashboard emai -->3lu6rw3.university@yopmail.com
+2024-01-10 18:38:49,092 :INFO : test_E2eLogin :sign up email -->3lu6rw3.university@yopmail.com
+2024-01-10 18:38:49,092 :INFO : test_E2eLogin :used contact number for sign up -->9590599002

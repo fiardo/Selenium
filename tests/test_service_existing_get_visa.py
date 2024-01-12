@@ -39,7 +39,7 @@ class Test_Existing_Bank_Account(Invokation):
         visa = GetVisaClass(self.driver)
 
         try:
-            self.driver.find_element(By.XPATH, "//button[text()='Accept']").click()
+            self.driver.find_element(By.XPATH, "//button[text()='×']").click()
         except Exception:
             pass
 

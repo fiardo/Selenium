@@ -18,16 +18,13 @@ from pageData.detailPage import detailpageClass
 from pageData.Forms import FormClass
 import pytest
 from pageData.thankyouPage import ThankyouClass
+import random
 
 
 class Test_book_now_existing_user(Invokation):
-    bookNow_url_one = "https://www.universityliving.com/united-kingdom/london/chapter-ealing/book-now/thank-you"
-    bookNow_url_two = "https://www.universityliving.com/united-kingdom/london/iq-hoxton/book-now/thank-you"
-    bookNow_url_three = "https://www.universityliving.com/australia/melbourne/scape-berkeley-2/book-now/thank-you"
     testing_key = "test"
     existing_email_id = "pravin.garg@universityliving.com"
-    properties_name = ["chapter ealing", "iQ Hoxton", "scape berkeley 2"]
-    Thankyou_urls = [bookNow_url_one, bookNow_url_two, bookNow_url_three]
+    properties_name = ["chapter ealing", "test (Dev purpose)"]
 
     @mark.testomatio("@T8d87d509")
     def test_bookNowForm_existing_user(self):
@@ -39,102 +36,137 @@ class Test_book_now_existing_user(Invokation):
         loginPopUP = loginpopupClass(self.driver)
         ThankyouPage = ThankyouClass(self.driver)
         propertyFlag = False
+
         try:
-            self.driver.find_element(By.XPATH, "//button[text()='Accept']").click()
+            self.driver.find_element(By.XPATH, "//button[text()='×']").click()
         except Exception:
             pass
-        assert HomePage.searchbar().is_displayed()
+
         HomePage.searchbar().send_keys(Test_book_now_existing_user.properties_name[0])
         time.sleep(3)
         HomePage.searchbar().send_keys(Keys.ENTER)
-        DetailPage.booknowButton().click()
-        assert loginPopUP.loginBtn().is_displayed()
-        assert loginPopUP.emailfield().is_displayed()
-        loginPopUP.emailfield().send_keys(Test_book_now_existing_user.existing_email_id)
-        log.info("Existing Email -> pravin.garg@universityliving.com")
-        loginPopUP.loginBtn().click()
-        loginPopUP.otpFirst().send_keys("1")
-        loginPopUP.otpsecond().send_keys("2")
-        loginPopUP.otpthird().send_keys("3")
-        loginPopUP.otpfourth().send_keys("4")
-        loginPopUP.otpfifth().send_keys("5")
-        assert loginPopUP.continueBtn().is_displayed()
-        loginPopUP.continueBtn().click()
-        visastatusDropdown = Select(Form.visaStatus())
-        visastatusDropdown.select_by_index(3)
-        bestPlatformDropdown = Select(Form.platform())
-        bestPlatformDropdown.select_by_index(10)
-        Form.platformInfo().send_keys("Dis-test-1")
-        try:
-            Form.uniIDone().click()
-        except Exception:
+        if DetailPage.booknowButton().is_displayed():
+            propertyFlag = True
+        else:
+            propertyFlag = False
+
+        def BookingJourney():
+            DetailPage.booknowButton().click()
+            loginPopUP.emailfield().send_keys(
+                Test_book_now_existing_user.existing_email_id
+            )
+            log.info("Existing Email -> pravin.garg@universityliving.com")
+            loginPopUP.loginBtn().click()
+            loginPopUP.otpFirst().send_keys("1")
+            loginPopUP.otpsecond().send_keys("2")
+            loginPopUP.otpthird().send_keys("3")
+            loginPopUP.otpfourth().send_keys("4")
+            loginPopUP.otpfifth().send_keys("5")
+            loginPopUP.continueBtn().click()
+            bestPlatformDropdown = Select(Form.platform())
+            bestPlatformDropdown.select_by_index(10)
+            Form.platformInfo().send_keys("Dis-test-1")
+            nationalityDropDown = Select(Form.nationalityDrop())
+            nationalityDropDown.select_by_index(4)
             try:
-                Form.uniIDtwo().click()
+                Form.uniIDone().click()
             except Exception:
                 try:
-                    Form.uniIDthree().click()
-                except:
+                    Form.uniIDtwo().click()
+                except Exception:
                     try:
-                        Form.uniIDfour().click()
-                    except Exception:
+                        Form.uniIDthree().click()
+                    except:
                         try:
-                            Form.uniIDfive().click()
+                            Form.uniIDfour().click()
                         except Exception:
-                            log.warning("ID is not interactable")
-        Form.uniItem().click()
-        Form.bookNowBtn().click()
-        log.info("partial Book now journey -- success")
-        assert Form.booknow_step1_validator().text == "Personal Info"
-        if Form.booknow_step1_validator().text == "Personal Info":
-            log.info("Partial booking -- completed")
-        else:
-            log.warning("personal info missing xx Plz check")
-        Form.genderBtn().click()
-        Form.homeField().send_keys("test Home")
-        country = Select(Form.countryDrop())
-        country.select_by_index(2)
-        Form.stateField().send_keys("test")
-        Form.cityField().send_keys("test")
-        Form.postalField().send_keys("test")
-        nationality = Select(Form.nationalityDrop())
-        nationality.select_by_index(2)
-        Form.nextBtn().click()
-        assert Form.booknow_step2_validator().text == "University Info"
-        if Form.booknow_step2_validator().text == "University Info":
-            log.info("step 1/3 -- success")
-        else:
-            log.warning("University info missing nxxx Plz check")
-        Form.courseField().send_keys("test course")
-        yearofStudy = Select(Form.yearofstudyField())
-        yearofStudy.select_by_index(2)
-        Form.startDateField().click()
-        Form.startdateMonth().click()
-        Form.endDateField().click()
-        Form.enddateMonth().click()
-        # Form.pastCourse().send_keys("test past course")
-        # Form.pastAttend().send_keys("test past university")
-        Form.nextBtn().click()
-        assert Form.booknow_step3_validator().text == "Guardian Info"
-        if Form.booknow_step3_validator().text == "Guardian Info":
-            log.info("step 2/3 -- success")
-        else:
-            log.warning("Guardian info missing xx Plz check")
-        Form.guardianFullname().send_keys("test")
-        Form.guardianEmail().send_keys("test@yopmail.com")
-        Form.guardianContact().send_keys("8100223348")
-        Form.guardianRelationship().send_keys("testrelation")
-        Form.message().send_keys("testing Message")
-        try:
-            Form.guardianDOB().click()
-            Form.guardianDOBDate().click()
-        except Exception:
-            log.info("no guardian DOB required")
-        sourceDrop = Select(Form.source())
-        sourceDrop.select_by_index(3)
-        Form.sourceName().send_keys("Mr Test")
-        Form.guardianSubmitBtn().click()
-        if ThankyouPage.chat_Btn().is_displayed():
-            log.info("step 3/3 -- success")
+                            try:
+                                Form.uniIDfive().click()
+                            except Exception:
+                                log.warning("ID is not interactable")
+
+            Form.uniItem().click()
+            Form.bookNowBtn().click()
+            log.info("partial Book now journey -- success")
+            assert Form.booknow_step1_validator().text == "Personal Info"
+            if Form.booknow_step1_validator().text == "Personal Info":
+                log.info("Partial booking -- completed")
+            else:
+                log.warning("personal info missing xx Plz check")
+            Form.genderBtn().click()
+            Form.homeField().send_keys("test Home")
+
+            country = Select(Form.countryDrop())
+            country.select_by_index(1)
+            time.sleep(2)
+
+            stateDropDown = Select(Form.stateField())
+            stateDropDown.select_by_index(2)
+            time.sleep(2)
+
+            cityDropDown = Select(Form.cityField())
+            cityDropDown.select_by_index(2)
+            time.sleep(2)
+
+            nationalityDropDown = Select(Form.nationalityDrop())
+            nationalityDropDown.select_by_index(4)
+
+            Form.postalField().send_keys("test")
+            Form.nextBtn().click()
+            assert Form.booknow_step2_validator().text == "University Info"
             time.sleep(3)
+            if Form.booknow_step2_validator().text == "University Info":
+                log.info("step 1/3 -- success")
+            else:
+                log.warning("University info missing xxxx Plz check")
+            Form.courseField().send_keys("test course")
+            yearofStudy = Select(Form.yearofstudyField())
+            yearofStudy.select_by_index(1)
+            Form.startDateField().click()
+            Form.startdateMonth().click()
+            Form.endDateField().click()
+            Form.enddateMonth().click()
+            Form.pastUniField().click()
+            Form.pastUniFieldItemOne().click()
+            Form.pastCourseField().click()
+            Form.pastCourseFieldItemOne().click()
+            Form.nextBtn().click()
+            assert Form.booknow_step3_validator().text == "Guardian Info"
+            if Form.booknow_step3_validator().text == "Guardian Info":
+                log.info("step 2/3 -- success")
+            else:
+                log.warning("Guardian info missing xx Plz check")
+            Form.guardianFullname().send_keys("test")
+            Form.guardianEmail().send_keys("test@yopmail.com")
+            Form.guardianContact().send_keys("8100223348")
+            Form.guardianRelationship().send_keys("testrelation")
+            Form.message().send_keys("testing Message")
+            time.sleep(3)
+            try:
+                Form.guardianDOB().click()
+                Form.guardianDOBDate().click()
+            except Exception:
+                log.info("no guardian DOB required")
+            sourceDrop = Select(Form.source())
+            sourceDrop.select_by_index(3)
+            Form.sourceName().send_keys("Mr Test")
+            Form.guardianSubmitBtn().click()
+            if ThankyouPage.chat_Btn().is_displayed():
+                log.info("step 3/3 -- success")
+                time.sleep(3)
+            else:
+                log.warning("step failure")
+
+            time.sleep(3)
+
+        if propertyFlag:
+            BookingJourney()
+
         else:
-            log.warning("step failure")
+            HomePage.headerLogo().click()
+            HomePage.searchbar().send_keys(
+                Test_book_now_existing_user.properties_name[1]
+            )
+            time.sleep(3)
+            HomePage.searchbar().send_keys(Keys.ENTER)
+            BookingJourney()

@@ -38,10 +38,12 @@ class Test_Drop_us_a_line_form(Invokation):
         homepage = Homepageclass(self.driver)
         detailpage = detailpageClass(self.driver)
         time.sleep(3)
+
         try:
-            self.driver.find_element(By.XPATH, "//button[text()='Accept']").click()
+            self.driver.find_element(By.XPATH, "//button[text()='×']").click()
         except Exception:
             pass
+
         time.sleep(2)
         homepage.searchbar().send_keys("iq hoxton")
         time.sleep(2)

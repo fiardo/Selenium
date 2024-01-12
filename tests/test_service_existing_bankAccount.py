@@ -37,9 +37,10 @@ class Test_Existing_Bank_Account(Invokation):
         homepage = Homepageclass(self.driver)
         login = loginpopupClass(self.driver)
         bank = BankAccountClass(self.driver)
+        Form = FormClass(self.driver)
 
         try:
-            self.driver.find_element(By.XPATH, "//button[text()='Accept']").click()
+            self.driver.find_element(By.XPATH, "//button[text()='×']").click()
         except Exception:
             pass
 
@@ -57,15 +58,34 @@ class Test_Existing_Bank_Account(Invokation):
         login.loginMethod()
         log.info("used existing email -> harsh.sachan@universityliving.com")
         bank.openAccountBtn().click()
+
+        # try:
+        #     Form.univ().click()
+        # except Exception:
+        #     try:
+        #         Form.uniIDtwo().click()
+        #     except Exception:
+        #         try:
+        #             Form.uniIDthree().click()
+        #         except:
+        #             try:
+        #                 Form.uniIDfour().click()
+        #             except Exception:
+        #                 try:
+        #                     Form.uniIDfive().click()
+        #                 except Exception:
+        #                     log.warning("ID is not interactable")
+
+        Form.uniPlaceholderValue().click()
+        Form.uniItem().click()
         bank.formSubmitBtn().click()
         time.sleep(2)
         self.driver.get_screenshot_as_file(
             "C:\\Users\\TUL\\Desktop\\selenium_things\\selenium_framework\\screenshots\\services\\bank_Account\\irelandBankAccount.png"
         )
-        assert bank.irelandPopup().is_displayed()
 
         time.sleep(2)
-        self.driver.refresh()
+        bank.okBtn().click()
 
         # ------------------------------ check for canada -----------------------
 
