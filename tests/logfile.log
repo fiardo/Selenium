@@ -97,3 +97,6 @@ Charges
 2024-01-10 18:38:49,092 :INFO : test_E2eLogin :dashboard emai -->3lu6rw3.university@yopmail.com
 2024-01-10 18:38:49,092 :INFO : test_E2eLogin :sign up email -->3lu6rw3.university@yopmail.com
 2024-01-10 18:38:49,092 :INFO : test_E2eLogin :used contact number for sign up -->9590599002
+2024-01-12 12:23:53,133 :INFO : test_login_existing_user :login successfull + Dashboard data matched
+2024-01-17 18:12:59,600 :INFO : test_servicelistingpage : Order of the listed services Names and Description in service listing page is matched 
+2024-01-17 18:13:54,815 :WARNING : test_servicelistingpage : Order of the listed services Names and Description in service listing page is Not matched
